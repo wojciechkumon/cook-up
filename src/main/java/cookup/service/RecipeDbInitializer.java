@@ -2,6 +2,7 @@ package cookup.service;
 
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,14 +27,15 @@ public class RecipeDbInitializer {
     recipeDao.deleteAll();
     ingredientDao.deleteAll();
 
-    Ingredient milk = new Ingredient("milk", IngredientUnit.ML);
-    Ingredient coffee = new Ingredient("coffee", IngredientUnit.GRAM);
-    Ingredient water = new Ingredient("water", IngredientUnit.ML);
+    Ingredient milk = ingredientDao.save(new Ingredient("milk", IngredientUnit.ML));
+    Ingredient coffee = ingredientDao.save(new Ingredient("coffee", IngredientUnit.GRAM));
+    Ingredient water = ingredientDao.save(new Ingredient("water", IngredientUnit.ML));
 
-    milk = ingredientDao.save(milk);
-    coffee = ingredientDao.save(coffee);
-    water = ingredientDao.save(water);
+    saveFirstRecipe(milk, coffee);
+    saveSecondRecipe(coffee, water);
+  }
 
+  private void saveFirstRecipe(Ingredient milk, Ingredient coffee) {
     Recipe coffeeWithMilk = Recipe.builder()
         .name("coffee with milk")
         .cookingDescription("blabla")
@@ -42,23 +44,25 @@ public class RecipeDbInitializer {
         .servings(1)
         .build();
 
-    RecipeIngredient recipeIngredient1 = new RecipeIngredient();
-    recipeIngredient1.setRecipe(coffeeWithMilk);
-    recipeIngredient1.setIngredient(milk);
-    recipeIngredient1.setAmount(30D);
+    RecipeIngredient recipeIngredient1 = RecipeIngredient.builder()
+        .recipe(coffeeWithMilk)
+        .ingredient(milk)
+        .amount(30D)
+        .build();
 
-    RecipeIngredient recipeIngredient2 = new RecipeIngredient();
-    recipeIngredient2.setRecipe(coffeeWithMilk);
-    recipeIngredient2.setIngredient(coffee);
-    recipeIngredient2.setAmount(20D);
+    RecipeIngredient recipeIngredient2 = RecipeIngredient.builder()
+        .recipe(coffeeWithMilk)
+        .ingredient(coffee)
+        .amount(20D)
+        .build();
 
-    Set<RecipeIngredient> recipeIngredientSet = new HashSet<>();
-    recipeIngredientSet.add(recipeIngredient1);
-    recipeIngredientSet.add(recipeIngredient2);
+    Set<RecipeIngredient> recipeIngredientSet =
+        new HashSet<>(Arrays.asList(recipeIngredient1, recipeIngredient2));
     coffeeWithMilk.setIngredients(recipeIngredientSet);
     recipeDao.save(coffeeWithMilk);
+  }
 
-
+  private void saveSecondRecipe(Ingredient coffee, Ingredient water) {
     Recipe coffeeRecipe = Recipe.builder()
         .name("coffee")
         .cookingDescription("blabla2")
@@ -67,19 +71,20 @@ public class RecipeDbInitializer {
         .servings(2)
         .build();
 
-    RecipeIngredient recipeIngredient3 = new RecipeIngredient();
-    recipeIngredient3.setRecipe(coffeeRecipe);
-    recipeIngredient3.setIngredient(water);
-    recipeIngredient3.setAmount(200D);
+    RecipeIngredient recipeIngredient3 = RecipeIngredient.builder()
+        .recipe(coffeeRecipe)
+        .ingredient(water)
+        .amount(200D)
+        .build();
 
-    RecipeIngredient recipeIngredient4 = new RecipeIngredient();
-    recipeIngredient4.setRecipe(coffeeRecipe);
-    recipeIngredient4.setIngredient(coffee);
-    recipeIngredient4.setAmount(40D);
+    RecipeIngredient recipeIngredient4 = RecipeIngredient.builder()
+        .recipe(coffeeRecipe)
+        .ingredient(coffee)
+        .amount(40D)
+        .build();
 
-    recipeIngredientSet = new HashSet<>();
-    recipeIngredientSet.add(recipeIngredient3);
-    recipeIngredientSet.add(recipeIngredient4);
+    Set<RecipeIngredient> recipeIngredientSet =
+        new HashSet<>(Arrays.asList(recipeIngredient3, recipeIngredient4));
     coffeeRecipe.setIngredients(recipeIngredientSet);
     recipeDao.save(coffeeRecipe);
   }
