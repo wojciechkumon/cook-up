@@ -13,8 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "account_role")
-public class AccountRole {
+@Table(name = "user_role")
+public class UserRole {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,9 +25,9 @@ public class AccountRole {
   @JoinColumn(name = "account_id", nullable = false)
   private Account owner;
 
-  @Column(name = "role", nullable = false, length = 16)
+  @Column(name = "role", nullable = false, length = AccountRestrictions.ROLE_LENGTH)
   @Enumerated(EnumType.STRING)
-  private AccountRoleType accountRoleType;
+  private UserRoleType userRoleType;
 
 
   public Long getId() {
@@ -38,12 +38,12 @@ public class AccountRole {
     this.id = id;
   }
 
-  public AccountRoleType getAccountRoleType() {
-    return accountRoleType;
+  public UserRoleType getUserRoleType() {
+    return userRoleType;
   }
 
-  public void setAccountRoleType(AccountRoleType accountRoleType) {
-    this.accountRoleType = accountRoleType;
+  public void setUserRoleType(UserRoleType userRoleType) {
+    this.userRoleType = userRoleType;
   }
 
   public Account getOwner() {

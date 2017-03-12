@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -17,22 +18,24 @@ import javax.persistence.Table;
 public class Account {
 
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", unique = true, nullable = false)
   private Long id;
 
-  @Column(name = "steam_id", unique = true, nullable = false)
-  private Long steamId;
+  @Column(name = "username", unique = true, nullable = false,
+      length = AccountRestrictions.USERNAME_MAX_LENGTH)
+  private String username;
+
+  @Column(name = "password_hash", nullable = false,
+      length = AccountRestrictions.PASSWORD_HASH_MAX_LENGTH)
+  private String passwordHash;
+
+  @Column(name = "email", unique = true, nullable = false)
+  private String email;
 
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "owner")
-  private Set<AccountRole> accountRoles = new HashSet<>(0);
+  private Set<UserRole> userRoles = new HashSet<>(0);
 
-  public Account() {}
-
-  public Account(Long steamId, Set<AccountRole> accountRoles) {
-    this.steamId = steamId;
-    this.accountRoles = accountRoles;
-  }
 
   public Long getId() {
     return id;
@@ -42,19 +45,36 @@ public class Account {
     this.id = id;
   }
 
-  public Long getSteamId() {
-    return steamId;
+  public String getUsername() {
+    return username;
   }
 
-  public void setSteamId(Long steamId) {
-    this.steamId = steamId;
+  public void setUsername(String username) {
+    this.username = username;
   }
 
-  public Set<AccountRole> getAccountRoles() {
-    return accountRoles;
+  public String getPasswordHash() {
+    return passwordHash;
   }
 
-  public void setAccountRoles(Set<AccountRole> accountRoles) {
-    this.accountRoles = accountRoles;
+  public void setPasswordHash(String passwordHash) {
+    this.passwordHash = passwordHash;
   }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public Set<UserRole> getUserRoles() {
+    return userRoles;
+  }
+
+  public void setUserRoles(Set<UserRole> userRoles) {
+    this.userRoles = userRoles;
+  }
+
 }

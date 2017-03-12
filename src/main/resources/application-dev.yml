@@ -1,12 +1,9 @@
 spring:
-  datasource:
-    url: jdbc:h2:mem:mydb
-    username: hiziCase
-    password: hiziCasePass
-    driver-class: org.h2.Driver
 
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
     show-sql: true
     hibernate:
       ddl-auto: update
+
+  thymeleaf:
+    cache: false

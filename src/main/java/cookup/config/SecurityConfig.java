@@ -1,5 +1,6 @@
 package cookup.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -8,10 +9,21 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+  private final UserDetailsService userDetailsService;
+  private final PasswordEncoder passwordEncoder;
+
+  @Autowired
+  public SecurityConfig(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
+    this.userDetailsService = userDetailsService;
+    this.passwordEncoder = passwordEncoder;
+  }
 
   @Override
   public void configure(WebSecurity web) throws Exception {
@@ -22,20 +34,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http
         .authorizeRequests()
-        .antMatchers("/", "/login", "/steam/**", "/api/**").permitAll()
+        .antMatchers("/", "/login", "/register", "/api/**").permitAll()
         .anyRequest().authenticated()
-        .and().formLogin().loginPage("/")
-        .and().logout();
+        .and().formLogin().loginPage("/login")
+        .and().logout()
+        .and().rememberMe();
   }
 
-  @Override
-  protected void configure(AuthenticationManagerBuilder authManager) throws Exception {
-    // AuthenticationManager config (overriding default)
+  @Autowired
+  public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    auth
+        .userDetailsService(userDetailsService)
+        .passwordEncoder(passwordEncoder);
   }
 
   @Bean
+  @Override
   public AuthenticationManager authenticationManagerBean() throws Exception {
-    // prevents spring boot auto-config
     return super.authenticationManagerBean();
+  }
+
+  @Bean
+  public static PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
   }
 }

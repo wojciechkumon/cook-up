@@ -35,9 +35,13 @@ module.exports = {
         }
       },
       {
-        test: /\.scss$/,
+        test: /\.s?css$/,
         exclude: /(node_modules)/,
         loader: ExtractTextPlugin.extract('css!sass')
+      },
+      {
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        loader: 'file?name=/fonts/[name].[ext]'
       }
     ]
   }

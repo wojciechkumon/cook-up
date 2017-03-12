@@ -2,17 +2,22 @@ server:
   port: 8080
 
 spring:
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/cookUp
+    username: cookUp
+    password: cookUpPass
+    driver-class: org.postgresql.Driver
+
   data:
     rest:
       base-path: /api
 
   thymeleaf:
     mode: LEGACYHTML5
-    cache: false
+    cache: true
 
   profiles:
     active: dev
-
-props:
-  steamProviderUrl: http://steamcommunity.com/openid
-  steamApiKey: 4BB7EB42707E3B08E291523E2FB84BF2 # registered for localhost
