@@ -30,13 +30,13 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
   @Override
   @Transactional(readOnly = true)
-  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    Account account = accountDao.findByUsername(username);
+  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    Account account = accountDao.findByEmail(email);
     if (account == null) {
-      throw new UsernameNotFoundException("Username not found: " + username);
+      throw new UsernameNotFoundException("Email not found: " + email);
     }
     List<GrantedAuthority> authorities = buildUserAuthority(account.getUserRoles());
-    return buildUserForAuthentication(username, account, authorities);
+    return buildUserForAuthentication(email, account, authorities);
   }
 
   private List<GrantedAuthority> buildUserAuthority(Collection<UserRole> userRoles) {
@@ -49,5 +49,4 @@ public class UserDetailServiceImpl implements UserDetailsService {
                                           List<GrantedAuthority> authorities) {
     return new User(username, account.getPasswordHash(), authorities);
   }
-
 }

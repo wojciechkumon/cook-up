@@ -17,8 +17,7 @@ import javax.persistence.Table;
 public class UserRole {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id", nullable = false, unique = true)
+  @GeneratedValue
   private Long id;
 
   @ManyToOne(fetch = FetchType.LAZY)

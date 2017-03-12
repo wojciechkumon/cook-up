@@ -26,10 +26,9 @@ public class AccountService {
 
   public void addAccount(RegistrationDto registrationDto) {
     Account newAccount = new Account();
-    newAccount.setUsername(registrationDto.getUsername());
+    newAccount.setEmail(registrationDto.getEmail());
     newAccount.setPasswordHash(passwordEncoder.encode(registrationDto.getPassword()));
     newAccount.setUserRoles(buildUserRoles(newAccount));
-    newAccount.setEmail(registrationDto.getEmail());
     accountDao.save(newAccount);
   }
 
@@ -44,9 +43,5 @@ public class AccountService {
 
   public boolean isEmailTaken(String email) {
     return accountDao.findByEmail(email) != null;
-  }
-
-  public boolean isUsernameTaken(String username) {
-    return accountDao.findByUsername(username) != null;
   }
 }
