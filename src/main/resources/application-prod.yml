@@ -1,5 +1,3 @@
 spring:
   jpa:
     show-sql: false
-    hibernate:
-      ddl-auto: update # TODO change and update prod db using migration scripts only (liquibase?)
