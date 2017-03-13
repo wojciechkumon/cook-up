@@ -1,7 +1,5 @@
 package cookup.annotation.validator;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
@@ -11,7 +9,6 @@ import cookup.service.AccountService;
 public class EmailUniqueValidator implements ConstraintValidator<EmailUnique, String> {
   private final AccountService accountService;
 
-  @Autowired
   public EmailUniqueValidator(AccountService accountService) {
     this.accountService = accountService;
   }
@@ -23,5 +20,4 @@ public class EmailUniqueValidator implements ConstraintValidator<EmailUnique, St
   public boolean isValid(String email, ConstraintValidatorContext context) {
     return !accountService.isEmailTaken(email);
   }
-
 }

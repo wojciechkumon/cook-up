@@ -1,5 +1,6 @@
 package cookup.domain.recipe;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -36,6 +37,12 @@ public class Recipe {
 
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "recipe")
   private Set<RecipeIngredient> ingredients;
+
+  @Column(nullable = false)
+  private LocalDateTime created;
+
+  @Column(nullable = false)
+  private LocalDateTime updated;
 
 
   public Long getId() {
@@ -97,6 +104,22 @@ public class Recipe {
 
   public static Builder builder() {
     return new Builder();
+  }
+
+  public LocalDateTime getCreated() {
+    return created;
+  }
+
+  public void setCreated(LocalDateTime created) {
+    this.created = created;
+  }
+
+  public LocalDateTime getUpdated() {
+    return updated;
+  }
+
+  public void setUpdated(LocalDateTime updated) {
+    this.updated = updated;
   }
 
   public static class Builder {

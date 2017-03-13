@@ -1,6 +1,5 @@
 package cookup.service.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -22,7 +21,6 @@ import cookup.domain.account.UserRole;
 public class UserDetailServiceImpl implements UserDetailsService {
   private final AccountDao accountDao;
 
-  @Autowired
   public UserDetailServiceImpl(AccountDao accountDao) {
     this.accountDao = accountDao;
   }

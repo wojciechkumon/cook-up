@@ -12,14 +12,18 @@ import cookup.domain.recipe.Ingredient;
 import cookup.domain.recipe.IngredientUnit;
 import cookup.domain.recipe.Recipe;
 import cookup.domain.recipe.RecipeIngredient;
+import cookup.service.recipe.RecipeService;
 
 @Service
 public class RecipeDbInitializer {
   private final RecipeDao recipeDao;
+  private final RecipeService recipeService;
   private final IngredientDao ingredientDao;
 
-  RecipeDbInitializer(RecipeDao recipeDao, IngredientDao ingredientDao) {
+  RecipeDbInitializer(RecipeDao recipeDao, RecipeService recipeService,
+                      IngredientDao ingredientDao) {
     this.recipeDao = recipeDao;
+    this.recipeService = recipeService;
     this.ingredientDao = ingredientDao;
   }
 
@@ -59,7 +63,7 @@ public class RecipeDbInitializer {
     Set<RecipeIngredient> recipeIngredientSet =
         new HashSet<>(Arrays.asList(recipeIngredient1, recipeIngredient2));
     coffeeWithMilk.setIngredients(recipeIngredientSet);
-    recipeDao.save(coffeeWithMilk);
+    recipeService.save(coffeeWithMilk);
   }
 
   private void saveSecondRecipe(Ingredient coffee, Ingredient water) {
@@ -86,6 +90,6 @@ public class RecipeDbInitializer {
     Set<RecipeIngredient> recipeIngredientSet =
         new HashSet<>(Arrays.asList(recipeIngredient3, recipeIngredient4));
     coffeeRecipe.setIngredients(recipeIngredientSet);
-    recipeDao.save(coffeeRecipe);
+    recipeService.save(coffeeRecipe);
   }
 }

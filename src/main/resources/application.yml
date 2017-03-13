@@ -19,5 +19,9 @@ spring:
     mode: LEGACYHTML5
     cache: true
 
+  jackson:
+    serialization:
+      write_dates_as_timestamps: false
+
   profiles:
     active: dev

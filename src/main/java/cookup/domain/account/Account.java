@@ -1,5 +1,6 @@
 package cookup.domain.account;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,6 +30,11 @@ public class Account {
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "owner")
   private Set<UserRole> userRoles = new HashSet<>(0);
 
+  @Column(nullable = false)
+  private LocalDateTime created;
+
+  @Column(nullable = false)
+  private LocalDateTime updated;
 
   public Long getId() {
     return id;
@@ -62,4 +68,19 @@ public class Account {
     this.userRoles = userRoles;
   }
 
+  public LocalDateTime getCreated() {
+    return created;
+  }
+
+  public void setCreated(LocalDateTime created) {
+    this.created = created;
+  }
+
+  public LocalDateTime getUpdated() {
+    return updated;
+  }
+
+  public void setUpdated(LocalDateTime updated) {
+    this.updated = updated;
+  }
 }
