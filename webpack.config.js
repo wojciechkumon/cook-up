@@ -35,6 +35,12 @@ module.exports = {
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
         loader: 'file?name=/fonts/[name].[ext]'
+      },
+      {
+        test: /\.(jpe?g|png|gif)$/i,
+        loaders: [
+          'file?name=/img/[name].[ext]'
+        ]
       }
     ]
   }
