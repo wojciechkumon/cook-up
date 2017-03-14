@@ -15,23 +15,36 @@ public class RecipeDaoImpl implements MatchingRecipeFinder {
           "select ri.ingredient_id from recipe r2 " +
           "join recipe_ingredient ri on (r2.id=ri.recipe_id) " +
           "where r1.id=r2.id) <@ array[";
-
   private static final String queryRight = "]\\:\\:bigint[]";
 
   @PersistenceContext
   private EntityManager entityManager;
 
+  RecipeDaoImpl() {}
+
+  RecipeDaoImpl(EntityManager entityManager) {
+    this.entityManager = entityManager;
+  }
+
   @Override
-  @SuppressWarnings("unchecked")
   public List<Long> findMatchingRecipeIds(List<Long> ids) {
     String query = buildQuery(ids);
 
-    Query nativeQuery = entityManager.createNativeQuery(query);
+    return getRecipeIds(query);
+  }
 
-    List<BigInteger> bigIntegers = nativeQuery.getResultList();
+  private List<Long> getRecipeIds(String query) {
+    List<BigInteger> bigIntegers = readFromDao(query);
+
     return bigIntegers.stream()
         .map(BigInteger::longValue)
         .collect(Collectors.toList());
+  }
+
+  @SuppressWarnings("unchecked")
+  private List<BigInteger> readFromDao(String query) {
+    Query nativeQuery = entityManager.createNativeQuery(query);
+    return (List<BigInteger>) nativeQuery.getResultList();
   }
 
   private String buildQuery(List<Long> ids) {
