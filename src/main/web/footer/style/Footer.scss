@@ -1,0 +1,22 @@
+@import "../../style/global_variables";
+@import "variables";
+
+.Footer {
+  padding: 40px;
+  background-color: $footerGrey;
+  font-size: 14px;
+  clear: both;
+  position: relative;
+  z-index: 10;
+  margin-top: -3em;
+  p {
+    text-align: center;
+    font-weight: 700;
+  }
+  a {
+    text-align: center;
+    font-weight: 700;
+    text-decoration: none;
+    color: $red;
+  }
+}
