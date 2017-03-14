@@ -36,9 +36,9 @@ public class RecipeDbInitializer {
     recipeDao.deleteAll();
     ingredientDao.deleteAll();
 
-    Ingredient coffee = ingredientDao.save(new Ingredient("kawa", IngredientUnit.GRAM));
-    Ingredient water = ingredientDao.save(new Ingredient("woda", IngredientUnit.ML));
-    Ingredient milk = ingredientDao.save(new Ingredient("mleko", IngredientUnit.ML));
+    Ingredient coffee = ingredientDao.save(new Ingredient("coffee", IngredientUnit.GRAM));
+    Ingredient water = ingredientDao.save(new Ingredient("water", IngredientUnit.ML));
+    Ingredient milk = ingredientDao.save(new Ingredient("milk", IngredientUnit.ML));
 
     saveFirstRecipe(coffee, water, milk);
     saveSecondRecipe(coffee, water);
@@ -46,8 +46,8 @@ public class RecipeDbInitializer {
 
   private void saveFirstRecipe(Ingredient coffee, Ingredient water, Ingredient milk) {
     Recipe coffeeWithMilk = Recipe.builder()
-        .name("kawa z mlekiem")
-        .cookingDescription("kawa + woda + mleko")
+        .name("coffee with milk")
+        .cookingDescription("coffee + water + milk")
         .cookingTimeMinutes(2)
         .kcal(2)
         .servings(1)
@@ -80,8 +80,8 @@ public class RecipeDbInitializer {
 
   private void saveSecondRecipe(Ingredient coffee, Ingredient water) {
     Recipe coffeeRecipe = Recipe.builder()
-        .name("kawa")
-        .cookingDescription("kawa + woda")
+        .name("coffee")
+        .cookingDescription("coffee + water")
         .cookingTimeMinutes(1)
         .kcal(0)
         .servings(2)
