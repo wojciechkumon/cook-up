@@ -1,5 +1,51 @@
 @import '../../style/global_variables';
 
 .Header {
-  background-color: $red;
+  background-color: white;
+  text-align: center;
+  padding: 20px;
+  ul {
+    margin-top: 20px;
+    list-style: none;
+  }
+  li {
+    display: inline;
+    margin-right: 30px;
+  }
+  .nav {
+    margin-top: 15px;
+  }
 }
+
+.Header .nav-pills li a,
+.Header .nav-pills li a:focus,
+.Header .nav-pills li a:visited,
+.Header .nav-pills li a:active,
+.Header .nav-pills li a:active:focus {
+  color: $red;
+  background: none;
+  text-decoration: none;
+  border-radius: 2rem;
+  padding: 15px 30px;
+  border: 2px solid $red;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  font-size: 12px;
+  margin-top: 0;
+  text-transform: uppercase;
+  transition: all 400ms;
+}
+
+.Header .nav-pills li.active a:hover,
+.Header .nav-pills li a:hover {
+  background-color: $red;
+  color: white !important;
+}
+
+//.nav-pills li.active a,
+//.nav-pills li.active a:active,
+//.nav-pills li.active a:focus,
+//.nav-pills li.active a:visited {
+//  background-color: $red;
+//  color: #fff;
+//}

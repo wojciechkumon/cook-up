@@ -1,0 +1,30 @@
+@import '../../style/global_variables';
+
+.About {
+  background-color: $dark_grey;
+  min-height: 300px;
+}
+
+.About h1 {
+  margin: 0;
+  padding: 30px;
+  color: white;
+  text-align: center;
+}
+
+.About p {
+  padding: 40px;
+  color: white;
+
+  &:first-letter {
+    z-index: 1;
+    float: left;
+    color: rgba(245, 245, 245, 0.2);
+    margin-right: -160px;
+    margin-left: -30px;
+    margin-top: -67px;
+    font-size: 100px;
+    font-weight: 700;
+
+  }
+}

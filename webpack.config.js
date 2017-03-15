@@ -34,10 +34,12 @@ module.exports = {
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
+        exclude: /(node_modules)/,
         loader: 'file?name=/fonts/[name].[ext]'
       },
       {
         test: /\.(jpe?g|png|gif)$/i,
+        exclude: /(node_modules)/,
         loaders: [
           'file?name=/img/[name].[ext]'
         ]

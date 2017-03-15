@@ -4,14 +4,20 @@ import {Grid, Col, Row} from 'react-bootstrap';
 
 class Footer extends Component {
   render() {
+    const year = new Date().getFullYear();
+
     return (
         <div className="Footer">
           <Grid>
             <Row className="show-grid">
-              <Col md={6}>
-                <h1>Footer</h1>
+              <Col md={4}>
+                <p>Cook up</p>
               </Col>
-              <Col md={6}>
+              <Col md={4}>
+                <p>© {year} Copyright CookUp</p>
+              </Col>
+              <Col md={4}>
+                <p>Contact</p>
               </Col>
             </Row>
           </Grid>

@@ -1,0 +1,12 @@
+@import "variables";
+
+.Wrapper {
+  height: 400px;
+  background: url($backgroundImgPath) no-repeat center center;
+  background-size: cover;
+  h1 {
+    color: white;
+    text-align: center;
+    padding-top: 120px;
+  }
+}
