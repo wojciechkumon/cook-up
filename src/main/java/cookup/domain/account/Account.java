@@ -2,7 +2,6 @@ package cookup.domain.account;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -11,7 +10,12 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+
+import cookup.domain.recipe.Recipe;
 
 @Entity
 public class Account {
@@ -30,6 +34,12 @@ public class Account {
 
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "owner")
   private Set<UserRole> userRoles = Collections.emptySet();
+
+  @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+  @JoinTable(name = "favourite_recipes",
+      joinColumns = @JoinColumn(name = "account_id"),
+      inverseJoinColumns = @JoinColumn(name = "recipe_id"))
+  private Set<Recipe> favouriteRecipes = Collections.emptySet();
 
   @Column(nullable = false)
   private LocalDateTime created;
@@ -83,5 +93,13 @@ public class Account {
 
   public void setUpdated(LocalDateTime updated) {
     this.updated = updated;
+  }
+
+  public Set<Recipe> getFavouriteRecipes() {
+    return favouriteRecipes;
+  }
+
+  public void setFavouriteRecipes(Set<Recipe> favouriteRecipes) {
+    this.favouriteRecipes = favouriteRecipes;
   }
 }

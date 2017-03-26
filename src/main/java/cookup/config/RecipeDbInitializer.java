@@ -17,6 +17,8 @@ import cookup.domain.recipe.IngredientUnit;
 import cookup.domain.recipe.Recipe;
 import cookup.domain.recipe.RecipeIngredient;
 import cookup.domain.recipe.comment.Comment;
+import cookup.dto.RegistrationDto;
+import cookup.service.AccountService;
 import cookup.service.recipe.RecipeService;
 
 @Component
@@ -25,12 +27,14 @@ public class RecipeDbInitializer {
   private final RecipeDao recipeDao;
   private final RecipeService recipeService;
   private final IngredientDao ingredientDao;
+  private final AccountService accountService;
 
   RecipeDbInitializer(RecipeDao recipeDao, RecipeService recipeService,
-                      IngredientDao ingredientDao) {
+                      IngredientDao ingredientDao, AccountService accountService) {
     this.recipeDao = recipeDao;
     this.recipeService = recipeService;
     this.ingredientDao = ingredientDao;
+    this.accountService = accountService;
   }
 
   @EventListener(ContextRefreshedEvent.class)
@@ -44,12 +48,21 @@ public class RecipeDbInitializer {
     Ingredient soyMilk = ingredientDao.save(new Ingredient("soy milk", IngredientUnit.ML));
     Ingredient coconutMilk = ingredientDao.save(new Ingredient("coconut milk", IngredientUnit.ML));
 
-    saveFirstRecipe(coffee, water, milk, soyMilk, coconutMilk);
-    saveSecondRecipe(coffee, water);
+    Recipe recipe1 = saveFirstRecipe(coffee, water, milk, soyMilk, coconutMilk);
+    Recipe recipe2 = saveSecondRecipe(coffee, water);
+
+    RegistrationDto registrationDto = new RegistrationDto();
+    registrationDto.setEmail("lolek@gmail.com");
+    registrationDto.setPassword("lolek");
+    registrationDto.setMatchingPassword("lolek");
+    accountService.addAccount(registrationDto);
+
+    recipeService.addFavouriteRecipe("lolek@gmail.com", recipe1);
+    recipeService.addFavouriteRecipe("lolek@gmail.com", recipe2);
   }
 
-  private void saveFirstRecipe(Ingredient coffee, Ingredient water, Ingredient milk,
-                               Ingredient soyMilk, Ingredient coconutMilk) {
+  private Recipe saveFirstRecipe(Ingredient coffee, Ingredient water, Ingredient milk,
+                                 Ingredient soyMilk, Ingredient coconutMilk) {
     Recipe coffeeWithMilk = Recipe.builder()
         .name("coffee with milk")
         .cookingDescription("coffee + water + milk")
@@ -81,10 +94,10 @@ public class RecipeDbInitializer {
     Set<RecipeIngredient> recipeIngredientSet = new HashSet<>(
         Arrays.asList(waterRecipeIngredient, coffeeRecipeIngredient, milkRecipeIngredient));
     coffeeWithMilk.setIngredients(recipeIngredientSet);
-    recipeService.save(coffeeWithMilk);
+    return recipeService.save(coffeeWithMilk);
   }
 
-  private void saveSecondRecipe(Ingredient coffee, Ingredient water) {
+  private Recipe saveSecondRecipe(Ingredient coffee, Ingredient water) {
     Recipe coffeeRecipe = Recipe.builder()
         .name("coffee")
         .cookingDescription("coffee + water")
@@ -119,6 +132,6 @@ public class RecipeDbInitializer {
         Arrays.asList(waterRecipeIngredient, coffeeRecipeIngredient));
     coffeeRecipe.setIngredients(recipeIngredientSet);
     coffeeRecipe.setComments(Arrays.asList(comment1, comment2));
-    recipeService.save(coffeeRecipe);
+    return recipeService.save(coffeeRecipe);
   }
 }
