@@ -25,3 +25,22 @@ spring:
 
   profiles:
     active: dev
+
+props: # creates one row for every recipe ingredient with replacements in array
+  sql: # matches if ingredient or replacement is satisfied and counts how many for every recipe
+    matchingRecipes: > # query returns recipe ids where all ingredients (or replacements) are satisfied
+      select matching_count_table.id from
+        (select id, count(*) as "matching_count" from
+            (select r1.id,
+                (ri1.ingredient_id || array_agg(ir1.ingredient_id)) as "ingredient_options"
+              from recipe r1
+              join recipe_ingredient ri1 on r1.id=ri1.recipe_id
+              left join ingredient_replacements ir1 on ir1.recipe_ingredient_id=ri1.id
+              group by r1.id, r1.name, ri1.ingredient_id
+              having (ri1.ingredient_id || array_agg(ir1.ingredient_id)) && array[%s]\:\:bigint[]) as "matching"
+          group by id) as "matching_count_table"
+          join (select r2.id, count(*) as "ingredients_count" from recipe r2
+        join recipe_ingredient ri2 on r2.id=ri2.recipe_id
+        group by r2.id) as "ingredients_count_table"
+          on matching_count_table.id=ingredients_count_table.id and
+          matching_count_table.matching_count=ingredients_count_table.ingredients_count;

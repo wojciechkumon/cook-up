@@ -1,5 +1,8 @@
 package cookup.dao;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Objects;
@@ -10,19 +13,19 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 public class RecipeDaoImpl implements MatchingRecipeFinder {
-  private static final String queryLeft =
-      "select r1.id from recipe r1 where array(" +
-          "select ri.ingredient_id from recipe r2 " +
-          "join recipe_ingredient ri on (r2.id=ri.recipe_id) " +
-          "where r1.id=r2.id) <@ array[";
-  private static final String queryRight = "]\\:\\:bigint[]";
+  private final String matchingRecipesSql;
 
   @PersistenceContext
   private EntityManager entityManager;
 
-  RecipeDaoImpl() {}
+  @Autowired
+  RecipeDaoImpl(@Value("${props.sql.matchingRecipes}") String matchingRecipesSql) {
+    this.matchingRecipesSql = matchingRecipesSql;
+  }
 
-  RecipeDaoImpl(EntityManager entityManager) {
+  RecipeDaoImpl(@Value("${props.sql.matchingRecipes}") String matchingRecipesSql,
+                EntityManager entityManager) {
+    this.matchingRecipesSql = matchingRecipesSql;
     this.entityManager = entityManager;
   }
 
@@ -54,6 +57,6 @@ public class RecipeDaoImpl implements MatchingRecipeFinder {
         .map(Object::toString)
         .collect(Collectors.joining(","));
 
-    return queryLeft + paramsString + queryRight;
+    return String.format(matchingRecipesSql, paramsString);
   }
 }

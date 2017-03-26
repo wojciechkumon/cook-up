@@ -39,12 +39,15 @@ public class RecipeDbInitializer {
     Ingredient coffee = ingredientDao.save(new Ingredient("coffee", IngredientUnit.GRAM));
     Ingredient water = ingredientDao.save(new Ingredient("water", IngredientUnit.ML));
     Ingredient milk = ingredientDao.save(new Ingredient("milk", IngredientUnit.ML));
+    Ingredient soyMilk = ingredientDao.save(new Ingredient("soy milk", IngredientUnit.ML));
+    Ingredient coconutMilk = ingredientDao.save(new Ingredient("coconut milk", IngredientUnit.ML));
 
-    saveFirstRecipe(coffee, water, milk);
+    saveFirstRecipe(coffee, water, milk, soyMilk, coconutMilk);
     saveSecondRecipe(coffee, water);
   }
 
-  private void saveFirstRecipe(Ingredient coffee, Ingredient water, Ingredient milk) {
+  private void saveFirstRecipe(Ingredient coffee, Ingredient water, Ingredient milk,
+                               Ingredient soyMilk, Ingredient coconutMilk) {
     Recipe coffeeWithMilk = Recipe.builder()
         .name("coffee with milk")
         .cookingDescription("coffee + water + milk")
@@ -69,8 +72,8 @@ public class RecipeDbInitializer {
         .recipe(coffeeWithMilk)
         .ingredient(milk)
         .amount(30D)
+        .replacements(new HashSet<>(Arrays.asList(soyMilk, coconutMilk)))
         .build();
-
 
     Set<RecipeIngredient> recipeIngredientSet = new HashSet<>(
         Arrays.asList(waterRecipeIngredient, coffeeRecipeIngredient, milkRecipeIngredient));

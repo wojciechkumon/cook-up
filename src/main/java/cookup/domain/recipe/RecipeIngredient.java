@@ -2,12 +2,18 @@ package cookup.domain.recipe;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -28,6 +34,12 @@ public class RecipeIngredient {
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "ingredient_id", nullable = false)
   private Ingredient ingredient;
+
+  @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+  @JoinTable(name = "ingredient_replacements",
+      joinColumns = @JoinColumn(name = "recipe_ingredient_id"),
+      inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
+  private Set<Ingredient> replacements = new HashSet<>();
 
 
   public Long getId() {
@@ -62,6 +74,14 @@ public class RecipeIngredient {
     this.ingredient = ingredient;
   }
 
+  public Set<Ingredient> getReplacements() {
+    return replacements;
+  }
+
+  public void setReplacements(Set<Ingredient> replacements) {
+    this.replacements = replacements;
+  }
+
 
   public static Builder builder() {
     return new Builder();
@@ -71,12 +91,14 @@ public class RecipeIngredient {
     private Double amount;
     private Recipe recipe;
     private Ingredient ingredient;
+    private Set<Ingredient> replacements;
 
     public RecipeIngredient build() {
       RecipeIngredient recipeIngredient = new RecipeIngredient();
       recipeIngredient.setAmount(amount);
       recipeIngredient.setRecipe(recipe);
       recipeIngredient.setIngredient(ingredient);
+      recipeIngredient.setReplacements(replacements);
 
       return recipeIngredient;
     }
@@ -93,6 +115,11 @@ public class RecipeIngredient {
 
     public Builder ingredient(Ingredient ingredient) {
       this.ingredient = ingredient;
+      return this;
+    }
+
+    public Builder replacements(Set<Ingredient> replacements) {
+      this.replacements = replacements;
       return this;
     }
   }

@@ -1,6 +1,7 @@
 package cookup.domain.account;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,7 +29,7 @@ public class Account {
   private String passwordHash;
 
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "owner")
-  private Set<UserRole> userRoles = new HashSet<>(0);
+  private Set<UserRole> userRoles = Collections.emptySet();
 
   @Column(nullable = false)
   private LocalDateTime created;

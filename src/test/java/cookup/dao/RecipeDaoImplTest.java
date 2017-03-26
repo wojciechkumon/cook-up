@@ -28,7 +28,7 @@ class RecipeDaoImplTest {
     Query query = mock(Query.class);
     when(query.getResultList()).thenReturn(RECIPE_BIG_INT_IDS);
     when(entityManager.createNativeQuery(any())).thenReturn(query);
-    RecipeDaoImpl recipeDao = new RecipeDaoImpl(entityManager);
+    RecipeDaoImpl recipeDao = new RecipeDaoImpl("sql", entityManager);
 
     // when
     List<Long> matchingRecipeIds = recipeDao.findMatchingRecipeIds(INGREDIENT_IDS);

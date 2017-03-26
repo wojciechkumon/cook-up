@@ -14,7 +14,8 @@ public class Ingredient {
   @GeneratedValue
   private Long id;
 
-  @Column(nullable = false, length = RecipeRestrictions.INGREDIENT_NAME_MAX_LENGTH)
+  @Column(unique = true, nullable = false,
+      length = RecipeRestrictions.INGREDIENT_NAME_MAX_LENGTH)
   private String name;
 
   @Column(name = "ingredient_unit", nullable = false, length = RecipeRestrictions.UNIT_LENGTH)
