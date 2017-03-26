@@ -8,4 +8,5 @@ public class RecipeRestrictions {
   public static final int INGREDIENT_NAME_MAX_LENGTH = 32;
   public static final int UNIT_LENGTH = 16;
   public static final int DIFFICULTY_LEVEL_LENGTH = 16;
+  public static final int DESCRIPTION_LENGTH = 2048;
 }

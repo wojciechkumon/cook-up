@@ -29,7 +29,7 @@ public class AccountServiceImpl implements AccountService {
   }
 
   @Override
-  public void addAccount(RegistrationDto registrationDto) {
+  public Account addAccount(RegistrationDto registrationDto) {
     Account newAccount = new Account();
     newAccount.setEmail(registrationDto.getEmail());
     newAccount.setPasswordHash(passwordEncoder.encode(registrationDto.getPassword()));
@@ -37,7 +37,7 @@ public class AccountServiceImpl implements AccountService {
     LocalDateTime now = timeUtil.now();
     newAccount.setUpdated(now);
     newAccount.setCreated(now);
-    accountDao.save(newAccount);
+    return accountDao.save(newAccount);
   }
 
   private Set<UserRole> buildUserRoles(Account newAccount) {

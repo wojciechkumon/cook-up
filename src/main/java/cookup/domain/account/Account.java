@@ -1,5 +1,8 @@
 package cookup.domain.account;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,6 +21,7 @@ import javax.persistence.OneToMany;
 import cookup.domain.recipe.Recipe;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Account {
 
   @Id
@@ -28,12 +32,17 @@ public class Account {
       length = AccountRestrictions.EMAIL_MAX_LENGTH)
   private String email;
 
+  @JsonIgnore
   @Column(name = "password_hash", nullable = false,
       length = AccountRestrictions.PASSWORD_HASH_MAX_LENGTH)
   private String passwordHash;
 
+  @JsonIgnore
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "owner")
   private Set<UserRole> userRoles = new HashSet<>(0);
+
+  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "author")
+  private Set<Recipe> createdRecipes = new HashSet<>(0);
 
   @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
   @JoinTable(name = "favourite_recipes",
@@ -41,9 +50,11 @@ public class Account {
       inverseJoinColumns = @JoinColumn(name = "recipe_id"))
   private Set<Recipe> favouriteRecipes = new HashSet<>(0);
 
+  @JsonIgnore
   @Column(nullable = false)
   private LocalDateTime created;
 
+  @JsonIgnore
   @Column(nullable = false)
   private LocalDateTime updated;
 
@@ -93,6 +104,14 @@ public class Account {
 
   public void setUpdated(LocalDateTime updated) {
     this.updated = updated;
+  }
+
+  public Set<Recipe> getCreatedRecipes() {
+    return createdRecipes;
+  }
+
+  public void setCreatedRecipes(Set<Recipe> createdRecipes) {
+    this.createdRecipes = createdRecipes;
   }
 
   public Set<Recipe> getFavouriteRecipes() {

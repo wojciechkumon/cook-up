@@ -1,10 +1,10 @@
 package cookup.service.recipe;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import cookup.dao.RecipeDao;
 import cookup.domain.recipe.Recipe;
@@ -18,12 +18,9 @@ public class RecipeFinderImpl implements RecipeFinder {
   }
 
   @Override
-  public Set<Recipe> findMatchingRecipes(List<Long> ingredientIds) {
+  public Page<Recipe> findMatchingRecipes(List<Long> ingredientIds, Pageable pageable) {
     List<Long> recipeIds = recipeDao.findMatchingRecipeIds(ingredientIds);
 
-    Set<Recipe> matchingRecipes = new HashSet<>();
-    recipeDao.findAll(recipeIds).forEach(matchingRecipes::add);
-
-    return matchingRecipes;
+    return recipeDao.findByIdIn(recipeIds, pageable);
   }
 }

@@ -16,6 +16,8 @@ public interface RecipeDao extends Repository<Recipe, Long>, MatchingRecipeFinde
 
   Iterable<Recipe> findAll(Iterable<Long> ids);
 
+  Page<Recipe> findByIdIn(Iterable<Long> ids, Pageable pageable);
+
   Iterable<Recipe> findAll(Sort sort);
 
   Page<Recipe> findAll(Pageable pageable);

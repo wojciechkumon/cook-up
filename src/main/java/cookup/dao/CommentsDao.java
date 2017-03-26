@@ -8,28 +8,26 @@ import org.springframework.data.rest.core.annotation.RestResource;
 
 import java.util.List;
 
-import cookup.domain.account.Account;
+import cookup.domain.recipe.comment.Comment;
 
-public interface AccountDao extends Repository<Account, Long> {
+public interface CommentsDao extends Repository<Comment, Long> {
 
-  Account findByEmail(String email);
+  List<Comment> findAll();
 
-  List<Account> findAll();
+  Iterable<Comment> findAll(Iterable<Long> ids);
 
-  Iterable<Account> findAll(Iterable<Long> ids);
+  Iterable<Comment> findAll(Sort sort);
 
-  Iterable<Account> findAll(Sort sort);
+  Page<Comment> findAll(Pageable pageable);
 
-  Page<Account> findAll(Pageable pageable);
-
-  Account findOne(Long id);
+  Comment findOne(Long id);
 
   @RestResource(exported = false)
-  Account save(Account recipe);
+  Comment save(Comment recipe);
 
   @RestResource(exported = false)
   void deleteAll();
 
   @RestResource(exported = false)
-  void delete(Account recipe);
+  void delete(Comment recipe);
 }

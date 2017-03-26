@@ -10,8 +10,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import cookup.dao.AccountDao;
+import cookup.dao.CommentsDao;
 import cookup.dao.IngredientDao;
 import cookup.dao.RecipeDao;
+import cookup.domain.account.Account;
 import cookup.domain.recipe.DifficultyLevel;
 import cookup.domain.recipe.Ingredient;
 import cookup.domain.recipe.IngredientUnit;
@@ -27,15 +29,17 @@ import cookup.service.recipe.RecipeService;
 public class RecipeDbInitializer {
   private final RecipeDao recipeDao;
   private final RecipeService recipeService;
+  private final CommentsDao commentsDao;
   private final IngredientDao ingredientDao;
   private final AccountDao accountDao;
   private final AccountService accountService;
 
   RecipeDbInitializer(RecipeDao recipeDao, RecipeService recipeService,
-                      IngredientDao ingredientDao, AccountDao accountDao,
-                      AccountService accountService) {
+                      CommentsDao commentsDao, IngredientDao ingredientDao,
+                      AccountDao accountDao, AccountService accountService) {
     this.recipeDao = recipeDao;
     this.recipeService = recipeService;
+    this.commentsDao = commentsDao;
     this.ingredientDao = ingredientDao;
     this.accountDao = accountDao;
     this.accountService = accountService;
@@ -43,9 +47,12 @@ public class RecipeDbInitializer {
 
   @EventListener(ContextRefreshedEvent.class)
   public void init() {
+    commentsDao.deleteAll();
     accountDao.deleteAll();
     recipeDao.deleteAll();
     ingredientDao.deleteAll();
+
+    Account account = createAccount();
 
     Ingredient coffee = ingredientDao.save(new Ingredient("coffee", IngredientUnit.GRAM));
     Ingredient water = ingredientDao.save(new Ingredient("water", IngredientUnit.ML));
@@ -53,20 +60,22 @@ public class RecipeDbInitializer {
     Ingredient soyMilk = ingredientDao.save(new Ingredient("soy milk", IngredientUnit.ML));
     Ingredient coconutMilk = ingredientDao.save(new Ingredient("coconut milk", IngredientUnit.ML));
 
-    Recipe recipe1 = saveFirstRecipe(coffee, water, milk, soyMilk, coconutMilk);
-    Recipe recipe2 = saveSecondRecipe(coffee, water);
-
-    RegistrationDto registrationDto = new RegistrationDto();
-    registrationDto.setEmail("lolek@gmail.com");
-    registrationDto.setPassword("lolek");
-    registrationDto.setMatchingPassword("lolek");
-    accountService.addAccount(registrationDto);
+    Recipe recipe1 = saveFirstRecipe(account, coffee, water, milk, soyMilk, coconutMilk);
+    Recipe recipe2 = saveSecondRecipe(account, coffee, water);
 
     recipeService.addFavouriteRecipe("lolek@gmail.com", recipe1);
     recipeService.addFavouriteRecipe("lolek@gmail.com", recipe2);
   }
 
-  private Recipe saveFirstRecipe(Ingredient coffee, Ingredient water, Ingredient milk,
+  private Account createAccount() {
+    RegistrationDto registrationDto = new RegistrationDto();
+    registrationDto.setEmail("lolek@gmail.com");
+    registrationDto.setPassword("lolek");
+    registrationDto.setMatchingPassword("lolek");
+    return accountService.addAccount(registrationDto);
+  }
+
+  private Recipe saveFirstRecipe(Account account, Ingredient coffee, Ingredient water, Ingredient milk,
                                  Ingredient soyMilk, Ingredient coconutMilk) {
     Recipe coffeeWithMilk = Recipe.builder()
         .name("coffee with milk")
@@ -75,6 +84,7 @@ public class RecipeDbInitializer {
         .difficultyLevel(DifficultyLevel.MEDIUM)
         .kcal(2)
         .servings(1)
+        .author(account)
         .build();
 
     RecipeIngredient coffeeRecipeIngredient = RecipeIngredient.builder()
@@ -102,7 +112,7 @@ public class RecipeDbInitializer {
     return recipeService.save(coffeeWithMilk);
   }
 
-  private Recipe saveSecondRecipe(Ingredient coffee, Ingredient water) {
+  private Recipe saveSecondRecipe(Account account, Ingredient coffee, Ingredient water) {
     Recipe coffeeRecipe = Recipe.builder()
         .name("coffee")
         .cookingDescription("coffee + water")
@@ -110,6 +120,7 @@ public class RecipeDbInitializer {
         .difficultyLevel(DifficultyLevel.EASY)
         .kcal(0)
         .servings(2)
+        .author(account)
         .build();
 
     RecipeIngredient coffeeRecipeIngredient = RecipeIngredient.builder()
@@ -127,10 +138,12 @@ public class RecipeDbInitializer {
     Comment comment1 = new Comment.Builder()
         .content("first comment")
         .recipe(coffeeRecipe)
+        .author(account)
         .build();
     Comment comment2 = new Comment.Builder()
         .content("second comment")
         .recipe(coffeeRecipe)
+        .author(account)
         .build();
 
     Set<RecipeIngredient> recipeIngredientSet = new HashSet<>(
