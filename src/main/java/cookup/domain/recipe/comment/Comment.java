@@ -10,7 +10,6 @@ import javax.persistence.ManyToOne;
 
 import cookup.domain.account.Account;
 import cookup.domain.recipe.Recipe;
-import cookup.domain.recipe.RecipeRestrictions;
 
 @Entity
 public class Comment {
@@ -19,7 +18,7 @@ public class Comment {
   @GeneratedValue
   private Long id;
 
-  @Column(nullable = false, length = RecipeRestrictions.COMMENT_MAX_LENGTH)
+  @Column(nullable = false)
   private String content;
 
   @ManyToOne
