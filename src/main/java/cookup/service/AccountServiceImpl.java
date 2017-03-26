@@ -4,7 +4,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import cookup.dao.AccountDao;
@@ -44,7 +44,9 @@ public class AccountServiceImpl implements AccountService {
     UserRole role = new UserRole();
     role.setUserRoleType(UserRoleType.USER);
     role.setOwner(newAccount);
-    return Collections.singleton(role);
+    HashSet<UserRole> roles = new HashSet<>(1);
+    roles.add(role);
+    return roles;
   }
 
   @Override

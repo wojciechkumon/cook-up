@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import cookup.dao.AccountDao;
 import cookup.dao.IngredientDao;
 import cookup.dao.RecipeDao;
 import cookup.domain.recipe.DifficultyLevel;
@@ -27,18 +28,22 @@ public class RecipeDbInitializer {
   private final RecipeDao recipeDao;
   private final RecipeService recipeService;
   private final IngredientDao ingredientDao;
+  private final AccountDao accountDao;
   private final AccountService accountService;
 
   RecipeDbInitializer(RecipeDao recipeDao, RecipeService recipeService,
-                      IngredientDao ingredientDao, AccountService accountService) {
+                      IngredientDao ingredientDao, AccountDao accountDao,
+                      AccountService accountService) {
     this.recipeDao = recipeDao;
     this.recipeService = recipeService;
     this.ingredientDao = ingredientDao;
+    this.accountDao = accountDao;
     this.accountService = accountService;
   }
 
   @EventListener(ContextRefreshedEvent.class)
   public void init() {
+    accountDao.deleteAll();
     recipeDao.deleteAll();
     ingredientDao.deleteAll();
 

@@ -39,7 +39,7 @@ public class RecipeIngredient {
   @JoinTable(name = "ingredient_substitutes",
       joinColumns = @JoinColumn(name = "recipe_ingredient_id"),
       inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
-  private Set<Ingredient> substitutes = new HashSet<>();
+  private Set<Ingredient> substitutes = new HashSet<>(0);
 
 
   public Long getId() {
@@ -91,7 +91,7 @@ public class RecipeIngredient {
     private Double amount;
     private Recipe recipe;
     private Ingredient ingredient;
-    private Set<Ingredient> substitutes;
+    private Set<Ingredient> substitutes = new HashSet<>(0);
 
     public RecipeIngredient build() {
       RecipeIngredient recipeIngredient = new RecipeIngredient();

@@ -4,8 +4,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 import cookup.dao.AccountDao;
 import cookup.dao.RecipeDao;
@@ -49,9 +47,7 @@ public class RecipeServiceImpl implements RecipeService {
     if (alreadyFavourite(account, recipe)) {
       return account;
     }
-    Set<Recipe> favouriteRecipes = new HashSet<>(account.getFavouriteRecipes());
-    favouriteRecipes.add(recipe);
-    account.setFavouriteRecipes(favouriteRecipes);
+    account.getFavouriteRecipes().add(recipe);
     account.setUpdated(timeUtil.now());
     return accountDao.save(account);
   }

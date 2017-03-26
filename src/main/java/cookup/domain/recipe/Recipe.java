@@ -1,7 +1,8 @@
 package cookup.domain.recipe;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -47,10 +48,10 @@ public class Recipe {
   private Integer servings;
 
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "recipe")
-  private Set<RecipeIngredient> ingredients;
+  private Set<RecipeIngredient> ingredients = new HashSet<>(0);
 
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "recipe")
-  private List<Comment> comments = Collections.emptyList();
+  private List<Comment> comments = new ArrayList<>(0);
 
   @Column(nullable = false)
   private LocalDateTime created;
@@ -159,8 +160,6 @@ public class Recipe {
     private DifficultyLevel difficultyLevel;
     private Integer kcal;
     private Integer servings;
-    private Set<RecipeIngredient> ingredients = Collections.emptySet();
-    private List<Comment> comments = Collections.emptyList();
 
     public Builder name(String name) {
       this.name = name;
@@ -189,16 +188,6 @@ public class Recipe {
 
     public Builder servings(Integer servings) {
       this.servings = servings;
-      return this;
-    }
-
-    public Builder ingredients(Set<RecipeIngredient> ingredients) {
-      this.ingredients = ingredients;
-      return this;
-    }
-
-    public Builder comments(List<Comment> comments) {
-      this.comments = comments;
       return this;
     }
 

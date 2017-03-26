@@ -1,7 +1,7 @@
 package cookup.domain.account;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -33,13 +33,13 @@ public class Account {
   private String passwordHash;
 
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "owner")
-  private Set<UserRole> userRoles = Collections.emptySet();
+  private Set<UserRole> userRoles = new HashSet<>(0);
 
   @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
   @JoinTable(name = "favourite_recipes",
       joinColumns = @JoinColumn(name = "account_id"),
       inverseJoinColumns = @JoinColumn(name = "recipe_id"))
-  private Set<Recipe> favouriteRecipes = Collections.emptySet();
+  private Set<Recipe> favouriteRecipes = new HashSet<>(0);
 
   @Column(nullable = false)
   private LocalDateTime created;
