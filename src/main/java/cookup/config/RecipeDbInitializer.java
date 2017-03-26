@@ -11,10 +11,12 @@ import java.util.Set;
 
 import cookup.dao.IngredientDao;
 import cookup.dao.RecipeDao;
+import cookup.domain.recipe.DifficultyLevel;
 import cookup.domain.recipe.Ingredient;
 import cookup.domain.recipe.IngredientUnit;
 import cookup.domain.recipe.Recipe;
 import cookup.domain.recipe.RecipeIngredient;
+import cookup.domain.recipe.comment.Comment;
 import cookup.service.recipe.RecipeService;
 
 @Component
@@ -52,6 +54,7 @@ public class RecipeDbInitializer {
         .name("coffee with milk")
         .cookingDescription("coffee + water + milk")
         .cookingTimeMinutes(2)
+        .difficultyLevel(DifficultyLevel.MEDIUM)
         .kcal(2)
         .servings(1)
         .build();
@@ -86,6 +89,7 @@ public class RecipeDbInitializer {
         .name("coffee")
         .cookingDescription("coffee + water")
         .cookingTimeMinutes(1)
+        .difficultyLevel(DifficultyLevel.EASY)
         .kcal(0)
         .servings(2)
         .build();
@@ -102,9 +106,19 @@ public class RecipeDbInitializer {
         .amount(230D)
         .build();
 
+    Comment comment1 = new Comment.Builder()
+        .content("first comment")
+        .recipe(coffeeRecipe)
+        .build();
+    Comment comment2 = new Comment.Builder()
+        .content("second comment")
+        .recipe(coffeeRecipe)
+        .build();
+
     Set<RecipeIngredient> recipeIngredientSet = new HashSet<>(
         Arrays.asList(waterRecipeIngredient, coffeeRecipeIngredient));
     coffeeRecipe.setIngredients(recipeIngredientSet);
+    coffeeRecipe.setComments(Arrays.asList(comment1, comment2));
     recipeService.save(coffeeRecipe);
   }
 }
