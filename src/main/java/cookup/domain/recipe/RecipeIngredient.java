@@ -36,10 +36,10 @@ public class RecipeIngredient {
   private Ingredient ingredient;
 
   @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-  @JoinTable(name = "ingredient_replacements",
+  @JoinTable(name = "ingredient_substitutes",
       joinColumns = @JoinColumn(name = "recipe_ingredient_id"),
       inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
-  private Set<Ingredient> replacements = new HashSet<>();
+  private Set<Ingredient> substitutes = new HashSet<>();
 
 
   public Long getId() {
@@ -74,12 +74,12 @@ public class RecipeIngredient {
     this.ingredient = ingredient;
   }
 
-  public Set<Ingredient> getReplacements() {
-    return replacements;
+  public Set<Ingredient> getSubstitutes() {
+    return substitutes;
   }
 
-  public void setReplacements(Set<Ingredient> replacements) {
-    this.replacements = replacements;
+  public void setSubstitutes(Set<Ingredient> substitutes) {
+    this.substitutes = substitutes;
   }
 
 
@@ -91,14 +91,14 @@ public class RecipeIngredient {
     private Double amount;
     private Recipe recipe;
     private Ingredient ingredient;
-    private Set<Ingredient> replacements;
+    private Set<Ingredient> substitutes;
 
     public RecipeIngredient build() {
       RecipeIngredient recipeIngredient = new RecipeIngredient();
       recipeIngredient.setAmount(amount);
       recipeIngredient.setRecipe(recipe);
       recipeIngredient.setIngredient(ingredient);
-      recipeIngredient.setReplacements(replacements);
+      recipeIngredient.setSubstitutes(substitutes);
 
       return recipeIngredient;
     }
@@ -118,8 +118,8 @@ public class RecipeIngredient {
       return this;
     }
 
-    public Builder replacements(Set<Ingredient> replacements) {
-      this.replacements = replacements;
+    public Builder substitutes(Set<Ingredient> substitutes) {
+      this.substitutes = substitutes;
       return this;
     }
   }

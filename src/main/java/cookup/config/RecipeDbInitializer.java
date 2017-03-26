@@ -75,7 +75,7 @@ public class RecipeDbInitializer {
         .recipe(coffeeWithMilk)
         .ingredient(milk)
         .amount(30D)
-        .replacements(new HashSet<>(Arrays.asList(soyMilk, coconutMilk)))
+        .substitutes(new HashSet<>(Arrays.asList(soyMilk, coconutMilk)))
         .build();
 
     Set<RecipeIngredient> recipeIngredientSet = new HashSet<>(
