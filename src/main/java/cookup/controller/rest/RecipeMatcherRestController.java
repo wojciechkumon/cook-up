@@ -33,9 +33,8 @@ public class RecipeMatcherRestController {
   @ResponseBody
   @SuppressWarnings("unchecked")
   public PagedResources<PersistentEntityResource> addNewFavouriteRecipe(
-      Pageable pageable,
       @RequestParam("ingredients") List<Long> ingredientIds,
-      PersistentEntityResourceAssembler resourceAssembler) {
+      PersistentEntityResourceAssembler resourceAssembler, Pageable pageable) {
 
     Page<Recipe> page = recipeFinder.findMatchingRecipes(ingredientIds, pageable);
     return pagedResourcesAssembler.toResource(page, resourceAssembler);
