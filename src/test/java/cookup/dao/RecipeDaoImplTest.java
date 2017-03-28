@@ -16,9 +16,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class RecipeDaoImplTest {
-  private static List<Long> INGREDIENT_IDS = Arrays.asList(1L, 2L, 3L);
-
-  private static List<BigInteger> RECIPE_BIG_INT_IDS = Arrays.asList(
+  private static final List<Long> INGREDIENT_IDS = Arrays.asList(1L, 2L, 3L);
+  private static final List<BigInteger> RECIPE_BIG_INT_IDS = Arrays.asList(
       BigInteger.valueOf(13), BigInteger.valueOf(17), BigInteger.valueOf(23));
 
   @Test
