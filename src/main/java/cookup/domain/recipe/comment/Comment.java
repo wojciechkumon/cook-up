@@ -24,11 +24,11 @@ public class Comment {
   private String content;
 
   @ManyToOne
-  @JoinColumn(name = "author_id", nullable = false)
+  @JoinColumn(name = "author_id")
   @JsonIgnore
   private Account author;
 
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToOne
   @JoinColumn(name = "recipe_id", nullable = false)
   @JsonIgnore
   private Recipe recipe;
