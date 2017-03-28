@@ -9,8 +9,8 @@ import java.util.List;
 import cookup.dao.IngredientDao;
 import cookup.domain.recipe.Ingredient;
 
-@BasePathAwareController
 @RestController
+@BasePathAwareController
 public class IngredientsRestController {
   private final IngredientDao ingredientDao;
 
