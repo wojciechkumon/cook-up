@@ -1,10 +1,11 @@
 package cookup.service.comments;
 
 import cookup.domain.recipe.comment.Comment;
+import cookup.dto.CommentDto;
 
 public interface CommentsService {
 
-  Comment addAnonymousComment(Comment comment, long recipeId);
+  Comment addAnonymousComment(CommentDto comment, long recipeId);
 
-  Comment addUserComment(Comment comment, long recipeId, String email);
+  Comment addUserComment(CommentDto comment, long recipeId, String email);
 }

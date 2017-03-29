@@ -8,6 +8,7 @@ import cookup.dao.RecipeDao;
 import cookup.domain.account.Account;
 import cookup.domain.recipe.Recipe;
 import cookup.domain.recipe.comment.Comment;
+import cookup.dto.CommentDto;
 
 @Service
 public class CommentsServiceImpl implements CommentsService {
@@ -23,12 +24,12 @@ public class CommentsServiceImpl implements CommentsService {
   }
 
   @Override
-  public Comment addAnonymousComment(Comment comment, long recipeId) {
+  public Comment addAnonymousComment(CommentDto comment, long recipeId) {
     return addComment(comment, recipeId, null);
   }
 
   @Override
-  public Comment addUserComment(Comment comment, long recipeId, String email) {
+  public Comment addUserComment(CommentDto comment, long recipeId, String email) {
     Account author = accountDao.findByEmail(email);
     if (author == null) {
       throw new IllegalArgumentException("Account not exists: " + email);
@@ -36,7 +37,8 @@ public class CommentsServiceImpl implements CommentsService {
     return addComment(comment, recipeId, author);
   }
 
-  private Comment addComment(Comment comment, long recipeId, Account author) {
+  private Comment addComment(CommentDto commentDto, long recipeId, Account author) {
+    Comment comment = new Comment(commentDto.getContent());
     validate(comment);
     comment.setRecipe(getRecipe(recipeId));
     comment.setAuthor(author);

@@ -19,7 +19,7 @@ import cookup.domain.recipe.Ingredient;
 import cookup.domain.recipe.IngredientUnit;
 import cookup.domain.recipe.Recipe;
 import cookup.domain.recipe.RecipeIngredient;
-import cookup.domain.recipe.comment.Comment;
+import cookup.dto.CommentDto;
 import cookup.dto.RegistrationDto;
 import cookup.service.AccountService;
 import cookup.service.comments.CommentsService;
@@ -149,16 +149,8 @@ public class RecipeDbInitializer {
   }
 
   private void addComments(String email, Account account, Recipe recipe1) {
-    Comment comment1 = new Comment.Builder()
-        .content("first comment")
-        .recipe(recipe1)
-        .author(account)
-        .build();
-    Comment comment2 = new Comment.Builder()
-        .content("second comment")
-        .recipe(recipe1)
-        .author(account)
-        .build();
+    CommentDto comment1 = new CommentDto("first comment");
+    CommentDto comment2 = new CommentDto("second comment");
     commentsService.addUserComment(comment1, recipe1.getId(), email);
     commentsService.addUserComment(comment2, recipe1.getId(), email);
   }

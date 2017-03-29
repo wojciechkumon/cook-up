@@ -35,10 +35,8 @@ public class Comment {
 
   public Comment() {}
 
-  private Comment(Builder builder) {
-    setContent(builder.content);
-    setAuthor(builder.author);
-    setRecipe(builder.recipe);
+  public Comment(String content) {
+    this.content = content;
   }
 
   public Long getId() {
@@ -71,33 +69,5 @@ public class Comment {
 
   public void setRecipe(Recipe recipe) {
     this.recipe = recipe;
-  }
-
-
-  public static final class Builder {
-    private String content;
-    private Account author;
-    private Recipe recipe;
-
-    public Builder() {}
-
-    public Builder content(String content) {
-      this.content = content;
-      return this;
-    }
-
-    public Builder author(Account author) {
-      this.author = author;
-      return this;
-    }
-
-    public Builder recipe(Recipe recipe) {
-      this.recipe = recipe;
-      return this;
-    }
-
-    public Comment build() {
-      return new Comment(this);
-    }
   }
 }

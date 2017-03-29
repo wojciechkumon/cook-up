@@ -1,20 +1,23 @@
 package cookup.controller.rest;
 
-import org.springframework.data.rest.webmvc.BasePathAwareController;
 import org.springframework.data.rest.webmvc.PersistentEntityResource;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 
+import javax.validation.Valid;
+
 import cookup.domain.recipe.comment.Comment;
+import cookup.dto.CommentDto;
 import cookup.service.comments.CommentsService;
 
 @RestController
-@BasePathAwareController
+@RequestMapping("/api")
 public class CommentsRestController {
   private final CommentsService commentsService;
 
@@ -23,7 +26,8 @@ public class CommentsRestController {
   }
 
   @PostMapping("/recipes/{recipeId}/comments")
-  PersistentEntityResource addComment(@PathVariable Long recipeId, @RequestBody Comment comment,
+  PersistentEntityResource addComment(@PathVariable Long recipeId,
+                                      @Valid @RequestBody CommentDto comment,
                                       PersistentEntityResourceAssembler resourceAssembler,
                                       Principal principal) {
 
@@ -31,7 +35,7 @@ public class CommentsRestController {
     return resourceAssembler.toResource(savedComment);
   }
 
-  private Comment saveComment(Comment comment, Long recipeId, Principal principal) {
+  private Comment saveComment(CommentDto comment, Long recipeId, Principal principal) {
     if (principal != null) {
       return commentsService.addUserComment(comment, recipeId, principal.getName());
     }
