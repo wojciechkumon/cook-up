@@ -32,7 +32,7 @@ public class RecipeMatcherRestController {
   @GetMapping("/matchingRecipes")
   @ResponseBody
   @SuppressWarnings("unchecked")
-  public PagedResources<PersistentEntityResource> getMatchingRecipes(
+  PagedResources<PersistentEntityResource> getMatchingRecipes(
       @RequestParam("ingredients") List<Long> ingredientIds,
       PersistentEntityResourceAssembler resourceAssembler, Pageable pageable) {
 

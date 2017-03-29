@@ -18,7 +18,7 @@ import cookup.service.comments.CommentsService;
 public class CommentsRestController {
   private final CommentsService commentsService;
 
-  public CommentsRestController(CommentsService commentsService) {
+  CommentsRestController(CommentsService commentsService) {
     this.commentsService = commentsService;
   }
 

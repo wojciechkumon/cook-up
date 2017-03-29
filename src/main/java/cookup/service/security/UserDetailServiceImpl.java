@@ -21,7 +21,7 @@ import cookup.domain.account.UserRole;
 public class UserDetailServiceImpl implements UserDetailsService {
   private final AccountDao accountDao;
 
-  public UserDetailServiceImpl(AccountDao accountDao) {
+  UserDetailServiceImpl(AccountDao accountDao) {
     this.accountDao = accountDao;
   }
 

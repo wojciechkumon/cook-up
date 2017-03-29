@@ -17,7 +17,7 @@ import cookup.service.recipe.RecipeService;
 public class RecipeRestController {
   private final RecipeService recipeService;
 
-  public RecipeRestController(RecipeService recipeService) {
+  RecipeRestController(RecipeService recipeService) {
     this.recipeService = recipeService;
   }
 

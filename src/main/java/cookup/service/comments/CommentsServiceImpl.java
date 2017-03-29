@@ -15,8 +15,8 @@ public class CommentsServiceImpl implements CommentsService {
   private final CommentsDao commentsDao;
   private final AccountDao accountDao;
 
-  public CommentsServiceImpl(RecipeDao recipeDao, CommentsDao commentsDao,
-                             AccountDao accountDao) {
+  CommentsServiceImpl(RecipeDao recipeDao, CommentsDao commentsDao,
+                      AccountDao accountDao) {
     this.recipeDao = recipeDao;
     this.commentsDao = commentsDao;
     this.accountDao = accountDao;

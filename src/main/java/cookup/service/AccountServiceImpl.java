@@ -21,8 +21,7 @@ public class AccountServiceImpl implements AccountService {
   private final TimeUtil timeUtil;
 
 
-  public AccountServiceImpl(AccountDao accountDao, PasswordEncoder passwordEncoder,
-                            TimeUtil timeUtil) {
+  AccountServiceImpl(AccountDao accountDao, PasswordEncoder passwordEncoder, TimeUtil timeUtil) {
     this.accountDao = accountDao;
     this.passwordEncoder = passwordEncoder;
     this.timeUtil = timeUtil;
