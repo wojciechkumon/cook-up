@@ -24,7 +24,8 @@ public class CommentsRestController {
 
   @PostMapping("/recipes/{recipeId}/comments")
   PersistentEntityResource addComment(@PathVariable Long recipeId, @RequestBody Comment comment,
-                                      Principal principal, PersistentEntityResourceAssembler resourceAssembler) {
+                                      PersistentEntityResourceAssembler resourceAssembler,
+                                      Principal principal) {
 
     Comment savedComment = saveComment(comment, recipeId, principal);
     return resourceAssembler.toResource(savedComment);

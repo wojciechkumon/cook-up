@@ -4,27 +4,43 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Objects;
+import java.util.Set;
 
 import cookup.dao.AccountDao;
+import cookup.dao.IngredientDao;
 import cookup.dao.RecipeDao;
 import cookup.domain.account.Account;
+import cookup.domain.recipe.Ingredient;
 import cookup.domain.recipe.Recipe;
+import cookup.domain.recipe.RecipeIngredient;
 import cookup.service.util.TimeUtil;
 
 @Service
 public class RecipeServiceImpl implements RecipeService {
   private final RecipeDao recipeDao;
   private final AccountDao accountDao;
+  private final IngredientDao ingredientDao;
   private final TimeUtil timeUtil;
 
-  RecipeServiceImpl(RecipeDao recipeDao, AccountDao accountDao, TimeUtil timeUtil) {
+  RecipeServiceImpl(RecipeDao recipeDao, AccountDao accountDao,
+                    IngredientDao ingredientDao, TimeUtil timeUtil) {
     this.recipeDao = recipeDao;
     this.accountDao = accountDao;
+    this.ingredientDao = ingredientDao;
     this.timeUtil = timeUtil;
   }
 
   @Override
-  public Recipe save(Recipe recipe) {
+  @Transactional
+  public Recipe addRecipe(Recipe recipe, String userEmail) {
+    validateRecipe(recipe);
+    setIngredientsReferences(recipe);
+
+    recipe.setComments(new ArrayList<>());
+    recipe.setId(null);
+    recipe.setAuthor(getAccount(userEmail));
     LocalDateTime now = timeUtil.now();
     if (recipe.getCreated() == null) {
       recipe.setCreated(now);
@@ -33,27 +49,80 @@ public class RecipeServiceImpl implements RecipeService {
     return recipeDao.save(recipe);
   }
 
+  private void validateRecipe(Recipe recipe) {
+    Objects.requireNonNull(recipe.getCookingDescription());
+    Objects.requireNonNull(recipe.getCookingTimeMinutes());
+    Objects.requireNonNull(recipe.getDifficultyLevel());
+    Objects.requireNonNull(recipe.getKcal());
+    Objects.requireNonNull(recipe.getName());
+    Objects.requireNonNull(recipe.getServings());
+    Objects.requireNonNull(recipe.getIngredients());
+    if (recipe.getIngredients().isEmpty()) {
+      throw new IllegalArgumentException("recipe must have ingredients");
+    }
+    recipe.getIngredients().forEach(this::validateRecipeIngredient);
+  }
+
+  private void validateRecipeIngredient(RecipeIngredient recipeIngredient) {
+    if (recipeIngredient.getSubstitutes() != null) {
+      recipeIngredient.getSubstitutes().forEach(this::validateIngredient);
+    }
+    Objects.requireNonNull(recipeIngredient.getAmount());
+    this.validateIngredient(recipeIngredient.getIngredient());
+  }
+
+  private void validateIngredient(Ingredient ingredient) {
+    Objects.requireNonNull(ingredient);
+    Objects.requireNonNull(ingredient.getId());
+    Ingredient ingredientFromDao = ingredientDao.getOne(ingredient.getId());
+    if (ingredientFromDao.getIngredientUnit() != ingredient.getIngredientUnit()
+        || !ingredientFromDao.getName().equals(ingredient.getName())) {
+      throw new IllegalArgumentException("Ingredient not recognized: "
+          + ingredient.getName() + ", " + ingredient.getIngredientUnit());
+    }
+  }
+
+  private void setIngredientsReferences(Recipe recipe) {
+    recipe.getIngredients().forEach(ingredient -> ingredient.setRecipe(recipe));
+  }
+
   @Override
   @Transactional
-  public Account addFavouriteRecipe(String email, Recipe recipe) {
-    Account account = accountDao.findByEmail(email);
-    if (account == null) {
-      throw new IllegalArgumentException("User with email not exists: " + email);
+  public void addToFavourites(long recipeId, String userEmail) {
+    Recipe recipe = getRecipe(recipeId);
+    Account account = getAccount(userEmail);
+
+    Set<Recipe> favouriteRecipes = account.getFavouriteRecipes();
+    if (recipeNotPresentInFavourites(recipe, favouriteRecipes)) {
+      favouriteRecipes.add(recipe);
+      accountDao.save(account);
     }
-    return addNewFavouriteRecipe(account, recipe);
   }
 
-  private Account addNewFavouriteRecipe(Account account, Recipe recipe) {
-    if (alreadyFavourite(account, recipe)) {
-      return account;
-    }
-    account.getFavouriteRecipes().add(recipe);
-    account.setUpdated(timeUtil.now());
-    return accountDao.save(account);
+  @Override
+  @Transactional
+  public void removeFromFavourites(long recipeId, String userEmail) {
+    Recipe recipe = getRecipe(recipeId);
+    Account account = getAccount(userEmail);
+
+    Set<Recipe> favouriteRecipes = account.getFavouriteRecipes();
+    favouriteRecipes.removeIf(r -> recipe.getId().equals(r.getId()));
+    accountDao.save(account);
   }
 
-  private boolean alreadyFavourite(Account account, Recipe recipe) {
-    return account.getFavouriteRecipes().stream()
-        .anyMatch(r -> r.getId().equals(recipe.getId()));
+  private boolean recipeNotPresentInFavourites(Recipe recipe, Set<Recipe> favouriteRecipes) {
+    return favouriteRecipes.stream().noneMatch(r -> recipe.getId().equals(r.getId()));
+  }
+
+  private Recipe getRecipe(long recipeId) {
+    Recipe recipe = recipeDao.findOne(recipeId);
+    Objects.requireNonNull(recipe, "Recipe not found, id=" + recipeId);
+    return recipe;
+  }
+
+  private Account getAccount(String userEmail) {
+    Account account = accountDao.findByEmail(userEmail);
+    Objects.requireNonNull(account, "Account not found, email=" + userEmail);
+    return account;
   }
 }

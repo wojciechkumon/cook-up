@@ -22,6 +22,7 @@ import cookup.domain.recipe.RecipeIngredient;
 import cookup.domain.recipe.comment.Comment;
 import cookup.dto.RegistrationDto;
 import cookup.service.AccountService;
+import cookup.service.comments.CommentsService;
 import cookup.service.recipe.RecipeService;
 
 @Component
@@ -33,16 +34,19 @@ public class RecipeDbInitializer {
   private final IngredientDao ingredientDao;
   private final AccountDao accountDao;
   private final AccountService accountService;
+  private final CommentsService commentsService;
 
   RecipeDbInitializer(RecipeDao recipeDao, RecipeService recipeService,
                       CommentsDao commentsDao, IngredientDao ingredientDao,
-                      AccountDao accountDao, AccountService accountService) {
+                      AccountDao accountDao, AccountService accountService,
+                      CommentsService commentsService) {
     this.recipeDao = recipeDao;
     this.recipeService = recipeService;
     this.commentsDao = commentsDao;
     this.ingredientDao = ingredientDao;
     this.accountDao = accountDao;
     this.accountService = accountService;
+    this.commentsService = commentsService;
   }
 
   @EventListener(ContextRefreshedEvent.class)
@@ -52,7 +56,8 @@ public class RecipeDbInitializer {
     recipeDao.deleteAll();
     ingredientDao.deleteAll();
 
-    Account account = createAccount();
+    String email = "lolek@gmail.com";
+    Account account = createAccount(email);
 
     Ingredient coffee = ingredientDao.save(new Ingredient("coffee", IngredientUnit.GRAM));
     Ingredient water = ingredientDao.save(new Ingredient("water", IngredientUnit.ML));
@@ -63,13 +68,15 @@ public class RecipeDbInitializer {
     Recipe recipe1 = saveFirstRecipe(account, coffee, water, milk, soyMilk, coconutMilk);
     Recipe recipe2 = saveSecondRecipe(account, coffee, water);
 
-    recipeService.addFavouriteRecipe("lolek@gmail.com", recipe1);
-    recipeService.addFavouriteRecipe("lolek@gmail.com", recipe2);
+    addComments(email, account, recipe1);
+
+    recipeService.addToFavourites(recipe1.getId(), email);
+    recipeService.addToFavourites(recipe2.getId(), email);
   }
 
-  private Account createAccount() {
+  private Account createAccount(String email) {
     RegistrationDto registrationDto = new RegistrationDto();
-    registrationDto.setEmail("lolek@gmail.com");
+    registrationDto.setEmail(email);
     registrationDto.setPassword("lolek");
     registrationDto.setMatchingPassword("lolek");
     return accountService.addAccount(registrationDto);
@@ -109,7 +116,7 @@ public class RecipeDbInitializer {
     Set<RecipeIngredient> recipeIngredientSet = new HashSet<>(
         Arrays.asList(waterRecipeIngredient, coffeeRecipeIngredient, milkRecipeIngredient));
     coffeeWithMilk.setIngredients(recipeIngredientSet);
-    return recipeService.save(coffeeWithMilk);
+    return recipeService.addRecipe(coffeeWithMilk, account.getEmail());
   }
 
   private Recipe saveSecondRecipe(Account account, Ingredient coffee, Ingredient water) {
@@ -135,21 +142,24 @@ public class RecipeDbInitializer {
         .amount(230D)
         .build();
 
+    Set<RecipeIngredient> recipeIngredientSet = new HashSet<>(
+        Arrays.asList(waterRecipeIngredient, coffeeRecipeIngredient));
+    coffeeRecipe.setIngredients(recipeIngredientSet);
+    return recipeService.addRecipe(coffeeRecipe, account.getEmail());
+  }
+
+  private void addComments(String email, Account account, Recipe recipe1) {
     Comment comment1 = new Comment.Builder()
         .content("first comment")
-        .recipe(coffeeRecipe)
+        .recipe(recipe1)
         .author(account)
         .build();
     Comment comment2 = new Comment.Builder()
         .content("second comment")
-        .recipe(coffeeRecipe)
+        .recipe(recipe1)
         .author(account)
         .build();
-
-    Set<RecipeIngredient> recipeIngredientSet = new HashSet<>(
-        Arrays.asList(waterRecipeIngredient, coffeeRecipeIngredient));
-    coffeeRecipe.setIngredients(recipeIngredientSet);
-    coffeeRecipe.setComments(Arrays.asList(comment1, comment2));
-    return recipeService.save(coffeeRecipe);
+    commentsService.addUserComment(comment1, recipe1.getId(), email);
+    commentsService.addUserComment(comment2, recipe1.getId(), email);
   }
 }

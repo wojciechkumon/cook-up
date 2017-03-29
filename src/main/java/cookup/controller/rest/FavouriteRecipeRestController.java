@@ -8,15 +8,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 
-import cookup.service.recipe.FavouriteRecipesService;
+import cookup.service.recipe.RecipeService;
 
 @RestController
 @BasePathAwareController
 public class FavouriteRecipeRestController {
-  private final FavouriteRecipesService favouriteRecipesService;
+  private final RecipeService recipeService;
 
-  FavouriteRecipeRestController(FavouriteRecipesService favouriteRecipesService) {
-    this.favouriteRecipesService = favouriteRecipesService;
+  FavouriteRecipeRestController(RecipeService recipeService) {
+    this.recipeService = recipeService;
   }
 
   @GetMapping("/recipes/{recipeId}/favourite")
@@ -25,9 +25,9 @@ public class FavouriteRecipeRestController {
 
     String userEmail = principal.getName();
     if (add) {
-      favouriteRecipesService.addToFavourites(recipeId, userEmail);
+      recipeService.addToFavourites(recipeId, userEmail);
     } else {
-      favouriteRecipesService.removeFromFavourites(recipeId, userEmail);
+      recipeService.removeFromFavourites(recipeId, userEmail);
     }
   }
 }
