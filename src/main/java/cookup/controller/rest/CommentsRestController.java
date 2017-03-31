@@ -2,10 +2,12 @@ package cookup.controller.rest;
 
 import org.springframework.data.rest.webmvc.PersistentEntityResource;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
@@ -26,6 +28,7 @@ public class CommentsRestController {
   }
 
   @PostMapping("/recipes/{recipeId}/comments")
+  @ResponseStatus(HttpStatus.CREATED)
   PersistentEntityResource addComment(@PathVariable Long recipeId,
                                       @Valid @RequestBody CommentDto comment,
                                       PersistentEntityResourceAssembler resourceAssembler,

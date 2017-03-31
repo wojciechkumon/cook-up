@@ -2,9 +2,11 @@ package cookup.controller.rest;
 
 import org.springframework.data.rest.webmvc.PersistentEntityResource;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -23,6 +25,7 @@ public class RegistrationRestController {
   }
 
   @PostMapping("/register")
+  @ResponseStatus(HttpStatus.CREATED)
   PersistentEntityResource register(@Valid @RequestBody RegistrationDto registrationDto,
                                     PersistentEntityResourceAssembler resourceAssembler) {
     Account newAccount = accountService.addAccount(registrationDto);
