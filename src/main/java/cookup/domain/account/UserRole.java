@@ -28,6 +28,13 @@ public class UserRole {
   private UserRoleType userRoleType;
 
 
+  public UserRole() {}
+
+  public UserRole(Account owner, UserRoleType userRoleType) {
+    this.owner = owner;
+    this.userRoleType = userRoleType;
+  }
+
   public Long getId() {
     return id;
   }

@@ -31,20 +31,19 @@ public class UserDetailServiceImpl implements UserDetailsService {
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
     Account account = accountDao.findByEmail(email);
     if (account == null) {
-      throw new UsernameNotFoundException("Email not found: " + email);
+      throw new UsernameNotFoundException("Email not found for auth: " + email);
     }
+    return buildUserForAuthentication(account);
+  }
+
+  private User buildUserForAuthentication(Account account) {
     List<GrantedAuthority> authorities = buildUserAuthority(account.getUserRoles());
-    return buildUserForAuthentication(email, account, authorities);
+    return new User(account.getEmail(), account.getPasswordHash(), authorities);
   }
 
   private List<GrantedAuthority> buildUserAuthority(Collection<UserRole> userRoles) {
     return userRoles.stream()
         .map(role -> new SimpleGrantedAuthority(role.getUserRoleType().getRole()))
         .collect(Collectors.toList());
-  }
-
-  private User buildUserForAuthentication(String username, Account account,
-                                          List<GrantedAuthority> authorities) {
-    return new User(username, account.getPasswordHash(), authorities);
   }
 }
