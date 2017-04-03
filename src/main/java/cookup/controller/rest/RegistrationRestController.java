@@ -24,6 +24,7 @@ public class RegistrationRestController {
     this.accountService = accountService;
   }
 
+  // TODO recaptcha
   @PostMapping("/register")
   @ResponseStatus(HttpStatus.CREATED)
   PersistentEntityResource register(@Valid @RequestBody RegistrationDto registrationDto,
