@@ -1,13 +1,20 @@
 package cookup.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import cookup.dao.AccountDao;
 import cookup.dao.CommentsDao;
@@ -16,7 +23,6 @@ import cookup.dao.RecipeDao;
 import cookup.domain.account.Account;
 import cookup.domain.recipe.DifficultyLevel;
 import cookup.domain.recipe.Ingredient;
-import cookup.domain.recipe.IngredientUnit;
 import cookup.domain.recipe.Recipe;
 import cookup.domain.recipe.RecipeIngredient;
 import cookup.dto.CommentDto;
@@ -28,6 +34,7 @@ import cookup.service.recipe.RecipeService;
 @Component
 @Profile(Profiles.DEV)
 public class RecipeDbInitializer {
+  private static final String INGREDIENTS_FILE = "data/ingredients.json";
   private final RecipeDao recipeDao;
   private final RecipeService recipeService;
   private final CommentsDao commentsDao;
@@ -59,11 +66,12 @@ public class RecipeDbInitializer {
     String email = "lolek@gmail.com";
     Account account = createAccount(email);
 
-    Ingredient coffee = ingredientDao.save(new Ingredient("coffee", IngredientUnit.GRAM));
-    Ingredient water = ingredientDao.save(new Ingredient("water", IngredientUnit.ML));
-    Ingredient milk = ingredientDao.save(new Ingredient("milk", IngredientUnit.ML));
-    Ingredient soyMilk = ingredientDao.save(new Ingredient("soy milk", IngredientUnit.ML));
-    Ingredient coconutMilk = ingredientDao.save(new Ingredient("coconut milk", IngredientUnit.ML));
+    Map<String, Ingredient> ingredients = putIngredientsToDb();
+    Ingredient coffee = ingredients.get("coffee");
+    Ingredient water = ingredients.get("water");
+    Ingredient milk = ingredients.get("milk");
+    Ingredient soyMilk = ingredients.get("soy milk");
+    Ingredient coconutMilk = ingredients.get("coconut milk");
 
     Recipe recipe1 = saveFirstRecipe(account, coffee, water, milk, soyMilk, coconutMilk);
     Recipe recipe2 = saveSecondRecipe(account, coffee, water);
@@ -80,6 +88,20 @@ public class RecipeDbInitializer {
     registrationDto.setPassword("lolek");
     registrationDto.setMatchingPassword("lolek");
     return accountService.addAccount(registrationDto);
+  }
+
+  private Map<String, Ingredient> putIngredientsToDb() {
+    InputStream inputStream = getClass().getClassLoader()
+        .getResourceAsStream(INGREDIENTS_FILE);
+    ObjectMapper mapper = new ObjectMapper();
+    try {
+      Ingredient[] ingredients = mapper.readValue(inputStream, Ingredient[].class);
+      List<Ingredient> savedIngredients = ingredientDao.save(Arrays.asList(ingredients));
+      return savedIngredients.stream()
+          .collect(Collectors.toMap(Ingredient::getName, ingredient -> ingredient));
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   private Recipe saveFirstRecipe(Account account, Ingredient coffee, Ingredient water, Ingredient milk,

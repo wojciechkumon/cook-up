@@ -1,0 +1,22 @@
+[
+  {
+    "name": "coffee",
+    "ingredientUnit": "GRAM"
+  },
+  {
+    "name": "water",
+    "ingredientUnit": "ML"
+  },
+  {
+    "name": "milk",
+    "ingredientUnit": "ML"
+  },
+  {
+    "name": "soy milk",
+    "ingredientUnit": "ML"
+  },
+  {
+    "name": "coconut milk",
+    "ingredientUnit": "ML"
+  }
+]
