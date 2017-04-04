@@ -39,7 +39,6 @@ public class CommentsServiceImpl implements CommentsService {
 
   private Comment addComment(CommentDto commentDto, long recipeId, Account author) {
     Comment comment = new Comment(commentDto.getContent());
-    validate(comment);
     comment.setRecipe(getRecipe(recipeId));
     comment.setAuthor(author);
     return commentsDao.save(comment);
@@ -51,11 +50,5 @@ public class CommentsServiceImpl implements CommentsService {
       throw new IllegalArgumentException("Recipe with id not exists: " + recipeId);
     }
     return recipe;
-  }
-
-  private void validate(Comment comment) {
-    if (comment.getContent() == null) {
-      throw new IllegalArgumentException("Comment content can't be empty");
-    }
   }
 }
