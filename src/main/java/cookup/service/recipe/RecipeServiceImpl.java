@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Set;
 
@@ -15,6 +14,7 @@ import cookup.domain.account.Account;
 import cookup.domain.recipe.Ingredient;
 import cookup.domain.recipe.Recipe;
 import cookup.domain.recipe.RecipeIngredient;
+import cookup.dto.RecipeDto;
 import cookup.service.util.TimeUtil;
 
 @Service
@@ -34,33 +34,16 @@ public class RecipeServiceImpl implements RecipeService {
 
   @Override
   @Transactional
-  public Recipe addRecipe(Recipe recipe, String userEmail) {
-    validateRecipe(recipe);
+  public Recipe addRecipe(RecipeDto recipeDto, String userEmail) {
+    Recipe recipe = recipeDto.toRecipe();
+    recipe.getIngredients().forEach(this::validateRecipeIngredient);
     setIngredientsReferences(recipe);
 
-    recipe.setComments(new ArrayList<>());
-    recipe.setId(null);
     recipe.setAuthor(getAccount(userEmail));
     LocalDateTime now = timeUtil.now();
-    if (recipe.getCreated() == null) {
-      recipe.setCreated(now);
-    }
+    recipe.setCreated(now);
     recipe.setUpdated(now);
     return recipeDao.save(recipe);
-  }
-
-  private void validateRecipe(Recipe recipe) {
-    Objects.requireNonNull(recipe.getCookingDescription());
-    Objects.requireNonNull(recipe.getCookingTimeMinutes());
-    Objects.requireNonNull(recipe.getDifficultyLevel());
-    Objects.requireNonNull(recipe.getKcal());
-    Objects.requireNonNull(recipe.getName());
-    Objects.requireNonNull(recipe.getServings());
-    Objects.requireNonNull(recipe.getIngredients());
-    if (recipe.getIngredients().isEmpty()) {
-      throw new IllegalArgumentException("recipe must have ingredients");
-    }
-    recipe.getIngredients().forEach(this::validateRecipeIngredient);
   }
 
   private void validateRecipeIngredient(RecipeIngredient recipeIngredient) {

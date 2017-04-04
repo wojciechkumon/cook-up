@@ -1,10 +1,11 @@
 package cookup.service.recipe;
 
 import cookup.domain.recipe.Recipe;
+import cookup.dto.RecipeDto;
 
 public interface RecipeService {
 
-  Recipe addRecipe(Recipe recipe, String userEmail);
+  Recipe addRecipe(RecipeDto recipeDto, String userEmail);
 
   void addToFavourites(long recipeId, String userEmail);
 

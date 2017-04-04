@@ -26,6 +26,7 @@ import cookup.domain.recipe.Ingredient;
 import cookup.domain.recipe.Recipe;
 import cookup.domain.recipe.RecipeIngredient;
 import cookup.dto.CommentDto;
+import cookup.dto.RecipeDto;
 import cookup.dto.RegistrationDto;
 import cookup.service.AccountService;
 import cookup.service.comments.CommentsService;
@@ -106,30 +107,26 @@ public class RecipeDbInitializer {
 
   private Recipe saveFirstRecipe(Account account, Ingredient coffee, Ingredient water, Ingredient milk,
                                  Ingredient soyMilk, Ingredient coconutMilk) {
-    Recipe coffeeWithMilk = Recipe.builder()
+    RecipeDto coffeeWithMilk = new RecipeDto.Builder()
         .name("coffee with milk")
         .cookingDescription("coffee + water + milk")
         .cookingTimeMinutes(2)
         .difficultyLevel(DifficultyLevel.MEDIUM)
         .kcal(2)
         .servings(1)
-        .author(account)
         .build();
 
     RecipeIngredient coffeeRecipeIngredient = RecipeIngredient.builder()
-        .recipe(coffeeWithMilk)
         .ingredient(coffee)
         .amount(20D)
         .build();
 
     RecipeIngredient waterRecipeIngredient = RecipeIngredient.builder()
-        .recipe(coffeeWithMilk)
         .ingredient(water)
         .amount(200D)
         .build();
 
     RecipeIngredient milkRecipeIngredient = RecipeIngredient.builder()
-        .recipe(coffeeWithMilk)
         .ingredient(milk)
         .amount(30D)
         .substitutes(new HashSet<>(Arrays.asList(soyMilk, coconutMilk)))
@@ -142,24 +139,21 @@ public class RecipeDbInitializer {
   }
 
   private Recipe saveSecondRecipe(Account account, Ingredient coffee, Ingredient water) {
-    Recipe coffeeRecipe = Recipe.builder()
+    RecipeDto coffeeRecipe = new RecipeDto.Builder()
         .name("coffee")
         .cookingDescription("coffee + water")
         .cookingTimeMinutes(1)
         .difficultyLevel(DifficultyLevel.EASY)
         .kcal(0)
         .servings(2)
-        .author(account)
         .build();
 
     RecipeIngredient coffeeRecipeIngredient = RecipeIngredient.builder()
-        .recipe(coffeeRecipe)
         .ingredient(coffee)
         .amount(40D)
         .build();
 
     RecipeIngredient waterRecipeIngredient = RecipeIngredient.builder()
-        .recipe(coffeeRecipe)
         .ingredient(water)
         .amount(230D)
         .build();

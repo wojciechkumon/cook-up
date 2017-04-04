@@ -1,21 +1,23 @@
 package cookup.controller.rest;
 
-import org.springframework.data.rest.webmvc.BasePathAwareController;
 import org.springframework.data.rest.webmvc.PersistentEntityResource;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
+import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 
+import javax.validation.Valid;
+
 import cookup.domain.recipe.Recipe;
+import cookup.dto.RecipeDto;
 import cookup.service.recipe.RecipeService;
 
-@RestController
-@BasePathAwareController
+@RepositoryRestController
 public class RecipeRestController {
   private final RecipeService recipeService;
 
@@ -25,10 +27,11 @@ public class RecipeRestController {
 
   @PostMapping("/recipes")
   @ResponseStatus(HttpStatus.CREATED)
-  PersistentEntityResource createRecipe(@RequestBody Recipe recipe,
+  @ResponseBody
+  PersistentEntityResource createRecipe(@Valid @RequestBody RecipeDto recipeDto,
                                         PersistentEntityResourceAssembler resourceAssembler,
                                         Principal principal) {
-    Recipe createdRecipe = recipeService.addRecipe(recipe, principal.getName());
+    Recipe createdRecipe = recipeService.addRecipe(recipeDto, principal.getName());
     return resourceAssembler.toResource(createdRecipe);
   }
 }
