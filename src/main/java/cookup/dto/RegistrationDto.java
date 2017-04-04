@@ -23,6 +23,14 @@ public class RegistrationDto {
   private String matchingPassword;
 
 
+  public RegistrationDto() {}
+
+  public RegistrationDto(String email, String password, String matchingPassword) {
+    this.email = email;
+    this.password = password;
+    this.matchingPassword = matchingPassword;
+  }
+
   public String getEmail() {
     return email;
   }
