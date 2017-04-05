@@ -14,12 +14,13 @@ import java.security.Principal;
 
 import javax.validation.Valid;
 
+import cookup.config.RestConfig;
 import cookup.domain.recipe.comment.Comment;
 import cookup.dto.CommentDto;
 import cookup.service.comments.CommentsService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping(RestConfig.API_BASE_PATH)
 public class CommentsRestController {
   private final CommentsService commentsService;
 

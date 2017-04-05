@@ -9,6 +9,7 @@ import cookup.domain.recipe.Recipe;
 
 @Configuration
 public class RestConfig extends RepositoryRestConfigurerAdapter {
+  public static final String API_BASE_PATH = "/api";
 
   @Override
   public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {

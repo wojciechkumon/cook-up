@@ -11,12 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+import cookup.config.RestConfig;
 import cookup.domain.account.Account;
 import cookup.dto.RegistrationDto;
 import cookup.service.AccountService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping(RestConfig.API_BASE_PATH)
 public class RegistrationRestController {
   private final AccountService accountService;
 
