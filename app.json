@@ -1,0 +1,6 @@
+{
+  "name": "CookUp",
+  "description": "Find best recipe",
+  "image": "heroku/java",
+  "addons": [ "heroku-postgresql" ]
+}
