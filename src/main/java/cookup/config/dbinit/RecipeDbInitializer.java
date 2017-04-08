@@ -1,10 +1,7 @@
-package cookup.config;
+package cookup.config.dbinit;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.springframework.context.annotation.Profile;
-import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -33,7 +30,6 @@ import cookup.service.comments.CommentsService;
 import cookup.service.recipe.RecipeService;
 
 @Component
-@Profile(Profiles.DEV)
 public class RecipeDbInitializer {
   private static final String INGREDIENTS_FILE = "data/ingredients.json";
   private final RecipeDao recipeDao;
@@ -56,8 +52,7 @@ public class RecipeDbInitializer {
     this.accountService = accountService;
     this.commentsService = commentsService;
   }
-
-  @EventListener(ContextRefreshedEvent.class)
+  
   public void init() {
     commentsDao.deleteAll();
     accountDao.deleteAll();
