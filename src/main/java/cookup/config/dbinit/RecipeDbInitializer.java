@@ -52,7 +52,7 @@ public class RecipeDbInitializer {
     this.accountService = accountService;
     this.commentsService = commentsService;
   }
-  
+
   public void init() {
     commentsDao.deleteAll();
     accountDao.deleteAll();
