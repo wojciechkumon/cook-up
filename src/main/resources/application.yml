@@ -9,9 +9,6 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/cookUp
-    username: cookUp
-    password: cookUpPass
     driver-class: org.postgresql.Driver
 
   data:

@@ -5,5 +5,10 @@ spring:
     hibernate:
       ddl-auto: update
 
+  datasource:
+    url: jdbc:postgresql://localhost:5432/cookUp
+    username: cookUp
+    password: cookUpPass
+
   thymeleaf:
     cache: false
