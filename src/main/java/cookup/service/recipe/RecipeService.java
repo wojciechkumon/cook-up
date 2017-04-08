@@ -7,6 +7,8 @@ public interface RecipeService {
 
   Recipe addRecipe(RecipeDto recipeDto, String userEmail);
 
+  Recipe updateRecipe(Long recipeId, RecipeDto recipeDto, String name);
+
   void addToFavourites(long recipeId, String userEmail);
 
   void removeFromFavourites(long recipeId, String userEmail);

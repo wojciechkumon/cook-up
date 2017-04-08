@@ -53,7 +53,8 @@ public class Recipe {
   @Column(nullable = false)
   private Integer servings;
 
-  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "recipe")
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,
+      fetch = FetchType.EAGER, mappedBy = "recipe")
   private Set<RecipeIngredient> ingredients = new HashSet<>(0);
 
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "recipe")

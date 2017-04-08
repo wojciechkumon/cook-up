@@ -63,6 +63,17 @@ public class RecipeDto {
     return recipe;
   }
 
+  public void putDataToRecipe(Recipe recipe) {
+    recipe.setName(this.getName());
+    recipe.setCookingDescription(this.getCookingDescription());
+    recipe.setCookingTimeMinutes(this.getCookingTimeMinutes());
+    recipe.setDifficultyLevel(this.getDifficultyLevel());
+    recipe.setKcal(this.getKcal());
+    recipe.setServings(this.getServings());
+    recipe.getIngredients().clear();
+    recipe.getIngredients().addAll(this.getIngredients());
+  }
+
   public String getName() {
     return name;
   }

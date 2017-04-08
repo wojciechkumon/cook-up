@@ -4,7 +4,9 @@ import org.springframework.data.rest.webmvc.PersistentEntityResource;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -33,5 +35,13 @@ public class RecipeRestController {
                                         Principal principal) {
     Recipe createdRecipe = recipeService.addRecipe(recipeDto, principal.getName());
     return resourceAssembler.toResource(createdRecipe);
+  }
+
+  @PutMapping("/recipes/{recipeId}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  @ResponseBody
+  void updateRecipe(@Valid @RequestBody RecipeDto recipeDto,
+                    @PathVariable Long recipeId, Principal principal) {
+    recipeService.updateRecipe(recipeId, recipeDto, principal.getName());
   }
 }

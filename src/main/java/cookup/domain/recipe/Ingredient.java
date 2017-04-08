@@ -1,5 +1,7 @@
 package cookup.domain.recipe;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -51,5 +53,21 @@ public class Ingredient {
 
   public void setIngredientUnit(IngredientUnit ingredientUnit) {
     this.ingredientUnit = ingredientUnit;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    Ingredient that = (Ingredient) o;
+    return Objects.equals(id, that.id)
+        && Objects.equals(name, that.name)
+        && Objects.equals(ingredientUnit, that.ingredientUnit);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, name, ingredientUnit);
   }
 }

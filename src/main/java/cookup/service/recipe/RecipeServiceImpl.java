@@ -71,6 +71,28 @@ public class RecipeServiceImpl implements RecipeService {
 
   @Override
   @Transactional
+  public Recipe updateRecipe(Long recipeId, RecipeDto recipeDto, String userEmail) {
+    Recipe recipeToUpdate = getRecipe(recipeId);
+    checkOwnership(userEmail, recipeToUpdate);
+    recipeDto.getIngredients().forEach(this::validateRecipeIngredient);
+
+    recipeDto.putDataToRecipe(recipeToUpdate);
+    setIngredientsReferences(recipeToUpdate);
+
+    LocalDateTime now = timeUtil.now();
+    recipeToUpdate.setUpdated(now);
+    return recipeDao.save(recipeToUpdate);
+  }
+
+  private void checkOwnership(String userEmail, Recipe recipe) {
+    if (!userEmail.equalsIgnoreCase(recipe.getAuthor().getEmail())) {
+      throw new IllegalArgumentException("User " + userEmail
+          + " is not owner of recipe with id " + recipe.getId());
+    }
+  }
+
+  @Override
+  @Transactional
   public void addToFavourites(long recipeId, String userEmail) {
     Recipe recipe = getRecipe(recipeId);
     Account account = getAccount(userEmail);

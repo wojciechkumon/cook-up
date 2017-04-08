@@ -3,6 +3,7 @@ package cookup.domain.recipe;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -82,6 +83,22 @@ public class RecipeIngredient {
     this.substitutes = substitutes;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    RecipeIngredient that = (RecipeIngredient) o;
+    return Objects.equals(id, that.id)
+        && Objects.equals(amount, that.amount)
+        && Objects.equals(ingredient, that.ingredient)
+        && Objects.equals(substitutes, that.substitutes);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, amount, ingredient, substitutes);
+  }
 
   public static Builder builder() {
     return new Builder();
