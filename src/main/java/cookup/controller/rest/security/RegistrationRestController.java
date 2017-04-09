@@ -1,4 +1,4 @@
-package cookup.controller.rest;
+package cookup.controller.rest.security;
 
 import org.springframework.data.rest.webmvc.PersistentEntityResource;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
