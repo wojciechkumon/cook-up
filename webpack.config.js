@@ -11,15 +11,13 @@ module.exports = {
     filename: 'js/bundle.js'
   },
   plugins: [
-    new ExtractTextPlugin(
-      {
-        filename: 'css/styles.css',
-        allChunks: true
-      }),
-    new webpack.LoaderOptionsPlugin(
-      {
-        debug: true
-      })
+    new ExtractTextPlugin({
+      filename: 'css/styles.css',
+      allChunks: true
+    }),
+    new webpack.LoaderOptionsPlugin({
+      debug: true
+    })
   ],
   module: {
     rules: [
@@ -35,13 +33,13 @@ module.exports = {
       {
         test: /\.s?css$/,
         use: [{
-          loader: "style-loader" // creates style nodes from JS strings
+          loader: "style-loader"
         }, {
-          loader: "css-loader" // translates CSS into CommonJS
+          loader: "css-loader"
         }, {
-          loader: "sass-loader" // compiles Sass to CSS
+          loader: "sass-loader"
         }],
-        exclude: /(node_modules)/,
+        exclude: /(node_modules)/
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,

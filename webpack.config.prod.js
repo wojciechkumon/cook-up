@@ -15,7 +15,7 @@ module.exports = {
       }
     }),
     new ExtractTextPlugin({
-        filename: 'css/styles.css'
+      filename: 'css/styles.css'
     }),
     new webpack.optimize.UglifyJsPlugin()
   ],
