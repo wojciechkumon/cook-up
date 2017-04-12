@@ -14,21 +14,17 @@ module.exports = {
         NODE_ENV: JSON.stringify('production')
       }
     }),
-    new ExtractTextPlugin('css/styles.css'),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      }
+    new ExtractTextPlugin({
+        filename: 'css/styles.css'
     }),
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.DedupePlugin()
+    new webpack.optimize.UglifyJsPlugin()
   ],
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: /(node_modules)/,
-        loader: 'babel',
+        loader: 'babel-loader',
         query: {
           cacheDirectory: true,
           presets: ['es2015', 'react']
@@ -37,19 +33,23 @@ module.exports = {
       {
         test: /\.s?css$/,
         exclude: /(node_modules)/,
-        loader: ExtractTextPlugin.extract('css!sass')
+        use: [{
+          loader: "style-loader"
+        }, {
+          loader: "css-loader"
+        }, {
+          loader: "sass-loader"
+        }]
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
         exclude: /(node_modules)/,
-        loader: 'file?name=/fonts/[name].[ext]'
+        loader: 'file-loader?name=/fonts/[name].[ext]'
       },
       {
         test: /\.(jpe?g|png|gif)$/i,
         exclude: /(node_modules)/,
-        loaders: [
-          'file?name=/img/[name].[ext]'
-        ]
+        loader: 'file-loader?name=/img/[name].[ext]'
       }
     ]
   }

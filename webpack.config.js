@@ -6,22 +6,27 @@ module.exports = {
   entry: './src/main/web/main/js/index.js',
   devtool: 'sourcemaps',
   cache: true,
-  debug: true,
   output: {
     path: path.join(__dirname, 'target/classes/static'),
     filename: 'js/bundle.js'
   },
   plugins: [
-    new ExtractTextPlugin('css/styles.css', {
-      allChunks: true
-    }),
+    new ExtractTextPlugin(
+      {
+        filename: 'css/styles.css',
+        allChunks: true
+      }),
+    new webpack.LoaderOptionsPlugin(
+      {
+        debug: true
+      })
   ],
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: /(node_modules)/,
-        loader: 'babel',
+        loader: 'babel-loader',
         query: {
           cacheDirectory: true,
           presets: ['es2015', 'react']
@@ -29,20 +34,24 @@ module.exports = {
       },
       {
         test: /\.s?css$/,
+        use: [{
+          loader: "style-loader" // creates style nodes from JS strings
+        }, {
+          loader: "css-loader" // translates CSS into CommonJS
+        }, {
+          loader: "sass-loader" // compiles Sass to CSS
+        }],
         exclude: /(node_modules)/,
-        loader: ExtractTextPlugin.extract('css!sass')
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
         exclude: /(node_modules)/,
-        loader: 'file?name=/fonts/[name].[ext]'
+        loader: 'file-loader?name=/fonts/[name].[ext]'
       },
       {
         test: /\.(jpe?g|png|gif)$/i,
         exclude: /(node_modules)/,
-        loaders: [
-          'file?name=/img/[name].[ext]'
-        ]
+        loader: 'file-loader?name=/img/[name].[ext]'
       }
     ]
   }
