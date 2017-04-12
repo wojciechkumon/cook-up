@@ -12,6 +12,10 @@ import About from "../../about/js/About";
 
 const history = createBrowserHistory()
 
+if (module.hot) {
+  module.hot.accept();
+}
+
 class Root extends Component {
 
   render() {

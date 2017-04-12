@@ -1,9 +1,33 @@
 const path = require('path');
+const fs = require("fs");
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-  entry: './src/main/web/main/js/index.js',
+  entry: ['react-hot-loader/patch',
+          'webpack-dev-server/client?http://localhost:9000',
+          'webpack/hot/only-dev-server',
+          './src/main/web/main/js/index.js'],
+  devServer: {
+    contentBase: path.join(__dirname, "target/classes/static"),
+    compress: true,
+    hot: true,
+    port: 9000,
+    proxy: {
+      "/api": "http://localhost:8080"
+    },
+    setup: function (app) {
+      app.use(function pushStateHook(req, res, next) {
+        if (req.url === '/' || req.url === '/about') {
+          const indexFile = __dirname + '/target/classes/templates/home.html';
+          res.setHeader("Content-Type", "text/html");
+          fs.createReadStream(indexFile).pipe(res);
+        } else {
+          next();
+        }
+      });
+    }
+  },
   devtool: 'source-map',
   cache: true,
   output: {
@@ -15,6 +39,8 @@ module.exports = {
       filename: 'css/styles.css',
       allChunks: true
     }),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(),
     new webpack.LoaderOptionsPlugin({
       debug: true
     })
@@ -25,10 +51,6 @@ module.exports = {
         test: /\.js$/,
         exclude: /(node_modules)/,
         loader: 'babel-loader',
-        query: {
-          cacheDirectory: true,
-          presets: ['es2015', 'react']
-        }
       },
       {
         test: /\.s?css$/,
