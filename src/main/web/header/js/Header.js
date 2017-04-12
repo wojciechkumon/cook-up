@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
-import {Link} from "react-router";
-import '../style/Header.scss';
-import {Grid, Col, Row} from 'react-bootstrap';
-import SignInModalPill from './SignInModalPill';
-import LoginModalPill from './LoginModalPill';
+import React, {Component} from "react";
+import {NavLink} from "react-router-dom";
+import "../style/Header.scss";
+import {Col, Grid, Row} from "react-bootstrap";
+import SignInModalPill from "./SignInModalPill";
+import LoginModalPill from "./LoginModalPill";
 
 class Header extends Component {
 
@@ -18,11 +18,11 @@ class Header extends Component {
               <Col md={8}>
                 <ul className="nav nav-pills">
                   <li>
-                    <Link to="/about"
-                          activeClassName="App-active-link">About</Link>
+                    <NavLink to="/about" // TODO activeClassName unused!
+                             activeClassName="App-active-link">About</NavLink>
                   </li>
                   <li>
-                    <Link to="/" activeClassName="App-active-link">Finder</Link>
+                    <NavLink to="/" activeClassName="App-active-link">Finder</NavLink>
                   </li>
                   <SignInModalPill/>
                   <LoginModalPill/>
