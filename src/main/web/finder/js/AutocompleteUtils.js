@@ -1,6 +1,6 @@
 class AutocompleteUtils {
 
-  static getProducts() {
+  static getIngredients() {
     return [
       {id: 1, name: "gooseberry", ingredientUnit: 'GRAM'},
       {id: 2, name: "water-melon", ingredientUnit: 'GRAM'},
@@ -13,13 +13,13 @@ class AutocompleteUtils {
     ];
   }
 
-  static matchProductToTerm(state, value) {
+  static matchIngredientToTerm(state, value) {
     return (
         state.name.toLowerCase().indexOf(value.toLowerCase()) !== -1
     )
   }
 
-  static sortProducts(a, b, value) {
+  static sortIngredient(a, b, value) {
     const aLower = a.name.toLowerCase();
     const bLower = b.name.toLowerCase();
     const valueLower = value.toLowerCase();
@@ -31,8 +31,8 @@ class AutocompleteUtils {
     return aLower < bLower ? -1 : 1;
   }
 
-  static getProductByName(name) {
-    return AutocompleteUtils.getProducts().find(
+  static getIngredientByName(name) {
+    return AutocompleteUtils.getIngredients().find(
         product => product.name === name);
   }
 }

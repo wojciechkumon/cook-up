@@ -20,7 +20,7 @@ class Finder extends Component {
 
   addNewIngredient(name) {
     this.setState({inputValue: ''});
-    const newIngredient = AutocompleteUtils.getProductByName(name);
+    const newIngredient = AutocompleteUtils.getIngredientByName(name);
     if (newIngredient) {
       this.props.dispatch(addIngredient(newIngredient));
     }
@@ -38,11 +38,11 @@ class Finder extends Component {
               <div className="autocomplete-input">
               <Autocomplete
                   value={this.state.inputValue}
-                  inputProps={{name: "Products", id: "products-autocomplete"}}
-                  items={AutocompleteUtils.getProducts()}
+                  inputProps={{name: "Ingredients", id: "ingredient-autocomplete"}}
+                  items={AutocompleteUtils.getIngredients()}
                   getItemValue={(item) => item.name}
-                  shouldItemRender={AutocompleteUtils.matchProductToTerm}
-                  sortItems={AutocompleteUtils.sortProducts}
+                  shouldItemRender={AutocompleteUtils.matchIngredientToTerm}
+                  sortItems={AutocompleteUtils.sortIngredient}
                   onChange={(event, inputValue) => this.setState({inputValue})}
                   onSelect={value => this.addNewIngredient(value)}
                   renderItem={(item, isHighlighted) => (

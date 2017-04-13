@@ -31,7 +31,7 @@
     cursor: default;
   }
 
-  #products-autocomplete {
+  #ingredient-autocomplete {
     margin: 0 auto 5px;
     width: 320px;
     height: 62px;
@@ -41,11 +41,9 @@
     letter-spacing: 0.1em;
     font-size: 12px;
     transition: all 400ms;
+    &:focus {
+      outline: none;
+      border: 2px solid $red;
+    }
   }
-
-  #products-autocomplete:focus {
-    outline: none;
-    border: 2px solid $red;
-  }
-
 }
