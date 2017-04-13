@@ -24,11 +24,12 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /(node_modules)/,
-        loader: 'babel-loader',
-        query: {
-          cacheDirectory: true,
-          presets: ['es2015', 'react']
-        }
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ["es2015", "react"]
+          }
+        },
       },
       {
         test: /\.s?css$/,
