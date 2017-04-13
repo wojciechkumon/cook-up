@@ -25,9 +25,6 @@ class Wrapper extends Component {
                 </div>
               </div>
             </Row>
-            <Row className="show-grid">
-              <h1>What do you have in your fridge?</h1>
-            </Row>
           </Grid>
         </div>
     );

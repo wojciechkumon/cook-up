@@ -10,12 +10,13 @@ class SingleIngredient extends Component {
     const ingredient = this.props.ingredient;
     const remove = () => this.props.dispatch(removeIngredient(ingredient.id));
     const name = ingredient.name;
-    const unit = ingredient.ingredientUnit;
+    // const unit = ingredient.ingredientUnit;
     return (
-        <div>
-          {name}<br/>
-          {unit}<br/>
-          <button className="close" onClick={remove}>x</button>
+        <div className="SingleIngredient">
+          <p>
+            <span>{name}</span>
+            <i className="glyphicon glyphicon-remove" onClick={remove}></i>
+          </p>
         </div>
     );
   }
