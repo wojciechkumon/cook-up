@@ -1,11 +1,12 @@
 import React, {Component} from "react";
-import {connect} from 'react-redux';
+import {connect} from "react-redux";
 import "../style/Finder.scss";
-import {Grid, Col, Row} from 'react-bootstrap';
-import Autocomplete from 'react-autocomplete';
-import IngredientList from './IngredientList';
-import AutocompleteUtils from './AutocompleteUtils';
-import {addIngredient} from './actions/actions';
+import {Grid, Row} from "react-bootstrap";
+import Autocomplete from "react-autocomplete";
+import IngredientList from "./IngredientList";
+import AutocompleteUtils from "./AutocompleteUtils";
+import {addIngredient, setAllIngredients} from "./actions/actions";
+import client from "../../restclient/client";
 
 class Finder extends Component {
 
@@ -18,12 +19,25 @@ class Finder extends Component {
     this.addNewIngredient = this.addNewIngredient.bind(this);
   }
 
+  componentDidMount() {
+    if (this.props.allIngredients.length > 0) {
+      return;
+    }
+    client({method: 'GET', path: '/api/ingredients'}).done(response => {
+      this.props.dispatch(setAllIngredients(response.entity));
+    });
+  }
+
   addNewIngredient(name) {
     this.setState({inputValue: ''});
-    const newIngredient = AutocompleteUtils.getIngredientByName(name);
+    const newIngredient = this.getIngredientByName(name);
     if (newIngredient) {
       this.props.dispatch(addIngredient(newIngredient));
     }
+  }
+
+  getIngredientByName(name) {
+    return this.props.allIngredients.find(ingredient => ingredient.name === name);
   }
 
   render() {
@@ -36,27 +50,25 @@ class Finder extends Component {
             <Row className="show-grid">
               <div className="autocomplete-input">
                 <Autocomplete
-                    value={this.state.inputValue}
-                    inputProps={{
-                      name: "Ingredients",
-                      id: "ingredient-autocomplete"
-                    }}
-                    items={AutocompleteUtils.getIngredients()}
-                    getItemValue={(item) => item.name}
-                    shouldItemRender={AutocompleteUtils.matchIngredientToTerm}
-                    sortItems={AutocompleteUtils.sortIngredient}
-                    onChange={(event, inputValue) => this.setState(
-                        {inputValue})}
-                    onSelect={value => this.addNewIngredient(value)}
-                    renderItem={(item, isHighlighted) => (
-                        <div className={isHighlighted ?
-                            'autocomplete-highlighted-item'
-                            : 'autocomplete-item'}
-                             key={item.abbr}>{item.name}</div>
-                    )}
+                  value={this.state.inputValue}
+                  inputProps={{
+                    name: "Ingredients",
+                    id: "ingredient-autocomplete"
+                  }}
+                  items={this.props.allIngredients}
+                  getItemValue={(item) => item.name}
+                  shouldItemRender={AutocompleteUtils.matchIngredientToTerm}
+                  sortItems={AutocompleteUtils.sortIngredient}
+                  onChange={(event, inputValue) => this.setState({inputValue})}
+                  onSelect={value => this.addNewIngredient(value)}
+                  renderItem={(item, isHighlighted) => (
+                    <div className={isHighlighted ? 'autocomplete-highlighted-item'
+                      : 'autocomplete-item'}
+                         key={item.abbr}>{item.name}</div>
+                  )}
                 />
               </div>
-              <IngredientList/>
+              <IngredientList ingredients={this.props.chosenIngredients}/>
             </Row>
           </Grid>
         </div>
@@ -66,7 +78,8 @@ class Finder extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    ingredients: state.ingredients
+    chosenIngredients: state.ingredients.chosenIngredients,
+    allIngredients: state.ingredients.allIngredients
   }
 };
 

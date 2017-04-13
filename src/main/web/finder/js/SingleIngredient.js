@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import '../style/SingleIngredient.scss';
-import {removeIngredient} from './actions/actions';
+import React, {Component} from "react";
+import PropTypes from "prop-types";
+import {connect} from "react-redux";
+import "../style/SingleIngredient.scss";
+import {removeIngredient} from "./actions/actions";
 
 class SingleIngredient extends Component {
 
@@ -10,12 +10,12 @@ class SingleIngredient extends Component {
     const ingredient = this.props.ingredient;
     const remove = () => this.props.dispatch(removeIngredient(ingredient.id));
     const name = ingredient.name;
-    // const unit = ingredient.ingredientUnit;
+
     return (
         <div className="SingleIngredient">
           <p>
             <span>{name}</span>
-            <i className="glyphicon glyphicon-remove" onClick={remove}></i>
+            <i className="glyphicon glyphicon-remove" onClick={remove}/>
           </p>
         </div>
     );

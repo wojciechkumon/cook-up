@@ -1,15 +1,16 @@
-import {combineReducers} from 'redux';
+import {combineReducers} from "redux";
 import {
   ADD_INGREDIENT,
+  CLEAR_INGREDIENTS,
   REMOVE_INGREDIENT,
-  CLEAR_INGREDIENTS
-} from '../actions/actions';
+  SET_ALL_INGREDIENTS
+} from "../actions/actions";
 
 function idAlreadyOnList(state, newIngredient) {
   return state.find((element) => element.id === newIngredient.id);
 }
 
-function ingredients(state = [], action) {
+function chosenIngredients(state = [], action) {
   switch (action.type) {
     case ADD_INGREDIENT:
       const ingredient = action.ingredient;
@@ -33,5 +34,19 @@ function ingredients(state = [], action) {
       return state
   }
 }
+
+function allIngredients(state = [], action) {
+  switch (action.type) {
+    case SET_ALL_INGREDIENTS:
+      return action.allIngredients;
+    default:
+      return state
+  }
+}
+
+const ingredients = combineReducers({
+  chosenIngredients,
+  allIngredients
+});
 
 export default ingredients;

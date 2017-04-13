@@ -1,20 +1,19 @@
 import React, {Component} from "react";
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import PropTypes from "prop-types";
 import "../style/IngredientList.scss";
-import SingleIngredient from './SingleIngredient';
+import SingleIngredient from "./SingleIngredient";
 
 class IngredientList extends Component {
 
   render() {
     const ingredients = this.props.ingredients;
     const ingredientsList = ingredients.map(ingredient =>
-        <SingleIngredient key={ingredient.id} ingredient={ingredient}/>);
+      <SingleIngredient key={ingredient.id} ingredient={ingredient}/>);
 
     return (
-        <div>
-          {ingredientsList}
-        </div>
+      <div>
+        {ingredientsList}
+      </div>
     );
   }
 }
@@ -26,13 +25,5 @@ IngredientList.propTypes = {
     ingredientUnit: PropTypes.string.isRequired
   })).isRequired
 };
-
-const mapStateToProps = (state) => {
-  return {
-    ingredients: state.ingredients
-  }
-};
-
-IngredientList = connect(mapStateToProps)(IngredientList);
 
 export default IngredientList;
