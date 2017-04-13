@@ -29,34 +29,34 @@ class Finder extends Component {
   render() {
     return (
         <div className="Finder">
-
           <Grid>
             <Row className="show-grid">
               <h1>What do you have in your fridge?</h1>
             </Row>
             <Row className="show-grid">
               <div className="autocomplete-input">
-              <Autocomplete
-                  value={this.state.inputValue}
-                  inputProps={{name: "Ingredients", id: "ingredient-autocomplete"}}
-                  items={AutocompleteUtils.getIngredients()}
-                  getItemValue={(item) => item.name}
-                  shouldItemRender={AutocompleteUtils.matchIngredientToTerm}
-                  sortItems={AutocompleteUtils.sortIngredient}
-                  onChange={(event, inputValue) => this.setState({inputValue})}
-                  onSelect={value => this.addNewIngredient(value)}
-                  renderItem={(item, isHighlighted) => (
-                      <div className={isHighlighted ?
-                          'autocomplete-highlighted-item'
-                          : 'autocomplete-item'}
-                           key={item.abbr}>{item.name}</div>
-                  )}
-              />
+                <Autocomplete
+                    value={this.state.inputValue}
+                    inputProps={{
+                      name: "Ingredients",
+                      id: "ingredient-autocomplete"
+                    }}
+                    items={AutocompleteUtils.getIngredients()}
+                    getItemValue={(item) => item.name}
+                    shouldItemRender={AutocompleteUtils.matchIngredientToTerm}
+                    sortItems={AutocompleteUtils.sortIngredient}
+                    onChange={(event, inputValue) => this.setState(
+                        {inputValue})}
+                    onSelect={value => this.addNewIngredient(value)}
+                    renderItem={(item, isHighlighted) => (
+                        <div className={isHighlighted ?
+                            'autocomplete-highlighted-item'
+                            : 'autocomplete-item'}
+                             key={item.abbr}>{item.name}</div>
+                    )}
+                />
               </div>
-                <IngredientList/>
-            </Row>
-            <Row className="show-grid">
-
+              <IngredientList/>
             </Row>
           </Grid>
         </div>

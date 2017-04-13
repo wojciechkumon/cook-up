@@ -4,6 +4,8 @@ public enum IngredientUnit {
 
   GRAM,
   ML,
-  PIECE
-
+  PIECE,
+  CLOVE,
+  PINCH,
+  TEASPOON
 }
