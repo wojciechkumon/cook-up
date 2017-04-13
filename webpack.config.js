@@ -1,7 +1,6 @@
 const path = require('path');
 const fs = require("fs");
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: ['react-hot-loader/patch',
@@ -22,6 +21,9 @@ module.exports = {
           const indexFile = __dirname + '/target/classes/templates/home.html';
           res.setHeader("Content-Type", "text/html");
           fs.createReadStream(indexFile).pipe(res);
+        } else if (req.url === '/css/styles.css') {
+          res.setHeader("Content-Type", "text/css");
+          res.send('');
         } else {
           next();
         }
@@ -35,10 +37,6 @@ module.exports = {
     filename: 'js/bundle.js'
   },
   plugins: [
-    new ExtractTextPlugin({
-      filename: 'css/styles.css',
-      allChunks: true
-    }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
     new webpack.LoaderOptionsPlugin({
