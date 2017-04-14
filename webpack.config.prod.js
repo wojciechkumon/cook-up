@@ -33,7 +33,6 @@ module.exports = {
       },
       {
         test: /\.s?css$/,
-        exclude: /(node_modules)/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: ['css-loader', 'sass-loader']
@@ -41,7 +40,6 @@ module.exports = {
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
-        exclude: /(node_modules)/,
         loader: 'file-loader?name=/fonts/[name].[ext]'
       },
       {

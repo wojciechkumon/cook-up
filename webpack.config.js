@@ -69,12 +69,10 @@ module.exports = {
           loader: "css-loader"
         }, {
           loader: "sass-loader"
-        }],
-        exclude: /(node_modules)/
+        }]
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
-        exclude: /(node_modules)/,
         loader: 'file-loader?name=/fonts/[name].[ext]'
       },
       {

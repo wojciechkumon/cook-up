@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import createBrowserHistory from "history/createBrowserHistory";
 import {Provider} from "react-redux";
-import "../../lib/css/bootstrap.min.css";
+import 'bootstrap/dist/css/bootstrap.css';
 import "../style/App.scss";
 import "../img/favicon.png";
 import LayoutWrapper from "./LayoutWrapper";
