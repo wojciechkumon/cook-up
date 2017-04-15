@@ -1,8 +1,10 @@
 import {combineReducers} from 'redux';
 import ingredients from '../../../finder/js/reducers/ingredients';
+import recipes from '../../../recipe/js/reducers/recipes';
 
 const calculatorApp = combineReducers({
-  ingredients
+  ingredients,
+  recipes
 });
 
 export default calculatorApp;
