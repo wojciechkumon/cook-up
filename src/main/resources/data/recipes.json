@@ -67,5 +67,270 @@
         "substitutes": []
       }
     ]
+  },
+  {
+    "name": "Tomato and Avocado Salad",
+    "cookingDescription": "On a large plate or platter, arrange tomatoes and avocado. Drizzle with olive oil and season with salt and pepper.",
+    "cookingTimeMinutes": 5,
+    "difficultyLevel": "EASY",
+    "kcal": 200,
+    "servings": 4,
+    "ingredients": [
+      {
+        "amount": 800.0,
+        "ingredient": {
+          "name": "tomato",
+          "ingredientUnit": "GRAM"
+        },
+        "substitutes": []
+      },
+      {
+        "amount": 1,
+        "ingredient": {
+          "name": "avocado",
+          "ingredientUnit": "PIECE"
+        },
+        "substitutes": []
+      },
+      {
+        "amount": 20.0,
+        "ingredient": {
+          "name": "olive oil",
+          "ingredientUnit": "ML"
+        },
+        "substitutes": []
+      },
+      {
+        "amount": 1,
+        "ingredient": {
+          "name": "salt",
+          "ingredientUnit": "PINCH"
+        },
+        "substitutes": []
+      },
+      {
+        "amount": 1,
+        "ingredient": {
+          "name": "pepper",
+          "ingredientUnit": "PINCH"
+        },
+        "substitutes": []
+      }
+    ]
+  },
+  {
+    "name": "Grilled Lamb Chops with Tomato and Onion",
+    "cookingDescription": "Heat a grill pan coated with olive oil over medium-high heat. Combine salt, basil, and pepper in a small bowl. Sprinkle half of basil mixture over tomato and onion; rub lamb with remaining basil mixture. Add tomato, onion, and lamb to pan. Cook vegetables 2 minutes on each side or until lightly browned. Cook lamb 8 minutes on each side or until desired degree of doneness.",
+    "cookingTimeMinutes": 30,
+    "difficultyLevel": "MEDIUM",
+    "kcal": 264,
+    "servings": 2,
+    "ingredients": [
+      {
+        "amount": 200.0,
+        "ingredient": {
+          "name": "lamb",
+          "ingredientUnit": "GRAM"
+        },
+        "substitutes": [
+          {
+            "name": "chicken breast",
+            "ingredientUnit": "GRAM"
+          },
+          {
+            "name": "turkey",
+            "ingredientUnit": "GRAM"
+          }
+        ]
+      },
+      {
+        "amount": 20.0,
+        "ingredient": {
+          "name": "olive oil",
+          "ingredientUnit": "ML"
+        },
+        "substitutes": []
+      },
+      {
+        "amount": 1,
+        "ingredient": {
+          "name": "tomato",
+          "ingredientUnit": "PIECE"
+        },
+        "substitutes": []
+      },
+      {
+        "amount": 1,
+        "ingredient": {
+          "name": "onion",
+          "ingredientUnit": "PIECE"
+        },
+        "substitutes": []
+      },
+      {
+        "amount": 1,
+        "ingredient": {
+          "name": "basil",
+          "ingredientUnit": "BUNCH"
+        },
+        "substitutes": []
+      },
+      {
+        "amount": 1,
+        "ingredient": {
+          "name": "salt",
+          "ingredientUnit": "PINCH"
+        },
+        "substitutes": []
+      },
+      {
+        "amount": 1,
+        "ingredient": {
+          "name": "pepper",
+          "ingredientUnit": "PINCH"
+        },
+        "substitutes": []
+      }
+    ]
+  },
+  {
+    "name": "Omelet with Tomato and Parmesan",
+    "cookingDescription": "Rinse, trim, and finely dice the tomatoes. Heat the oil in a nonstick pan, and add the tomatoes. Beat the eggs with 4 tablespoons of water. Season with salt and pepper. Pour into the pan over the tomatoes, cover, and cook for 15 minutes over low heat.",
+    "cookingTimeMinutes": 20,
+    "difficultyLevel": "EASY",
+    "kcal": 358,
+    "servings": 2,
+    "ingredients": [
+      {
+        "amount": 3,
+        "ingredient": {
+          "name": "tomato",
+          "ingredientUnit": "PIECE"
+        },
+        "substitutes": []
+      },
+      {
+        "amount": 20,
+        "ingredient": {
+          "name": "parmesan",
+          "ingredientUnit": "GRAM"
+        },
+        "substitutes": [
+          {
+            "name": "cheddar",
+            "ingredientUnit": "GRAM"
+          },
+          {
+            "name": "mozzarella",
+            "ingredientUnit": "GRAM"
+          }
+        ]
+      },
+      {
+        "amount": 4,
+        "ingredient": {
+          "name": "eggs",
+          "ingredientUnit": "PIECE"
+        },
+        "substitutes": []
+      },
+      {
+        "amount": 15.0,
+        "ingredient": {
+          "name": "olive oil",
+          "ingredientUnit": "ML"
+        },
+        "substitutes": [
+          {
+            "name": "grape seed oil",
+            "ingredientUnit": "ML"
+          },
+          {
+            "name": "coconut oil",
+            "ingredientUnit": "ML"
+          }
+        ]
+      },
+      {
+        "amount": 1,
+        "ingredient": {
+          "name": "basil",
+          "ingredientUnit": "BUNCH"
+        },
+        "substitutes": []
+      },
+      {
+        "amount": 1,
+        "ingredient": {
+          "name": "salt",
+          "ingredientUnit": "PINCH"
+        },
+        "substitutes": []
+      },
+      {
+        "amount": 1,
+        "ingredient": {
+          "name": "pepper",
+          "ingredientUnit": "PINCH"
+        },
+        "substitutes": []
+      }
+    ]
+  },
+  {
+    "name": "Chicken Paillards",
+    "cookingDescription": "Place each chicken-breast half between two sheets of heavy-duty plastic wrap, and pound to 1/2-inch thickness using a meat mallet or a rolling pin. Salt and pepper both sides of each chicken-breast half. Heat oil in large nonstick skillet over medium-high heat. Add chicken; sauté 3 minutes per side, until golden and cooked through. Cook in batches if necessary to prevent from crowding the pan.",
+    "cookingTimeMinutes": 15,
+    "difficultyLevel": "EASY",
+    "kcal": 92,
+    "servings": 4,
+    "ingredients": [
+      {
+        "amount": 400,
+        "ingredient": {
+          "name": "chicken breast",
+          "ingredientUnit": "GRAM"
+        },
+        "substitutes": [
+          {
+            "name": "ground turkey",
+            "ingredientUnit": "GRAM"
+          }
+        ]
+      },
+      {
+        "amount": 15.0,
+        "ingredient": {
+          "name": "olive oil",
+          "ingredientUnit": "ML"
+        },
+        "substitutes": [
+          {
+            "name": "grape seed oil",
+            "ingredientUnit": "ML"
+          },
+          {
+            "name": "coconut oil",
+            "ingredientUnit": "ML"
+          }
+        ]
+      },
+      {
+        "amount": 1,
+        "ingredient": {
+          "name": "salt",
+          "ingredientUnit": "PINCH"
+        },
+        "substitutes": []
+      },
+      {
+        "amount": 1,
+        "ingredient": {
+          "name": "pepper",
+          "ingredientUnit": "PINCH"
+        },
+        "substitutes": []
+      }
+    ]
   }
 ]
