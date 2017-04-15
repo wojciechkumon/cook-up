@@ -18,20 +18,13 @@ function chosenIngredients(state = [], action) {
       if (idAlreadyOnList(state, ingredient)) {
         return state;
       }
-      return [
-        ...state,
-        {
-          id: ingredient.id,
-          name: ingredient.name,
-          ingredientUnit: ingredient.ingredientUnit
-        }
-      ];
+      return state.concat([ingredient]);
     case REMOVE_INGREDIENT:
       return state.filter((ingredient) => ingredient.id !== action.id);
     case CLEAR_INGREDIENTS:
       return [];
     default:
-      return state
+      return state;
   }
 }
 
@@ -40,7 +33,7 @@ function allIngredients(state = [], action) {
     case SET_ALL_INGREDIENTS:
       return action.allIngredients;
     default:
-      return state
+      return state;
   }
 }
 
