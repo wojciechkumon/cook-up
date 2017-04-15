@@ -152,10 +152,10 @@
         "substitutes": []
       },
       {
-        "amount": 1,
+        "amount": 300,
         "ingredient": {
           "name": "tomato",
-          "ingredientUnit": "PIECE"
+          "ingredientUnit": "GRAM"
         },
         "substitutes": []
       },
@@ -202,10 +202,10 @@
     "servings": 2,
     "ingredients": [
       {
-        "amount": 3,
+        "amount": 200,
         "ingredient": {
           "name": "tomato",
-          "ingredientUnit": "PIECE"
+          "ingredientUnit": "GRAM"
         },
         "substitutes": []
       },
