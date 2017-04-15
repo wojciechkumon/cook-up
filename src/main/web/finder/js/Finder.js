@@ -11,8 +11,8 @@ import client from "../../restclient/client";
 
 class Finder extends Component {
 
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       inputValue: ''
     };
