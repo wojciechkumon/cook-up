@@ -1276,6 +1276,10 @@
     "ingredientUnit": "PINCH"
   },
   {
+    "name": "salt",
+    "ingredientUnit": "PINCH"
+  },
+  {
     "name": "flour",
     "ingredientUnit": "GRAM"
   },
