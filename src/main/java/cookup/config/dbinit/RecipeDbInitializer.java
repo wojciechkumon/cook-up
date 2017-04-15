@@ -7,10 +7,8 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import cookup.dao.AccountDao;
@@ -18,10 +16,8 @@ import cookup.dao.CommentsDao;
 import cookup.dao.IngredientDao;
 import cookup.dao.RecipeDao;
 import cookup.domain.account.Account;
-import cookup.domain.recipe.DifficultyLevel;
 import cookup.domain.recipe.Ingredient;
 import cookup.domain.recipe.Recipe;
-import cookup.domain.recipe.RecipeIngredient;
 import cookup.dto.CommentDto;
 import cookup.dto.RecipeDto;
 import cookup.dto.RegistrationDto;
@@ -32,6 +28,8 @@ import cookup.service.recipe.RecipeService;
 @Component
 public class RecipeDbInitializer {
   private static final String INGREDIENTS_FILE = "data/ingredients.json";
+  private static final String RECIPES_FILE = "data/recipes.json";
+  private static final String EMAIL = "lolek@gmail.com";
   private final RecipeDao recipeDao;
   private final RecipeService recipeService;
   private final CommentsDao commentsDao;
@@ -54,28 +52,23 @@ public class RecipeDbInitializer {
   }
 
   public void init() {
+    clearDb();
+
+    Account account = createAccount(EMAIL);
+
+    Map<String, Ingredient> ingredients = putIngredientsToDb();
+    List<Recipe> recipes = putRecipesToDb(account.getEmail(), ingredients);
+
+    addComments(account.getEmail(), recipes.get(0));
+
+    recipeService.addToFavourites(recipes.get(0).getId(), account.getEmail());
+  }
+
+  private void clearDb() {
     commentsDao.deleteAll();
     accountDao.deleteAll();
     recipeDao.deleteAll();
     ingredientDao.deleteAll();
-
-    String email = "lolek@gmail.com";
-    Account account = createAccount(email);
-
-    Map<String, Ingredient> ingredients = putIngredientsToDb();
-    Ingredient coffee = ingredients.get("coffee");
-    Ingredient water = ingredients.get("water");
-    Ingredient milk = ingredients.get("milk");
-    Ingredient soyMilk = ingredients.get("soy milk");
-    Ingredient coconutMilk = ingredients.get("coconut milk");
-
-    Recipe recipe1 = saveFirstRecipe(account, coffee, water, milk, soyMilk, coconutMilk);
-    Recipe recipe2 = saveSecondRecipe(account, coffee, water);
-
-    addComments(email, recipe1);
-
-    recipeService.addToFavourites(recipe1.getId(), email);
-    recipeService.addToFavourites(recipe2.getId(), email);
   }
 
   private Account createAccount(String email) {
@@ -100,63 +93,42 @@ public class RecipeDbInitializer {
     }
   }
 
-  private Recipe saveFirstRecipe(Account account, Ingredient coffee, Ingredient water, Ingredient milk,
-                                 Ingredient soyMilk, Ingredient coconutMilk) {
-    RecipeDto coffeeWithMilk = new RecipeDto.Builder()
-        .name("coffee with milk")
-        .cookingDescription("coffee + water + milk")
-        .cookingTimeMinutes(2)
-        .difficultyLevel(DifficultyLevel.MEDIUM)
-        .kcal(2)
-        .servings(1)
-        .build();
-
-    RecipeIngredient coffeeRecipeIngredient = RecipeIngredient.builder()
-        .ingredient(coffee)
-        .amount(20D)
-        .build();
-
-    RecipeIngredient waterRecipeIngredient = RecipeIngredient.builder()
-        .ingredient(water)
-        .amount(200D)
-        .build();
-
-    RecipeIngredient milkRecipeIngredient = RecipeIngredient.builder()
-        .ingredient(milk)
-        .amount(30D)
-        .substitutes(new HashSet<>(Arrays.asList(soyMilk, coconutMilk)))
-        .build();
-
-    Set<RecipeIngredient> recipeIngredientSet = new HashSet<>(
-        Arrays.asList(waterRecipeIngredient, coffeeRecipeIngredient, milkRecipeIngredient));
-    coffeeWithMilk.setIngredients(recipeIngredientSet);
-    return recipeService.addRecipe(coffeeWithMilk, account.getEmail());
+  private List<Recipe> putRecipesToDb(String email, Map<String, Ingredient> ingredients) {
+    InputStream inputStream = getClass().getClassLoader()
+        .getResourceAsStream(RECIPES_FILE);
+    ObjectMapper mapper = new ObjectMapper();
+    try {
+      List<RecipeDto> recipes = Arrays.asList(mapper.readValue(inputStream, RecipeDto[].class));
+      recipes.forEach(recipeDto -> setIngredientsId(recipeDto, ingredients));
+      return recipes.stream()
+          .map(recipeDto -> recipeService.addRecipe(recipeDto, email))
+          .collect(Collectors.toList());
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 
-  private Recipe saveSecondRecipe(Account account, Ingredient coffee, Ingredient water) {
-    RecipeDto coffeeRecipe = new RecipeDto.Builder()
-        .name("coffee")
-        .cookingDescription("coffee + water")
-        .cookingTimeMinutes(1)
-        .difficultyLevel(DifficultyLevel.EASY)
-        .kcal(0)
-        .servings(2)
-        .build();
+  private void setIngredientsId(RecipeDto recipeDto, Map<String, Ingredient> ingredients) {
+    recipeDto.getIngredients().forEach(recipeIngredient -> {
+      setId(ingredients, recipeIngredient.getIngredient());
+      recipeIngredient.getSubstitutes().forEach(substitute -> setId(ingredients, substitute));
+    });
+  }
 
-    RecipeIngredient coffeeRecipeIngredient = RecipeIngredient.builder()
-        .ingredient(coffee)
-        .amount(40D)
-        .build();
+  private void setId(Map<String, Ingredient> ingredients, Ingredient ingredient) {
+    Ingredient ingredientFromDb = ingredients.get(ingredient.getName());
+    validateIngredient(ingredient, ingredientFromDb);
+    ingredient.setId(ingredientFromDb.getId());
+  }
 
-    RecipeIngredient waterRecipeIngredient = RecipeIngredient.builder()
-        .ingredient(water)
-        .amount(230D)
-        .build();
-
-    Set<RecipeIngredient> recipeIngredientSet = new HashSet<>(
-        Arrays.asList(waterRecipeIngredient, coffeeRecipeIngredient));
-    coffeeRecipe.setIngredients(recipeIngredientSet);
-    return recipeService.addRecipe(coffeeRecipe, account.getEmail());
+  private void validateIngredient(Ingredient ingredient, Ingredient ingredientFromDb) {
+    if (ingredientFromDb == null) {
+      throw new IllegalArgumentException("Ingredient not exists: " + ingredient.getName());
+    } else if (ingredient.getIngredientUnit() != ingredientFromDb.getIngredientUnit()) {
+      throw new IllegalArgumentException("Not correct ingredient unit="
+          + ingredient.getIngredientUnit() + ", but should be "
+          + ingredientFromDb.getIngredientUnit() + " for " + ingredient.getName());
+    }
   }
 
   private void addComments(String email, Recipe recipe) {

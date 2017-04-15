@@ -1,0 +1,71 @@
+[
+  {
+    "name": "coffee with milk",
+    "cookingDescription": "coffee + water + milk",
+    "cookingTimeMinutes": 2,
+    "difficultyLevel": "MEDIUM",
+    "kcal": 1,
+    "servings": 1,
+    "ingredients": [
+      {
+        "amount": 50.0,
+        "ingredient": {
+          "name": "milk",
+          "ingredientUnit": "ML"
+        },
+        "substitutes": [
+          {
+            "name": "soy milk",
+            "ingredientUnit": "ML"
+          },
+          {
+            "name": "coconut milk",
+            "ingredientUnit": "ML"
+          }
+        ]
+      },
+      {
+        "amount": 150.0,
+        "ingredient": {
+          "name": "water",
+          "ingredientUnit": "ML"
+        },
+        "substitutes": []
+      },
+      {
+        "amount": 30.0,
+        "ingredient": {
+          "name": "coffee",
+          "ingredientUnit": "GRAM"
+        },
+        "substitutes": []
+      }
+    ]
+  },
+  {
+    "name": "coffee",
+    "cookingDescription": "coffee + water",
+    "cookingTimeMinutes": 1,
+    "difficultyLevel": "EASY",
+    "kcal": 0,
+    "servings": 1,
+    "ingredients": [
+      {
+        "amount": 200.0,
+        "ingredient": {
+          "name": "water",
+          "ingredientUnit": "ML"
+        },
+        "substitutes": []
+      },
+      {
+        "amount": 35.0,
+        "ingredient": {
+          "name": "coffee",
+          "ingredientUnit": "GRAM"
+        },
+        "substitutes": []
+      }
+    ]
+  }
+]
