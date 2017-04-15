@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import "../style/Finder.scss";
 import {Grid, Row} from "react-bootstrap";
@@ -75,6 +76,19 @@ class Finder extends Component {
     );
   }
 }
+
+Finder.propTypes = {
+  chosenIngredients: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    ingredientUnit: PropTypes.string.isRequired
+  })).isRequired,
+  allIngredients: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    ingredientUnit: PropTypes.string.isRequired
+  })).isRequired
+};
 
 const mapStateToProps = (state) => {
   return {
