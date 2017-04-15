@@ -17,7 +17,7 @@ module.exports = {
     },
     setup: function (app) {
       app.use(function pushStateHook(req, res, next) {
-        if (req.url === '/' || req.url === '/about') {
+        if (req.url === '/' || req.url === '/about' || req.url.startsWith('/recipe/')) {
           const indexFile = __dirname + '/target/classes/templates/home.html';
           res.setHeader("Content-Type", "text/html");
           fs.createReadStream(indexFile).pipe(res);
