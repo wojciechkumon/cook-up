@@ -72,7 +72,7 @@ public class RecipeDbInitializer {
     Recipe recipe1 = saveFirstRecipe(account, coffee, water, milk, soyMilk, coconutMilk);
     Recipe recipe2 = saveSecondRecipe(account, coffee, water);
 
-    addComments(email, account, recipe1);
+    addComments(email, recipe1);
 
     recipeService.addToFavourites(recipe1.getId(), email);
     recipeService.addToFavourites(recipe2.getId(), email);
@@ -159,10 +159,10 @@ public class RecipeDbInitializer {
     return recipeService.addRecipe(coffeeRecipe, account.getEmail());
   }
 
-  private void addComments(String email, Account account, Recipe recipe1) {
+  private void addComments(String email, Recipe recipe) {
     CommentDto comment1 = new CommentDto("first comment");
     CommentDto comment2 = new CommentDto("second comment");
-    commentsService.addUserComment(comment1, recipe1.getId(), email);
-    commentsService.addUserComment(comment2, recipe1.getId(), email);
+    commentsService.addUserComment(comment1, recipe.getId(), email);
+    commentsService.addUserComment(comment2, recipe.getId(), email);
   }
 }
