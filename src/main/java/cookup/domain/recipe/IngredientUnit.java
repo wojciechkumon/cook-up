@@ -7,5 +7,6 @@ public enum IngredientUnit {
   PIECE,
   CLOVE,
   PINCH,
-  TEASPOON
+  TEASPOON,
+  BUNCH
 }
