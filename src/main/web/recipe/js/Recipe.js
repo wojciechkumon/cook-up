@@ -14,7 +14,10 @@ class Recipe extends Component {
   componentDidMount() {
     const recipeId = parseInt(this.props.match.params.recipeId);
     const recipes = this.props.recipes;
-    if (recipes.find(r => r.id === recipeId)) {
+    const recipe = recipes.find(r => r.id === recipeId);
+    if (recipe) {
+      recipe.comments
+        .then(r => this.setState({comments: r.entity._embedded.recipeCommentDtoes}));
       return;
     }
 
