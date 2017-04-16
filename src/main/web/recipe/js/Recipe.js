@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import client from "../../restclient/client";
+import {addRecipe} from "./actions/actions";
 
 class Recipe extends Component {
 
@@ -21,6 +22,7 @@ class Recipe extends Component {
       .then(response => {
         response.entity.comments
           .then(r => this.setState({comments: r.entity._embedded.recipeCommentDtoes}));
+        this.props.dispatch(addRecipe(response.entity));
       });
   }
 
