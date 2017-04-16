@@ -1,26 +1,21 @@
 import React, {Component} from "react";
-import {Modal, Button} from 'react-bootstrap';
-import '../style/modals.scss';
+import {Button, Modal} from "react-bootstrap";
+import "../style/modals.scss";
 
 class SignInModalPill extends Component {
 
   constructor() {
     super();
-    this.state = {
-      showSignInModal: false
-    };
-
-    this.openSignInModal = this.openSignInModal.bind(this);
-    this.closeSignInModal = this.closeSignInModal.bind(this);
+    this.state = {showSignInModal: false};
   }
 
-  closeSignInModal() {
+  closeSignInModal = () => {
     this.setState({showSignInModal: false});
-  }
+  };
 
-  openSignInModal() {
+  openSignInModal = () => {
     this.setState({showSignInModal: true});
-  }
+  };
 
   render() {
     return (

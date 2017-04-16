@@ -13,11 +13,7 @@ class Finder extends Component {
 
   constructor() {
     super();
-    this.state = {
-      inputValue: ''
-    };
-
-    this.addNewIngredient = this.addNewIngredient.bind(this);
+    this.state = {searchText: ''};
   }
 
   componentDidMount() {
@@ -30,7 +26,7 @@ class Finder extends Component {
   }
 
   addNewIngredient(name) {
-    this.setState({inputValue: ''});
+    this.setState({searchText: ''});
     const newIngredient = this.getIngredientByName(name);
     if (newIngredient) {
       this.props.dispatch(addIngredient(newIngredient));
@@ -51,7 +47,7 @@ class Finder extends Component {
             <Row className="show-grid">
               <div className="autocomplete-input">
                 <Autocomplete
-                  value={this.state.inputValue}
+                  value={this.state.searchText}
                   inputProps={{
                     name: "Ingredients",
                     id: "ingredient-autocomplete"
@@ -60,7 +56,7 @@ class Finder extends Component {
                   getItemValue={(item) => item.name}
                   shouldItemRender={AutocompleteUtils.matchIngredientToTerm}
                   sortItems={AutocompleteUtils.sortIngredient}
-                  onChange={(event, inputValue) => this.setState({inputValue})}
+                  onChange={(event, searchText) => this.setState({searchText})}
                   onSelect={value => this.addNewIngredient(value)}
                   renderItem={(item, isHighlighted) => (
                     <div className={isHighlighted ? 'autocomplete-highlighted-item'
