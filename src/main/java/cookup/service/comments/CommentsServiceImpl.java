@@ -2,6 +2,9 @@ package cookup.service.comments;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import cookup.dao.AccountDao;
 import cookup.dao.CommentsDao;
 import cookup.dao.RecipeDao;
@@ -9,6 +12,7 @@ import cookup.domain.account.Account;
 import cookup.domain.recipe.Recipe;
 import cookup.domain.recipe.comment.Comment;
 import cookup.dto.CommentDto;
+import cookup.dto.RecipeCommentDto;
 
 @Service
 public class CommentsServiceImpl implements CommentsService {
@@ -50,5 +54,21 @@ public class CommentsServiceImpl implements CommentsService {
       throw new IllegalArgumentException("Recipe with id not exists: " + recipeId);
     }
     return recipe;
+  }
+
+  @Override
+  public List<RecipeCommentDto> getRecipeComments(long recipeId) {
+    Recipe recipe = getRecipe(recipeId);
+    return recipe.getComments().stream()
+        .map(this::toRecipeCommentDto)
+        .collect(Collectors.toList());
+  }
+
+  private RecipeCommentDto toRecipeCommentDto(Comment comment) {
+    Account author = comment.getAuthor();
+    if (author == null) {
+      return new RecipeCommentDto(comment.getContent());
+    }
+    return new RecipeCommentDto(comment.getContent(), author.getId(), author.getEmail());
   }
 }

@@ -20,9 +20,8 @@ class Finder extends Component {
     if (this.props.allIngredients.length > 0) {
       return;
     }
-    client({method: 'GET', path: '/api/ingredients'}).then(response => {
-      this.props.dispatch(setAllIngredients(response.entity));
-    });
+    client({method: 'GET', path: '/api/ingredients'})
+      .then(response => this.props.dispatch(setAllIngredients(response.entity)));
   }
 
   addNewIngredient(name) {
