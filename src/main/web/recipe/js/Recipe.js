@@ -8,7 +8,10 @@ class Recipe extends Component {
 
   constructor() {
     super();
-    this.state = {comments: []};
+    this.state = {
+      comments: [],
+      author: undefined
+    };
   }
 
   componentDidMount() {
@@ -16,17 +19,22 @@ class Recipe extends Component {
     const recipes = this.props.recipes;
     const recipe = recipes.find(r => r.id === recipeId);
     if (recipe) {
-      recipe.comments
-        .then(r => this.setState({comments: r.entity._embedded.recipeCommentDtoes}));
+      this.getAuthorAndComments(recipe);
       return;
     }
 
     client({method: 'GET', path: '/api/recipes/' + recipeId})
-      .then(response => {
-        response.entity.comments
-          .then(r => this.setState({comments: r.entity._embedded.recipeCommentDtoes}));
-        this.props.dispatch(addRecipe(response.entity));
+      .then(rs => {
+        this.getAuthorAndComments(rs.entity);
+        this.props.dispatch(addRecipe(rs.entity));
       });
+  }
+
+  getAuthorAndComments(recipe) {
+    recipe.comments
+      .then(rs => this.setState({comments: rs.entity._embedded.recipeCommentDtoes}));
+    recipe.author
+      .then(rs => this.setState({author: rs.entity}));
   }
 
   render() {
@@ -39,8 +47,11 @@ class Recipe extends Component {
         : ' anonymous';
       return c.content + author + ' ';
     });
+    const author = this.state.author;
     return (
       <div>
+        <br/><br/>
+        author {author && author.email + ', id=' + author.id}
         <br/><br/>
         {recipe && recipe.name + ', description: ' + recipe.cookingDescription}
         <br/>
