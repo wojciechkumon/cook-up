@@ -67,8 +67,9 @@ public class CommentsServiceImpl implements CommentsService {
   private RecipeCommentDto toRecipeCommentDto(Comment comment) {
     Account author = comment.getAuthor();
     if (author == null) {
-      return new RecipeCommentDto(comment.getContent());
+      return new RecipeCommentDto(comment.getId(), comment.getContent());
     }
-    return new RecipeCommentDto(comment.getContent(), author.getId(), author.getEmail());
+    return new RecipeCommentDto(comment.getId(), comment.getContent(), author.getId(),
+        author.getEmail());
   }
 }
