@@ -4,6 +4,7 @@
   "description": "Cook Up",
   "dependencies": {
     "bootstrap": "^3.3.7",
+    "font-awesome": "^4.7.0",
     "history": "^4.6.1",
     "material-ui": "^0.17.4",
     "prop-types": "^15.5.8",
@@ -11,17 +12,20 @@
     "react-autocomplete": "^1.4.4",
     "react-bootstrap": "^0.30.9",
     "react-dom": "^15.5.4",
+    "react-fontawesome": "^1.6.1",
     "react-redux": "^5.0.4",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.6.0",
     "redux-form": "^6.6.3",
+    "redux-logger": "^3.0.1",
+    "redux-thunk": "^2.2.0",
     "rest": "^2.0.0"
   },
   "scripts": {
     "watch": "webpack --watch -d",
-    "dev": "webpack-dev-server",
+    "dev": "webpack -d && webpack-dev-server",
     "build-prod": "webpack -p --progress --config webpack.config.prod.js"
   },
   "devDependencies": {
