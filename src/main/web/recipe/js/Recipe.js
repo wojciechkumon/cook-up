@@ -1,15 +1,13 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import '../style/Recipe.scss';
+import "../style/Recipe.scss";
 import PropTypes from "prop-types";
-import {
-  fetchRecipeIfNeeded,
-  fetchAuthorIfNeeded
-} from "./actions/actions";
-import {Col, Grid, Row, Table} from "react-bootstrap";
-import Loader from '../../util/js/Loader';
-import RecipeIngredients from './RecipeIngredients';
-import Comments from './Comments';
+import {fetchAuthorIfNeeded, fetchRecipeIfNeeded} from "./actions/actions";
+import {Col, Grid, Row, Table, Glyphicon} from "react-bootstrap";
+import Loader from "../../util/js/Loader";
+import RecipeIngredients from "./RecipeIngredients";
+import Comments from "./Comments";
+import NewCommentForm from "./NewCommentForm";
 
 class Recipe extends Component {
 
@@ -42,7 +40,7 @@ class Recipe extends Component {
               <Col md={6}>
                 {recipeFetching && <Loader/>}
                 <h1>{recipe && recipe.name}</h1>
-                <i className="glyphicon glyphicon-heart"/>
+                <Glyphicon glyph="heart"/>
               </Col>
               <Col md={6} id="info">
                 <Table>
@@ -75,7 +73,8 @@ class Recipe extends Component {
                 <p>{recipe && recipe.cookingDescription}</p>
               </Col>
             </Row>
-            <Comments recipeId={recipeId} />
+            <Comments recipeId={recipeId}/>
+            <NewCommentForm/>
           </Grid>
         </div>
     );

@@ -3,8 +3,8 @@ import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {fetchCommentsIfNeeded} from "./actions/actions";
 import {Col, Row} from "react-bootstrap";
-import Comment from './Comment';
-import Loader from '../../util/js/Loader';
+import Comment from "./Comment";
+import Loader from "../../util/js/Loader";
 
 class Comments extends Component {
 

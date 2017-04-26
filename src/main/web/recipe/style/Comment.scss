@@ -1,0 +1,12 @@
+@import '../../style/global_variables';
+
+.Comment {
+  width: 500px;
+  min-height: 50px;
+  margin-top: 10px;
+  text-decoration: none;
+  padding: 2px 10px;
+  border-left: 3px solid $red;
+  font-size: 12px;
+  transition: all 400ms;
+}
