@@ -1,7 +1,6 @@
 import React, {Component} from "react";
-import {connect} from "react-redux";
-import '../style/Recipe.scss';
 import PropTypes from "prop-types";
+import RecipeIngredient from "./RecipeIngredient";
 
 class RecipeIngredients extends Component {
 
@@ -10,13 +9,9 @@ class RecipeIngredients extends Component {
     return (
         <div>
           <h3>Ingredients</h3>
-          <div>{ingredients.map(i =>
-              <div key={i.ingredient.id} className="Ingredient">
-                <i className="glyphicon glyphicon-plus"/>
-                {i.amount + ' ' + i.ingredient.ingredientUnit + ' '
-                + i.ingredient.name}
-              </div>
-          )}</div>
+          <div>
+            {ingredients.map(i => <RecipeIngredient key={i.id} recipeIngredient={i}/>)}
+          </div>
         </div>
     );
   }

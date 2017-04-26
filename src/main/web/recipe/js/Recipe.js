@@ -7,7 +7,6 @@ import {
   fetchAuthorIfNeeded
 } from "./actions/actions";
 import {Col, Grid, Row, Table} from "react-bootstrap";
-import {Field, reduxForm} from 'redux-form';
 import Loader from '../../util/js/Loader';
 import RecipeIngredients from './RecipeIngredients';
 import Comments from './Comments';
