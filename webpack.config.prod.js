@@ -41,12 +41,20 @@ module.exports = {
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
-        loader: 'file-loader?name=/fonts/[name].[ext]'
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]',
+          outputPath: '/fonts/'
+        }
       },
       {
         test: /\.(jpe?g|png|gif)$/i,
         exclude: /(node_modules)/,
-        loader: 'file-loader?name=/img/[name].[ext]'
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]',
+          outputPath: '/img/'
+        }
       }
     ]
   }
