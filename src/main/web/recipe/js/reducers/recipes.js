@@ -1,11 +1,12 @@
 import {combineReducers} from "redux";
 import {
-  REQUEST_RECIPE,
-  RECEIVE_RECIPE,
-  REQUEST_COMMENTS,
-  RECEIVE_COMMENTS,
-  REQUEST_AUTHOR,
+  INVALIDATE_COMMENTS,
   RECEIVE_AUTHOR,
+  RECEIVE_COMMENTS,
+  RECEIVE_RECIPE,
+  REQUEST_AUTHOR,
+  REQUEST_COMMENTS,
+  REQUEST_RECIPE,
   SET_FOUND_RECIPE_IDS
 } from "../actions/actions";
 
@@ -65,6 +66,8 @@ function handleComments(state = {isFetching: false, didInvalidate: false},
         data: action.comments,
         lastUpdated: action.receivedAt
       });
+    case INVALIDATE_COMMENTS:
+      return Object.assign({}, state, {didInvalidate: true});
     default:
       return state;
   }
@@ -74,6 +77,7 @@ function commentsByRecipeId(state = {}, action) {
   switch (action.type) {
     case REQUEST_COMMENTS:
     case RECEIVE_COMMENTS:
+    case INVALIDATE_COMMENTS:
       return Object.assign({}, state, {
         [action.recipeId]: handleComments(state[action.recipeId], action)
       });

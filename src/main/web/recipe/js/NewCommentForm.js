@@ -23,14 +23,8 @@ class NewCommentForm extends Component {
   }
 }
 
-const handleSubmit = (values) => {
-  console.log('handleSub');
-  console.log(values);
-};
-
 NewCommentForm = reduxForm({
-  form: 'new-comment',
-  onSubmit: handleSubmit
+  form: 'new-comment'
 })(NewCommentForm);
 
 export default NewCommentForm;

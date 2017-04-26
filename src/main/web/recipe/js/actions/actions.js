@@ -4,6 +4,7 @@ export const REQUEST_RECIPE = 'REQUEST_RECIPE';
 export const RECEIVE_RECIPE = 'RECEIVE_RECIPE';
 export const REQUEST_COMMENTS = 'REQUEST_COMMENTS';
 export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS';
+export const INVALIDATE_COMMENTS = 'INVALIDATE_COMMENT';
 export const REQUEST_AUTHOR = 'REQUEST_AUTHOR';
 export const RECEIVE_AUTHOR = 'RECEIVE_AUTHOR';
 export const SET_FOUND_RECIPE_IDS = 'SET_FOUND_RECIPE_IDS';
@@ -24,6 +25,13 @@ export function fetchCommentsIfNeeded(recipeId) {
       return dispatch(fetchComments(recipeId));
     }
     return Promise.resolve();
+  }
+}
+
+export function invalidateComments(recipeId) {
+  return {
+    type: INVALIDATE_COMMENTS,
+    recipeId
   }
 }
 

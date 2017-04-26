@@ -3,11 +3,12 @@ import {connect} from "react-redux";
 import "../style/Recipe.scss";
 import PropTypes from "prop-types";
 import {fetchAuthorIfNeeded, fetchRecipeIfNeeded} from "./actions/actions";
-import {Col, Grid, Row, Table, Glyphicon} from "react-bootstrap";
+import {Col, Glyphicon, Grid, Row, Table} from "react-bootstrap";
 import Loader from "../../util/js/Loader";
 import RecipeIngredients from "./RecipeIngredients";
 import Comments from "./Comments";
 import NewCommentForm from "./NewCommentForm";
+import {handleSubmit} from "./newCommentSubmitter";
 
 class Recipe extends Component {
 
@@ -74,7 +75,7 @@ class Recipe extends Component {
               </Col>
             </Row>
             <Comments recipeId={recipeId}/>
-            <NewCommentForm/>
+            <NewCommentForm onSubmit={handleSubmit(recipeId, this.props.dispatch)}/>
           </Grid>
         </div>
     );
