@@ -3,8 +3,9 @@ import {connect} from "react-redux";
 import "../style/Recipe.scss";
 import PropTypes from "prop-types";
 import {fetchAuthorIfNeeded, fetchRecipeIfNeeded} from "./actions/actions";
-import {Col, Glyphicon, Grid, Row, Table} from "react-bootstrap";
+import {Col, Glyphicon, Grid, Row} from "react-bootstrap";
 import Loader from "../../util/js/Loader";
+import RecipeTable from "./RecipeTable";
 import RecipeIngredients from "./RecipeIngredients";
 import Comments from "./Comments";
 import NewCommentForm from "./NewCommentForm";
@@ -34,6 +35,7 @@ class Recipe extends Component {
     if (authorFetching) {
       console.log('author fetching');
     }
+
     return (
         <div className="Recipe">
           <Grid>
@@ -43,26 +45,7 @@ class Recipe extends Component {
                 <h1>{recipe && recipe.name}</h1>
                 <Glyphicon glyph="heart"/>
               </Col>
-              <Col md={6} id="info">
-                <Table>
-                  <thead>
-                  <tr>
-                    <th>Cooking Time</th>
-                    <th>Difficulty</th>
-                    <th>Kcal</th>
-                    <th>Servings</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr>
-                    <td>{recipe && recipe.cookingTimeMinutes + ' min'}</td>
-                    <td>{recipe && recipe.difficultyLevel}</td>
-                    <td>{recipe && recipe.kcal + ' kcal'}</td>
-                    <td>{recipe && recipe.servings + ' servings'}</td>
-                  </tr>
-                  </tbody>
-                </Table>
-              </Col>
+              <RecipeTable recipe={recipe}/>
             </Row>
 
             <Row className="show-grid">

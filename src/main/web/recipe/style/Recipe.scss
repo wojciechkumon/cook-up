@@ -30,21 +30,4 @@
   .glyphicon-heart:hover {
     color: $red;
   }
-
-  #info {
-    background-color: $red;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-    color: white;
-    table > thead > tr > th {
-      border-color: white;
-    }
-    th {
-      text-align: center;
-      text-transform: uppercase;
-      font-weight: 700;
-    }
-    td {
-      text-align: center;
-    }
-  }
 }
