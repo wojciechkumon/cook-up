@@ -70,8 +70,8 @@ function fetchRecipe(recipeId) {
     dispatch(requestRecipe(recipeId));
 
     return client({method: 'GET', path: '/api/recipes/' + recipeId})
-    .then(response => response.entity)
-    .then(recipe => dispatch(receiveRecipe(recipe)));
+      .then(response => response.entity)
+      .then(recipe => dispatch(receiveRecipe(recipe)));
   }
 }
 
@@ -80,9 +80,10 @@ function fetchComments(recipeId) {
     dispatch(requestComments(recipeId));
 
     return client(
-        {method: 'GET', path: '/api/recipes/' + recipeId + '/comments'})
-    .then(response => response.entity._embedded.recipeCommentDtoes)
-    .then(comments => dispatch(receiveComments(recipeId, comments)));
+      {method: 'GET', path: '/api/recipes/' + recipeId + '/comments'})
+      .then(response => response.entity)
+      .then(entity => entity && entity._embedded ? entity._embedded.recipeCommentDtoes : [])
+      .then(comments => dispatch(receiveComments(recipeId, comments)));
   }
 }
 
@@ -91,9 +92,9 @@ function fetchAuthor(recipeId) {
     dispatch(requestAuthor(recipeId));
 
     return client(
-        {method: 'GET', path: '/api/recipes/' + recipeId + '/author'})
-    .then(response => response.entity)
-    .then(author => dispatch(receiveAuthor(recipeId, author)));
+      {method: 'GET', path: '/api/recipes/' + recipeId + '/author'})
+      .then(response => response.entity)
+      .then(author => dispatch(receiveAuthor(recipeId, author)));
   }
 }
 
