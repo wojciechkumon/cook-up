@@ -7,6 +7,7 @@ import {Col, Grid, Row} from "react-bootstrap";
 import Loader from "../../util/js/Loader";
 import RecipeTable from "./RecipeTable";
 import RecipeIngredients from "./RecipeIngredients";
+import RecipeAuthor from "./RecipeAuthor";
 import Comments from "./Comments";
 import NewCommentForm from "./NewCommentForm";
 import {handleSubmit} from "./newCommentSubmitter";
@@ -29,13 +30,7 @@ class Recipe extends Component {
     const recipeIngredients = (recipe && recipe.ingredients) ?
         recipe.ingredients : [];
 
-    let author = this.props.authors[recipeId];
-    const authorFetching = author && author.isFetching;
-    author = author ? author.data : undefined;
-    console.log(author && author.id + ' ' + author.email);
-    if (authorFetching) {
-      console.log('author fetching');
-    }
+    const author = this.props.authors[recipeId];
 
     return (
         <div className="Recipe">
@@ -51,8 +46,7 @@ class Recipe extends Component {
 
             <Row className="show-grid">
               <Col md={6}>
-                <h3>Author</h3>
-                <p>{author && author.email}</p>
+                <RecipeAuthor author={author}/>
                 <RecipeIngredients recipeIngredients={recipeIngredients}/>
               </Col>
               <Col md={6}>

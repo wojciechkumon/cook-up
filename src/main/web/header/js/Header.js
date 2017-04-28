@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {NavLink} from "react-router-dom";
+import {Link} from "react-router-dom";
 import "../style/Header.scss";
 import {Col, Grid, Row} from "react-bootstrap";
 import SignInModalPill from "./SignInModalPill";
@@ -18,11 +18,10 @@ class Header extends Component {
               <Col md={8}>
                 <ul className="nav nav-pills">
                   <li>
-                    <NavLink to="/about" // TODO activeClassName unused!
-                             activeClassName="App-active-link">About</NavLink>
+                    <Link to="/about">About</Link>
                   </li>
                   <li>
-                    <NavLink to="/" activeClassName="App-active-link">Finder</NavLink>
+                    <Link to="/">Finder</Link>
                   </li>
                   <SignInModalPill/>
                   <LoginModalPill/>
