@@ -1,0 +1,12 @@
+@import '../../style/global_variables';
+
+.RecipeAuthor {
+  a {
+    text-decoration: none;
+    color: white;
+    margin-left: 25px;
+    &:hover {
+      color: $red;
+    }
+  }
+}
