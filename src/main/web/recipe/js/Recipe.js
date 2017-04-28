@@ -3,13 +3,14 @@ import {connect} from "react-redux";
 import "../style/Recipe.scss";
 import PropTypes from "prop-types";
 import {fetchAuthorIfNeeded, fetchRecipeIfNeeded} from "./actions/actions";
-import {Col, Glyphicon, Grid, Row} from "react-bootstrap";
+import {Col, Grid, Row} from "react-bootstrap";
 import Loader from "../../util/js/Loader";
 import RecipeTable from "./RecipeTable";
 import RecipeIngredients from "./RecipeIngredients";
 import Comments from "./Comments";
 import NewCommentForm from "./NewCommentForm";
 import {handleSubmit} from "./newCommentSubmitter";
+import Share from './Share';
 
 class Recipe extends Component {
 
@@ -40,16 +41,18 @@ class Recipe extends Component {
         <div className="Recipe">
           <Grid>
             <Row className="show-grid">
-              <Col md={6}>
+              <Col md={6} className="title">
                 {recipeFetching && <Loader/>}
                 <h1>{recipe && recipe.name}</h1>
-                <Glyphicon glyph="heart"/>
+                <Share />
               </Col>
               <RecipeTable recipe={recipe}/>
             </Row>
 
             <Row className="show-grid">
               <Col md={6}>
+                <h3>Author</h3>
+                <p>{author && author.email}</p>
                 <RecipeIngredients recipeIngredients={recipeIngredients}/>
               </Col>
               <Col md={6}>

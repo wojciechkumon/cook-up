@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import "../style/RecipeTable.scss";
 import PropTypes from "prop-types";
-import {Col, Table} from "react-bootstrap";
+import {Col, Table, Glyphicon} from "react-bootstrap";
 
 class RecipeTable extends Component {
 
@@ -12,10 +12,11 @@ class RecipeTable extends Component {
         <Table>
           <thead>
           <tr>
-            <th>Cooking Time</th>
-            <th>Difficulty</th>
-            <th>Kcal</th>
-            <th>Servings</th>
+            <th><p>Cooking <br />Time</p></th>
+            <th><p className="singleWordTitle">Difficulty</p></th>
+            <th><p className="singleWordTitle">Kcal</p></th>
+            <th><p className="singleWordTitle">Servings</p></th>
+            <th><p>Add to <br /> favourites</p></th>
           </tr>
           </thead>
           <tbody>
@@ -24,6 +25,7 @@ class RecipeTable extends Component {
             <td>{recipe && recipe.difficultyLevel}</td>
             <td>{recipe && recipe.kcal + ' kcal'}</td>
             <td>{recipe && recipe.servings + ' serving' + (recipe.servings > 1 ? 's' : '')}</td>
+            <td><Glyphicon glyph="heart"/></td>
           </tr>
           </tbody>
         </Table>
@@ -33,7 +35,7 @@ class RecipeTable extends Component {
 }
 
 RecipeTable.propTypes = {
-  recipe: PropTypes.object.isRequired
+  recipe: PropTypes.object
 };
 
 export default RecipeTable;

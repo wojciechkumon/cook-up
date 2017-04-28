@@ -5,14 +5,25 @@
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
   color: white;
   table > thead > tr > th {
-    border-color: white;
+    border-color: $dark-grey;
   }
   th {
     text-align: center;
     text-transform: uppercase;
     font-weight: 700;
+    .singleWordTitle {
+      margin-bottom: 20px;
+    }
   }
   td {
     text-align: center;
+    .glyphicon-heart:before {
+      font-size: 20px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .glyphicon-heart:hover {
+      color: $dark-grey;
+    }
   }
 }
