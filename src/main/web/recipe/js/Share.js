@@ -1,10 +1,8 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import "../style/Share.scss";
-import {
-  ShareButtons,
-  generateShareIcon
-} from 'react-share';
+import PropTypes from "prop-types";
+import {ShareButtons, generateShareIcon} from 'react-share';
 
 class Share extends Component {
 
@@ -15,7 +13,8 @@ class Share extends Component {
         TwitterShareButton
     } = ShareButtons;
 
-    const shareUrl = 'http://github.com';
+    const {recipeId} = this.props;
+    const shareUrl = window.location.origin + '/recipe/' + recipeId;
     const FacebookIcon = generateShareIcon('facebook');
     const TwitterIcon = generateShareIcon('twitter');
     const GooglePlusIcon = generateShareIcon('google');
@@ -37,5 +36,9 @@ class Share extends Component {
     );
   }
 }
+
+Share.propTypes = {
+  recipeId: PropTypes.number.isRequired
+};
 
 export default Share;

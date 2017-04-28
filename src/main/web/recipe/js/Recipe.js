@@ -39,7 +39,7 @@ class Recipe extends Component {
               <Col md={6} className="title">
                 {recipeFetching && <Loader/>}
                 <h1>{recipe && recipe.name}</h1>
-                <Share />
+                {recipe && <Share recipeId={recipe.id}/>}
               </Col>
               <RecipeTable recipe={recipe}/>
             </Row>
