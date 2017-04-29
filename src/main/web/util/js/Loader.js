@@ -9,7 +9,6 @@ class Loader extends Component {
         <FontAwesome className="Loader"
             name='circle-o-notch'
             size='2x'
-            spin
         />
     );
   }
