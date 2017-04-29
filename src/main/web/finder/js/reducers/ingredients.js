@@ -2,8 +2,9 @@ import {combineReducers} from "redux";
 import {
   ADD_INGREDIENT,
   CLEAR_INGREDIENTS,
+  RECEIVE_INGREDIENTS,
   REMOVE_INGREDIENT,
-  SET_ALL_INGREDIENTS
+  REQUEST_INGREDIENTS
 } from "../actions/actions";
 
 function idAlreadyOnList(state, newIngredient) {
@@ -28,10 +29,21 @@ function chosenIngredients(state = [], action) {
   }
 }
 
-function allIngredients(state = [], action) {
+function allIngredients(state = {isFetching: false, didInvalidate: false, data: []},
+                              action) {
   switch (action.type) {
-    case SET_ALL_INGREDIENTS:
-      return action.allIngredients;
+    case REQUEST_INGREDIENTS:
+      return Object.assign({}, state, {
+        isFetching: true,
+        didInvalidate: false
+      });
+    case RECEIVE_INGREDIENTS:
+      return {
+        isFetching: false,
+        didInvalidate: false,
+        data: action.allIngredients,
+        lastUpdated: action.receivedAt
+      };
     default:
       return state;
   }

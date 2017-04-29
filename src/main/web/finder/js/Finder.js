@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import "../style/Finder.scss";
 import {Grid, Row} from "react-bootstrap";
-import Autocomplete from "react-autocomplete";
 import IngredientList from "./IngredientList";
-import AutocompleteUtils from "./AutocompleteUtils";
-import {addIngredient, setAllIngredients} from "./actions/actions";
-import client from "../../restclient/client";
+import FoundRecipes from "./FoundRecipes";
+import {fetchIngredientsIfNeeded} from "./actions/actions";
+import Loader from "../../util/js/Loader";
+import FinderAutocomplete from "./FinderAutocomplete";
 
 class Finder extends Component {
 
@@ -17,57 +17,28 @@ class Finder extends Component {
   }
 
   componentDidMount() {
-    if (this.props.allIngredients.length > 0) {
-      return;
-    }
-    client({method: 'GET', path: '/api/ingredients'})
-      .then(response => this.props.dispatch(setAllIngredients(response.entity)));
-  }
-
-  addNewIngredient(name) {
-    this.setState({searchText: ''});
-    const newIngredient = this.getIngredientByName(name);
-    if (newIngredient) {
-      this.props.dispatch(addIngredient(newIngredient));
-    }
-  }
-
-  getIngredientByName(name) {
-    return this.props.allIngredients.find(ingredient => ingredient.name === name);
+    this.props.dispatch(fetchIngredientsIfNeeded());
   }
 
   render() {
+    const {allIngredients} = this.props;
+
     return (
-        <div className="Finder">
-          <Grid>
-            <Row className="show-grid">
-              <h1>What do you have in your fridge?</h1>
-            </Row>
-            <Row className="show-grid">
-              <div className="autocomplete-input">
-                <Autocomplete
-                  value={this.state.searchText}
-                  inputProps={{
-                    name: "Ingredients",
-                    id: "ingredient-autocomplete"
-                  }}
-                  items={this.props.allIngredients}
-                  getItemValue={(item) => item.name}
-                  shouldItemRender={AutocompleteUtils.matchIngredientToTerm}
-                  sortItems={AutocompleteUtils.sortIngredient}
-                  onChange={(event, searchText) => this.setState({searchText})}
-                  onSelect={value => this.addNewIngredient(value)}
-                  renderItem={(item, isHighlighted) => (
-                    <div className={isHighlighted ? 'autocomplete-highlighted-item'
-                      : 'autocomplete-item'}
-                         key={item.abbr}>{item.name}</div>
-                  )}
-                />
-              </div>
-              <IngredientList ingredients={this.props.chosenIngredients}/>
-            </Row>
-          </Grid>
-        </div>
+      <div className="Finder">
+        <Grid>
+          <Row className="show-grid">
+            <h1>What do you have in your fridge?</h1>
+          </Row>
+          <Row className="show-grid">
+            <div className="autocomplete-input">
+              {allIngredients.data.length > 0 ?
+               <FinderAutocomplete ingredients={allIngredients.data}/> : <Loader/>}
+            </div>
+            <IngredientList ingredients={this.props.chosenIngredients}/>
+            <FoundRecipes/>
+          </Row>
+        </Grid>
+      </div>
     );
   }
 }
@@ -78,11 +49,16 @@ Finder.propTypes = {
     name: PropTypes.string.isRequired,
     ingredientUnit: PropTypes.string.isRequired
   })).isRequired,
-  allIngredients: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    ingredientUnit: PropTypes.string.isRequired
-  })).isRequired
+  allIngredients: PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      ingredientUnit: PropTypes.string.isRequired
+    })).isRequired,
+    isFetching: PropTypes.bool,
+    didInvalidate: PropTypes.bool,
+    lastUpdated: PropTypes.number
+  }).isRequired
 };
 
 const mapStateToProps = (state) => {
