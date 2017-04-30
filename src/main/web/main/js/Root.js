@@ -11,6 +11,7 @@ import LayoutWrapper from "./LayoutWrapper";
 import Finder from "../../finder/js/Finder";
 import About from "../../about/js/About";
 import Recipe from "../../recipe/js/Recipe";
+import Profile from "../../profile/js/Profile";
 
 const history = createBrowserHistory();
 
@@ -25,6 +26,7 @@ class Root extends Component {
               <Route exact path="/" component={Finder}/>
               <Route path="/about" component={About}/>
               <Route path="/recipe/:recipeId" component={Recipe}/>
+              <Route path="/user/:userId" component={Profile}/>
             </LayoutWrapper>
           </Switch>
         </Router>

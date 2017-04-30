@@ -11,7 +11,7 @@ class Comment extends Component {
     return (
         <div className="Comment">
           <h6>{author}</h6>
-          <p>{comment.content}</p>
+          <p className="comment-content">{comment.content}</p>
         </div>
     );
   }

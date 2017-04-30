@@ -17,8 +17,11 @@ module.exports = {
     },
     setup: function (app) {
       app.use(function pushStateHook(req, res, next) {
-        if (req.url === '/' || req.url === '/about' || req.url.startsWith('/recipe/')) {
-          const indexFile = __dirname + '/src/main/resources/templates/home.html';
+        if (req.url === '/' || req.url === '/about'
+            || req.url.startsWith('/recipe/')
+            || req.url.startsWith('/user/')) {
+          const indexFile = __dirname
+              + '/src/main/resources/templates/home.html';
           res.setHeader("Content-Type", "text/html");
           fs.createReadStream(indexFile).pipe(res);
         } else if (req.url === '/css/styles.css') {

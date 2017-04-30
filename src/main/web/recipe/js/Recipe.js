@@ -12,6 +12,7 @@ import Comments from "./Comments";
 import NewCommentForm from "./NewCommentForm";
 import {handleSubmit} from "./newCommentSubmitter";
 import Share from './Share';
+import "font-awesome/scss/font-awesome.scss";
 
 class Recipe extends Component {
 
@@ -27,8 +28,8 @@ class Recipe extends Component {
     const recipeFetching = recipe && recipe.isFetching;
     recipe = recipe ? recipe.data : recipe;
 
-    const recipeIngredients = (recipe && recipe.ingredients) ?
-        recipe.ingredients : [];
+    const recipeIngredients = (recipe && recipe.ingredients)
+        ? recipe.ingredients : [];
 
     const author = this.props.authors[recipeId];
 
@@ -51,11 +52,15 @@ class Recipe extends Component {
               </Col>
               <Col md={6}>
                 <h3>Directions</h3>
-                <p>{recipe && recipe.cookingDescription}</p>
+                <p className="directions">{recipe
+                && recipe.cookingDescription}</p>
+                <h3>Save recipe to pdf <i className="fa fa-file-pdf-o" /></h3>
+                <h3>Add to favourites <i className="fa fa-heart" /></h3>
               </Col>
             </Row>
             <Comments recipeId={recipeId}/>
-            <NewCommentForm onSubmit={handleSubmit(recipeId, this.props.dispatch)}/>
+            <NewCommentForm
+                onSubmit={handleSubmit(recipeId, this.props.dispatch)}/>
           </Grid>
         </div>
     );

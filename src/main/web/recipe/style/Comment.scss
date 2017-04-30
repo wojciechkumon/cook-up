@@ -9,4 +9,10 @@
   border-left: 3px solid $red;
   font-size: 12px;
   transition: all 400ms;
+  h6 {
+    font-weight: 700;
+  }
+  .comment-content {
+    word-wrap: break-word;
+  }
 }

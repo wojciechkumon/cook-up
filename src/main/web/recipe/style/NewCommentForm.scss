@@ -1,3 +1,36 @@
+@import '../../style/global_variables';
+
 .NewCommentForm {
   color: black;
+  button {
+    margin-top: 20px;
+    color: white;
+    background: $red;
+    text-decoration: none;
+    border-radius: 2rem;
+    padding: 15px 30px;
+    border: 2px solid $red;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    font-size: 12px;
+    text-transform: uppercase;
+    transition: all 400ms;
+    &:hover {
+      background-color: white;
+      border: 2px solid white;
+      color: $red !important;
+    }
+  }
+  input[type=text] {
+    border-radius: 2rem;
+    padding: 15px 30px;
+    border: 2px solid white;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    font-size: 12px;
+    &:focus {
+      outline: none;
+      border: 2px solid $red;
+    }
+  }
 }

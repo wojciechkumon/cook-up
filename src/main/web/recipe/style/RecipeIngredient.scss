@@ -1,6 +1,28 @@
+@import '../../style/global_variables';
+
 .RecipeIngredient {
   p {
     text-transform: lowercase;
     margin-left: 25px;
+  }
+  li {
+    margin-left: 20px;
+  }
+  button {
+    margin-left: 10px;
+    color: white;
+    background: $red;
+    text-decoration: none;
+    border-radius: 2rem;
+    padding: 2px 6px;
+    border: 2px solid $red;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    font-size: 12px;
+    text-transform: uppercase;
+    transition: all 400ms;
+    &:focus {
+      outline: none;
+    }
   }
 }

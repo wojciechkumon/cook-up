@@ -7,13 +7,23 @@
   padding: 50px;
   margin-bottom: 30px;
 
-  h1, h3 {
+  i {
+    margin-left: 5px;
+    &:hover {
+      color: $red;
+    }
+  }
+
+  h3 {
+    margin-top: 40px;
     text-transform: uppercase;
     font-weight: 700;
   }
 
   h1 {
     margin-top: 0;
+    text-transform: uppercase;
+    font-weight: 700;
   }
 
   .show-grid.row {
@@ -27,5 +37,9 @@
 
   .title {
     border-left: 5px solid $red;
+  }
+
+  .directions {
+    margin-left: 25px;
   }
 }

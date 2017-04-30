@@ -14,7 +14,7 @@ class NewCommentForm extends Component {
       <form className="NewCommentForm" onSubmit={handleSubmit}>
         <div>
           <Field name="content" type="text"
-                 component={renderField} label="Content"
+                 component={renderField} label="Add comment..."
                  validate={[required, maxLength255]}/>
         </div>
         <button type="submit" disabled={submitting}>Submit</button>
