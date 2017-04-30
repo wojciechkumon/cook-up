@@ -1,20 +1,18 @@
 import React, {Component} from "react";
+import PropTypes from "prop-types";
 import {Button, Modal} from "react-bootstrap";
+import {connect} from "react-redux";
+import {hideLoginModal, showLoginModal} from "./actions/actions";
 import "../style/modals.scss";
 
 class LoginModalPill extends Component {
 
-  constructor() {
-    super();
-    this.state = {showLogInModal: false};
-  }
-
   openLogInModal = () => {
-    this.setState({showLogInModal: true});
+    this.props.dispatch(showLoginModal());
   };
 
   closeLogInModal = () => {
-    this.setState({showLogInModal: false});
+    this.props.dispatch(hideLoginModal());
   };
 
   render() {
@@ -22,7 +20,7 @@ class LoginModalPill extends Component {
         <li>
           <a onClick={this.openLogInModal}>Log in</a>
 
-          <Modal show={this.state.showLogInModal}
+          <Modal show={this.props.showModal}
                  onHide={this.closeLogInModal}>
             <Modal.Header closeButton>
               <Modal.Title>Log In</Modal.Title>
@@ -41,5 +39,17 @@ class LoginModalPill extends Component {
     );
   }
 }
+
+LoginModalPill.propTypes = {
+  showModal: PropTypes.bool.isRequired
+};
+
+const mapStateToProps = (state) => {
+  return {
+    showModal: state.frontend.modals.showLoginModal
+  }
+};
+
+LoginModalPill = connect(mapStateToProps)(LoginModalPill);
 
 export default LoginModalPill;

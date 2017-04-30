@@ -1,27 +1,25 @@
 import React, {Component} from "react";
+import PropTypes from "prop-types";
 import {Button, Modal} from "react-bootstrap";
+import {connect} from "react-redux";
+import {showSignInModal, hideSignInModal} from "./actions/actions";
 import "../style/modals.scss";
 
 class SignInModalPill extends Component {
 
-  constructor() {
-    super();
-    this.state = {showSignInModal: false};
-  }
-
-  closeSignInModal = () => {
-    this.setState({showSignInModal: false});
+  openSignInModal = () => {
+    this.props.dispatch(showSignInModal());
   };
 
-  openSignInModal = () => {
-    this.setState({showSignInModal: true});
+  closeSignInModal = () => {
+    this.props.dispatch(hideSignInModal());
   };
 
   render() {
     return (
         <li>
           <a onClick={this.openSignInModal}>Sign In</a>
-          <Modal show={this.state.showSignInModal}
+          <Modal show={this.props.showModal}
                  onHide={this.closeSignInModal}>
             <Modal.Header closeButton>
               <Modal.Title>Registration</Modal.Title>
@@ -39,5 +37,17 @@ class SignInModalPill extends Component {
     );
   }
 }
+
+SignInModalPill.propTypes = {
+  showModal: PropTypes.bool.isRequired
+};
+
+const mapStateToProps = (state) => {
+  return {
+    showModal: state.frontend.modals.showSignInModal
+  }
+};
+
+SignInModalPill = connect(mapStateToProps)(SignInModalPill);
 
 export default SignInModalPill;
