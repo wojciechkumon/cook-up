@@ -9,7 +9,7 @@
     "material-ui": "^0.17.4",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
-    "react-autocomplete": "^1.5.0",
+    "react-autocomplete": "^1.5.1",
     "react-bootstrap": "^0.31.0",
     "react-dom": "^15.5.4",
     "react-fontawesome": "^1.6.1",
