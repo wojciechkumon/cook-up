@@ -1,0 +1,12 @@
+@import '../../style/global_variables';
+
+tbody > tr {
+  color: white;
+  text-align: center;
+  padding: 10px;
+  &:hover {
+    background-color: $light-red;
+  }
+}
+
+
