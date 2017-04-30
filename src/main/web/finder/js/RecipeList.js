@@ -7,7 +7,7 @@ class RecipeList extends Component {
 
   render() {
     const {recipes} = this.props;
-    const tableRows = recipes.map(recipe => <RecipeListRow recipe={recipe}/>);
+    const tableRows = recipes.map(recipe => <RecipeListRow key={recipe.id} recipe={recipe}/>);
 
     return (
       <Row className="show-grid">

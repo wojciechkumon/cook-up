@@ -7,6 +7,7 @@ import IngredientList from "./IngredientList";
 import FoundRecipes from "./FoundRecipes";
 import {fetchIngredientsIfNeeded} from "./actions/actions";
 import Loader from "../../util/js/Loader";
+import FindButton from "./FindButton";
 import FinderAutocomplete from "./FinderAutocomplete";
 
 class Finder extends Component {
@@ -32,7 +33,8 @@ class Finder extends Component {
           <Row className="show-grid">
             <div className="autocomplete-input">
               {allIngredients.data.length > 0 ?
-               <FinderAutocomplete ingredients={allIngredients.data}/> : <Loader/>}
+               <div><FinderAutocomplete ingredients={allIngredients.data}/><FindButton/></div> :
+               <Loader/>}
             </div>
             <IngredientList ingredients={this.props.chosenIngredients}/>
             <FoundRecipes/>

@@ -7,8 +7,8 @@ export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS';
 export const INVALIDATE_COMMENTS = 'INVALIDATE_COMMENT';
 export const REQUEST_AUTHOR = 'REQUEST_AUTHOR';
 export const RECEIVE_AUTHOR = 'RECEIVE_AUTHOR';
-export const SET_FOUND_RECIPE_IDS = 'SET_FOUND_RECIPE_IDS';
-
+export const REQUEST_FOUND_RECIPES = 'REQUEST_FOUND_RECIPES';
+export const RECEIVE_FOUND_RECIPES = 'RECEIVE_FOUND_RECIPES';
 
 export function fetchRecipeIfNeeded(recipeId) {
   return (dispatch, getState) => {
@@ -150,6 +150,57 @@ function receiveAuthor(recipeId, author) {
     type: RECEIVE_AUTHOR,
     recipeId,
     author,
+    receivedAt: Date.now()
+  }
+}
+
+export function fetchMatchingRecipesIfNeeded() {
+  return (dispatch, getState) => {
+    const state = getState();
+    if (shouldFetchMatchingRecipes(state)) {
+      return dispatch(fetchMatchingRecipes(state));
+    }
+    return Promise.resolve();
+  }
+}
+
+function shouldFetchMatchingRecipes(state) {
+  const ingredients = state.ingredients.chosenIngredients;
+  const foundRecipes = state.recipes.foundRecipeIds;
+
+  if (ingredients.length === 0) {
+    return false;
+  } else if (!foundRecipes) {
+    return true;
+  } else {
+    return !foundRecipes.isFetching;
+  }
+}
+
+function fetchMatchingRecipes(state) {
+  return dispatch => {
+    dispatch(requestMatchingRecipes());
+    const ingredientIds = state.ingredients.chosenIngredients
+      .map(i => i.id)
+      .join();
+    return client({method: 'GET', path: '/api/matchingRecipes?ingredients=' + ingredientIds})
+      .then(response => response.entity)
+      .then(
+        entity => (entity._embedded && entity._embedded.recipes) ? entity._embedded.recipes : [])
+      .then(recipes => dispatch(receiveMatchingRecipes(recipes)));
+  }
+}
+
+function requestMatchingRecipes() {
+  return {
+    type: REQUEST_FOUND_RECIPES
+  }
+}
+
+function receiveMatchingRecipes(recipes) {
+  return {
+    type: RECEIVE_FOUND_RECIPES,
+    recipes,
     receivedAt: Date.now()
   }
 }
