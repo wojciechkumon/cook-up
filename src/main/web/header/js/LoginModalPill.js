@@ -2,8 +2,11 @@ import React, {Component} from "react";
 import PropTypes from "prop-types";
 import {Button, Modal} from "react-bootstrap";
 import {connect} from "react-redux";
+import {submit} from "redux-form";
 import {hideLoginModal, showLoginModal} from "./actions/actions";
 import "../style/modals.scss";
+import LoginForm from "./LoginForm";
+import {handleSubmit} from "./loginSubmitter";
 
 class LoginModalPill extends Component {
 
@@ -15,27 +18,29 @@ class LoginModalPill extends Component {
     this.props.dispatch(hideLoginModal());
   };
 
+  login = () => {
+    this.props.dispatch(submit('login'));
+  };
+
   render() {
     return (
-        <li>
-          <a onClick={this.openLogInModal}>Log in</a>
+      <li>
+        <a onClick={this.openLogInModal}>Log in</a>
 
-          <Modal show={this.props.showModal}
-                 onHide={this.closeLogInModal}>
-            <Modal.Header closeButton>
-              <Modal.Title>Log In</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <h4>Log in form</h4>
-              <p>Duis mollis, est non commodo luctus, nisi erat
-                porttitor ligula.</p>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button
-                  onClick={this.closeLogInModal}>Close</Button>
-            </Modal.Footer>
-          </Modal>
-        </li>
+        <Modal show={this.props.showModal}
+               onHide={this.closeLogInModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>Log In</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <LoginForm onSubmit={handleSubmit(this.props.dispatch)}/>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button type="submit" onClick={this.login}>Submit</Button>
+            <Button onClick={this.closeLogInModal}>Close</Button>
+          </Modal.Footer>
+        </Modal>
+      </li>
     );
   }
 }
