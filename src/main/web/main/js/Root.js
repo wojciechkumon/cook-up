@@ -12,6 +12,8 @@ import Finder from "../../finder/js/Finder";
 import About from "../../about/js/About";
 import Recipe from "../../recipe/js/Recipe";
 import Profile from "../../profile/js/Profile";
+import MePage from "../../me/js/MePage";
+import NotFoundPage from "../../notFoundPage/js/NotFoundPage";
 
 const history = createBrowserHistory();
 
@@ -21,14 +23,16 @@ class Root extends Component {
     return (
       <Provider store={this.props.store}>
         <Router history={history}>
-          <Switch>
-            <LayoutWrapper>
+          <LayoutWrapper>
+            <Switch>
               <Route exact path="/" component={Finder}/>
               <Route path="/about" component={About}/>
               <Route path="/recipe/:recipeId" component={Recipe}/>
               <Route path="/user/:userId" component={Profile}/>
-            </LayoutWrapper>
-          </Switch>
+              <Route path="/me" component={MePage}/>
+              <Route path="*" component={NotFoundPage}/>
+            </Switch>
+          </LayoutWrapper>
         </Router>
       </Provider>
     );
