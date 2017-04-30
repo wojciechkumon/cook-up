@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import {Button} from "react-bootstrap";
 import {fetchMatchingRecipesIfNeeded} from "../../recipe/js/actions/actions";
+import "../style/FindButton.scss";
 
 class FindButton extends Component {
 
@@ -11,13 +12,10 @@ class FindButton extends Component {
 
   render() {
     return (
-      <div>
         <Button
           bsStyle="primary"
-          bsSize="large"
           onClick={this.find}
         >Find</Button>
-      </div>
     );
   }
 }
