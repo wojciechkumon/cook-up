@@ -27,7 +27,7 @@
   },
   "scripts": {
     "watch": "webpack --watch -d",
-    "dev": "webpack-dev-server",
+    "dev": "webpack-dev-server --progress",
     "build-prod": "webpack -p --progress --config webpack.config.prod.js"
   },
   "devDependencies": {

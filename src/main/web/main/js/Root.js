@@ -13,6 +13,7 @@ import About from "../../about/js/About";
 import Recipe from "../../recipe/js/Recipe";
 import Profile from "../../profile/js/Profile";
 import MePage from "../../me/js/MePage";
+import LoginPage from "../../loginPage/js/LoginPage";
 import NotFoundPage from "../../notFoundPage/js/NotFoundPage";
 
 const history = createBrowserHistory();
@@ -30,6 +31,7 @@ class Root extends Component {
               <Route path="/recipe/:recipeId" component={Recipe}/>
               <Route path="/user/:userId" component={Profile}/>
               <Route path="/me" component={MePage}/>
+              <Route path="/login" component={LoginPage}/>
               <Route path="*" component={NotFoundPage}/>
             </Switch>
           </LayoutWrapper>
