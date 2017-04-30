@@ -12,7 +12,7 @@ import Comments from "./Comments";
 import NewCommentForm from "./NewCommentForm";
 import {handleSubmit} from "./newCommentSubmitter";
 import Share from './Share';
-import "font-awesome/scss/font-awesome.scss";
+import FontAwesome from 'react-fontawesome';
 
 class Recipe extends Component {
 
@@ -54,8 +54,8 @@ class Recipe extends Component {
                 <h3>Directions</h3>
                 <p className="directions">{recipe
                 && recipe.cookingDescription}</p>
-                <h3>Save recipe to pdf <i className="fa fa-file-pdf-o" /></h3>
-                <h3>Add to favourites <i className="fa fa-heart" /></h3>
+                <h3>Save recipe to pdf <FontAwesome className="pdf-icon" name="file-pdf-o"/></h3>
+                <h3>Add to favourites <FontAwesome className="heart-icon" name="heart"/></h3>
               </Col>
             </Row>
             <Comments recipeId={recipeId}/>
