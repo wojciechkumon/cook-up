@@ -15,6 +15,7 @@ import Recipe from "../../recipe/js/Recipe";
 import Profile from "../../profile/js/Profile";
 import MePage from "../../me/js/MePage";
 import LoginPage from "../../loginPage/js/LoginPage";
+import SignInSuccess from "../../signInSuccessPage/js/SignInSuccess";
 import NotFoundPage from "../../notFoundPage/js/NotFoundPage";
 
 const history = createBrowserHistory();
@@ -37,6 +38,7 @@ class Root extends Component {
               <Route path="/recipe/:recipeId" component={Recipe}/>
               <Route path="/user/:userId" component={Profile}/>
               <Route path="/login" component={LoginPage}/>
+              <Route path="/signInSuccess" component={SignInSuccess}/>
               <Route path="/me" component={WithAuth(MePage)}/>
               <Route path="*" component={NotFoundPage}/>
             </Switch>

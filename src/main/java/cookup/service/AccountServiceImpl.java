@@ -30,7 +30,7 @@ public class AccountServiceImpl implements AccountService {
   @Override
   public Account addAccount(RegistrationDto registrationDto) {
     Account newAccount = new Account();
-    newAccount.setEmail(registrationDto.getEmail());
+    newAccount.setEmail(registrationDto.getEmail().toLowerCase());
     newAccount.setPasswordHash(passwordEncoder.encode(registrationDto.getPassword()));
     newAccount.setUserRoles(buildUserRoles(newAccount));
     LocalDateTime now = timeUtil.now();
@@ -50,6 +50,6 @@ public class AccountServiceImpl implements AccountService {
 
   @Override
   public boolean isEmailTaken(String email) {
-    return accountDao.findByEmail(email) != null;
+    return accountDao.findByEmail(email.toLowerCase()) != null;
   }
 }

@@ -29,7 +29,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
   @Override
   @Transactional(readOnly = true)
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-    Account account = accountDao.findByEmail(email);
+    Account account = accountDao.findByEmail(email.toLowerCase());
     if (account == null) {
       throw new UsernameNotFoundException("Email not found for auth: " + email);
     }
