@@ -15,4 +15,9 @@
   td {
     text-align: center;
   }
+  tbody > tr {
+    &:hover {
+      background-color: transparent;
+    }
+  }
 }
