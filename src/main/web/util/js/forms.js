@@ -7,3 +7,9 @@ export const renderField = ({input, label, type, meta: {touched, error, warning}
     {touched && (error && <div className="form-error">{error}</div>)}
   </div>
 );
+
+export const FormError = ({error}) => {
+  return (
+    <strong className="form-error">{error}</strong>
+  );
+};

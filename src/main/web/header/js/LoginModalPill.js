@@ -19,7 +19,7 @@ class LoginModalPill extends Component {
   };
 
   login = () => {
-    this.props.dispatch(submit('login'));
+    this.props.dispatch(submit('login-form'));
   };
 
   render() {

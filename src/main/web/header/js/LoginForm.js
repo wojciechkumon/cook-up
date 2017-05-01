@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Field, reduxForm} from "redux-form";
 import {required} from "../../util/js/validators";
-import {renderField} from "../../util/js/forms";
+import {FormError, renderField} from "../../util/js/forms";
 
 class LoginForm extends Component {
 
@@ -13,7 +13,7 @@ class LoginForm extends Component {
   };
 
   render() {
-    const {handleSubmit, submitting} = this.props;
+    const {handleSubmit, error} = this.props;
     return (
       <form className="NewCommentForm" onSubmit={handleSubmit}
             onKeyDown={(e) => {
@@ -26,6 +26,7 @@ class LoginForm extends Component {
           <Field name="password" type="password"
                  component={renderField} label="Password"
                  validate={[required]}/>
+          <FormError error={error}/>
         </div>
       </form>
     );
@@ -33,7 +34,7 @@ class LoginForm extends Component {
 }
 
 LoginForm = reduxForm({
-  form: 'login'
+  form: 'login-form'
 })(LoginForm);
 
 export default LoginForm;
