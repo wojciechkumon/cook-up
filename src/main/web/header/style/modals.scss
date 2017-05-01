@@ -10,18 +10,6 @@
   font-weight: bold;
 }
 
-input[type=text], input[type=password] {
-  background-color: $transparent;
-  border-radius: 2rem;
-  padding: 15px 30px;
-  border: 2px solid $transparent!important;
-  font-weight: 900;
-  letter-spacing: 0.1em;
-  font-size: 12px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
 .btn-default,
 .btn-default:visited {
   margin-left: 15px;

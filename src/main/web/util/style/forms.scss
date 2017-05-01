@@ -1,13 +1,27 @@
 @import '../../style/global_variables';
 
+.Field {
+  .async-validating {
+    background-color: #807c80;
+  }
+
+  input[type=text], input[type=password] {
+    color: black;
+    border-radius: 2rem;
+    padding: 15px 30px;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    font-size: 12px;
+    background-color: $transparent;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+}
+
 .form-error {
   color: $red;
 }
 
 .form-warning {
   color: orange;
-}
-
-.async-validating {
-  background-color: #807c80;
 }
