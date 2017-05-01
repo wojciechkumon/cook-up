@@ -36,12 +36,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .csrf().disable()
 
         .authorizeRequests()
-          .antMatchers("/", "/about", "/recipe/**", "/login", "/register", "/api/**")
-          .permitAll()
-        .anyRequest().authenticated()
+          .antMatchers("/me", "/api/loginSuccess")
+          .authenticated()
+        .anyRequest().permitAll()
 
         .and().formLogin()
           .loginPage("/login")
+          .loginProcessingUrl("/api/login")
           .defaultSuccessUrl("/api/loginSuccess")
           .failureUrl("/api/wrongCredentials")
         .and().logout()

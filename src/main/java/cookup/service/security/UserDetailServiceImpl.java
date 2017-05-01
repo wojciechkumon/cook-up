@@ -2,7 +2,6 @@ package cookup.service.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,6 +15,7 @@ import java.util.stream.Collectors;
 import cookup.dao.AccountDao;
 import cookup.domain.account.Account;
 import cookup.domain.account.UserRole;
+import cookup.domain.account.UserWithId;
 
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
@@ -36,9 +36,10 @@ public class UserDetailServiceImpl implements UserDetailsService {
     return buildUserForAuthentication(account);
   }
 
-  private User buildUserForAuthentication(Account account) {
+  private UserWithId buildUserForAuthentication(Account account) {
     List<GrantedAuthority> authorities = buildUserAuthority(account.getUserRoles());
-    return new User(account.getEmail(), account.getPasswordHash(), authorities);
+    return new UserWithId(account.getEmail(), account.getId(), account.getPasswordHash(),
+        authorities);
   }
 
   private List<GrantedAuthority> buildUserAuthority(Collection<UserRole> userRoles) {
