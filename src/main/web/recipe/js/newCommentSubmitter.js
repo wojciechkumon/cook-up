@@ -9,7 +9,7 @@ export const handleSubmit = (recipeId, dispatch) => values => {
     content: values.content
   };
   return client({method: 'POST', path, entity: commentDto})
-    .then(() => dispatch(reset('new-comment')))
+    .then(() => dispatch(reset('new-comment-form')))
     .then(() => dispatch(invalidateComments(recipeNum)))
     .then(() => dispatch(fetchCommentsIfNeeded(recipeNum)));
 };

@@ -24,7 +24,7 @@ class NewCommentForm extends Component {
 }
 
 NewCommentForm = reduxForm({
-  form: 'new-comment'
+  form: 'new-comment-form'
 })(NewCommentForm);
 
 export default NewCommentForm;
