@@ -58,12 +58,10 @@ module.exports = {
           options: {
             presets: [
               ["es2015", {"modules": false}],
-              "react"
+              "react",
+              "stage-2"
             ],
-            plugins: [
-              "react-hot-loader/babel",
-              "transform-class-properties"
-            ]
+            plugins: ["react-hot-loader/babel", "transform-decorators-legacy"]
           }
         },
       },
