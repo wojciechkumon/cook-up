@@ -6,6 +6,7 @@
     "bootstrap": "^3.3.7",
     "font-awesome": "^4.7.0",
     "history": "^4.6.1",
+    "hoist-non-react-statics": "^1.2.0",
     "material-ui": "^0.18.0",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
@@ -23,7 +24,8 @@
     "redux-form": "^6.6.3",
     "redux-logger": "^3.0.1",
     "redux-thunk": "^2.2.0",
-    "rest": "^2.0.0"
+    "rest": "^2.0.0",
+    "url": "^0.11.0"
   },
   "scripts": {
     "watch": "webpack --watch -d",

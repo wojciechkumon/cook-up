@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import createBrowserHistory from "history/createBrowserHistory";
 import {Provider} from "react-redux";
+import {WithAuthWrapper} from "../../util/js/WithAuthWrapper";
 import "bootstrap/dist/css/bootstrap.css";
 import "font-awesome/scss/font-awesome.scss";
 import "../style/App.scss";
@@ -18,6 +19,11 @@ import NotFoundPage from "../../notFoundPage/js/NotFoundPage";
 
 const history = createBrowserHistory();
 
+const WithAuth = WithAuthWrapper({
+  authSelector: state => state.user,
+  predicate: (authData) => authData.loggedIn
+});
+
 class Root extends Component {
 
   render() {
@@ -30,8 +36,8 @@ class Root extends Component {
               <Route path="/about" component={About}/>
               <Route path="/recipe/:recipeId" component={Recipe}/>
               <Route path="/user/:userId" component={Profile}/>
-              <Route path="/me" component={MePage}/>
               <Route path="/login" component={LoginPage}/>
+              <Route path="/me" component={WithAuth(MePage)}/>
               <Route path="*" component={NotFoundPage}/>
             </Switch>
           </LayoutWrapper>

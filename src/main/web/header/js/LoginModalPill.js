@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import {Button, Modal} from "react-bootstrap";
 import {connect} from "react-redux";
 import {submit} from "redux-form";
+import {withRouter} from "react-router-dom";
 import {hideLoginModal, showLoginModal} from "./actions/actions";
 import "../style/modals.scss";
 import LoginForm from "./LoginForm";
@@ -33,7 +34,7 @@ class LoginModalPill extends Component {
             <Modal.Title>Log In</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <LoginForm onSubmit={handleSubmit(this.props.dispatch)}/>
+            <LoginForm onSubmit={handleSubmit(this.props.dispatch, this.props.history)}/>
           </Modal.Body>
           <Modal.Footer>
             <Button type="submit" onClick={this.login}>Submit</Button>
@@ -57,4 +58,4 @@ const mapStateToProps = (state) => {
 
 LoginModalPill = connect(mapStateToProps)(LoginModalPill);
 
-export default LoginModalPill;
+export default withRouter(LoginModalPill);
