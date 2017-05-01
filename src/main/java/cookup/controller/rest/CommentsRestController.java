@@ -36,6 +36,7 @@ public class CommentsRestController {
                   @Valid @RequestBody CommentDto comment, Principal principal) {
     if (principal != null) {
       commentsService.addUserComment(comment, recipeId, principal.getName());
+      return;
     }
     commentsService.addAnonymousComment(comment, recipeId);
   }
