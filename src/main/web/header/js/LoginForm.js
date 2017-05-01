@@ -15,7 +15,7 @@ class LoginForm extends Component {
   render() {
     const {handleSubmit, error} = this.props;
     return (
-      <form className="NewCommentForm" onSubmit={handleSubmit}
+      <form onSubmit={handleSubmit}
             onKeyDown={(e) => {
               this.handleKeyDown(e, handleSubmit);
             }}>
