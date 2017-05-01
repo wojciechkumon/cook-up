@@ -5,10 +5,20 @@ import {renderField} from "../../util/js/forms";
 
 class LoginForm extends Component {
 
+  handleKeyDown = (e, handleSubmit) => {
+    if (e.key === 'Enter' && e.shiftKey === false) {
+      e.preventDefault();
+      handleSubmit();
+    }
+  };
+
   render() {
-    const {handleSubmit} = this.props;
+    const {handleSubmit, submitting} = this.props;
     return (
-      <form className="NewCommentForm" onSubmit={handleSubmit}>
+      <form className="NewCommentForm" onSubmit={handleSubmit}
+            onKeyDown={(e) => {
+              this.handleKeyDown(e, handleSubmit);
+            }}>
         <div>
           <Field name="email" type="text"
                  component={renderField} label="Email"
