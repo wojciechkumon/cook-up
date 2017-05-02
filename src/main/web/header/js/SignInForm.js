@@ -9,6 +9,7 @@ import {
 } from "../../util/js/validators";
 import {emailNotTaken} from "./emailNotTakenValidator";
 import {asyncValidationDisabledOnSubmit, FormError, renderField} from "../../util/js/forms";
+import {onEnter} from "../../util/js/keyboard";
 
 const minLength4 = minLength(4);
 const maxLength64 = maxLength(64);
@@ -16,20 +17,11 @@ const lengthWarn = passwordLengthWarn(4, 8);
 
 class SignInForm extends Component {
 
-  handleKeyDown = (e, handleSubmit) => {
-    if (e.key === 'Enter' && e.shiftKey === false) {
-      e.preventDefault();
-      handleSubmit();
-    }
-  };
-
   render() {
     const {handleSubmit, error} = this.props;
     return (
       <form onSubmit={handleSubmit}
-            onKeyDown={(e) => {
-              this.handleKeyDown(e, handleSubmit);
-            }}>
+            onKeyDown={e => onEnter(e, handleSubmit)}>
         <div>
           <Field name="email" type="text"
                  component={renderField} label="Email"
