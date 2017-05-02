@@ -9,8 +9,14 @@
   border-left: 3px solid $red;
   font-size: 12px;
   transition: all 400ms;
-  h6 {
+  a, .author {
+    text-decoration: none;
+    color: white;
     font-weight: 700;
+    font-size: 14px;
+    &:hover {
+      color: $red;
+    }
   }
   .comment-content {
     word-wrap: break-word;

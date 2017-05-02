@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import "../style/Comment.scss";
 
@@ -6,11 +7,13 @@ class Comment extends Component {
 
   render() {
     const comment = this.props.comment;
+    const url = comment && '/user/' + comment.authorId;
     const author = (comment.authorId && comment.authorEmail) ?
-        ' author: ' + comment.authorEmail : ' anonymous';
+        <Link to={url}>{comment.authorEmail}</Link> : ' anonymous';
+
     return (
         <div className="Comment">
-          <h6>{author}</h6>
+          <p className="author">{author}</p>
           <p className="comment-content">{comment.content}</p>
         </div>
     );
