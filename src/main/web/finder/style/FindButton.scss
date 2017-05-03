@@ -1,4 +1,4 @@
-@import '../../style/global_variables';
+@import '../../main/style/global_variables';
 
 .btn-primary,
 .btn-primary:visited {
@@ -14,7 +14,6 @@
   border: 2px solid $red;
   font-weight: 900;
   letter-spacing: 0.1em;
-  font-size: 12px;
   text-transform: uppercase;
   transition: all 400ms;
 }

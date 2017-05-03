@@ -38,6 +38,7 @@ class LoginModalPill extends Component {
           </Modal.Body>
           <Modal.Footer>
             <Button type="submit" onClick={this.login}>Submit</Button>
+            {this.props.submitting && 'submt'}
             <Button onClick={this.closeLogInModal}>Close</Button>
           </Modal.Footer>
         </Modal>
@@ -47,12 +48,15 @@ class LoginModalPill extends Component {
 }
 
 LoginModalPill.propTypes = {
-  showModal: PropTypes.bool.isRequired
+  showModal: PropTypes.bool.isRequired,
+  submitting: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => {
   return {
-    showModal: state.frontend.modals.showLoginModal
+    showModal: state.frontend.modals.showLoginModal,
+    submitting: state.form['login-form']
+        ? state.form['login-form'].submitting === true : false
   }
 };
 
