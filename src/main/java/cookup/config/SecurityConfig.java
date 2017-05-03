@@ -45,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
           .loginProcessingUrl("/api/login")
           .defaultSuccessUrl("/api/loginSuccess")
           .failureUrl("/api/wrongCredentials")
-        .and().logout()
+        .and().logout().logoutUrl("/api/logout")
         .and().rememberMe();
   }
 

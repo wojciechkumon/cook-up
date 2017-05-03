@@ -1,0 +1,17 @@
+@import '../../style/global_variables';
+
+.NotFoundPage {
+  background-color: $dark-grey;
+  min-height: 320px;
+  padding: 50px;
+  font-weight: 700;
+  color: white;
+  text-align: center;
+
+  .title-error-404 {
+    font-size: 72px;
+  }
+  p {
+    font-size: 36px;
+  }
+}
