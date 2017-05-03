@@ -12,10 +12,7 @@ import MePill from "./MePill";
 class Header extends Component {
 
   render() {
-    const {loggedIn, email, id} = this.props.user;
-    console.log( this.props.user);
-    console.log(email);
-    console.log(id);
+    const {loggedIn} = this.props.user;
     return (
       <div className="Header">
         <Grid>
