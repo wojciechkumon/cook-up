@@ -1,7 +1,7 @@
 @import '../../style/global_variables';
 
 .Field {
-  .async-validating {
+  &.async-validating {
     background-color: #807c80;
   }
 
@@ -20,6 +20,7 @@
 
 .form-error {
   color: $red;
+  font-weight: 700;
 }
 
 .form-warning {
