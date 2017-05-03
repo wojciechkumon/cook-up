@@ -19,15 +19,34 @@ export const handleSubmit = (dispatch, history) => values => {
     .then(response => response.entity)
     .then(entity => {
       if (entity.success === "true") {
-        dispatch(hideLoginModal());
-        dispatch(reset('login-form'));
-        dispatch(login(entity.email, entity.id));
-        const redirectLoc = url.parse(window.location.href, true).query.redirect;
-        if (redirectLoc) {
-          history.push(redirectLoc);
-        }
+        dispatchSuccessLogin(dispatch, entity);
       } else {
+        dispatch(logout());
         throw new SubmissionError({_error: 'Login failed!'});
       }
     });
+};
+
+export const setUserIfLoggedIn = dispatch => {
+  return client({method: 'GET', path: '/api/loginSuccess'})
+    .then(response => response.entity)
+    .then(entity => {
+      if (entity.success === "true") {
+        dispatchSuccessLogin(dispatch, entity);
+      } else {
+        dispatch(logout());
+      }
+    }).catch(() => {
+      dispatch(logout());
+    });
+};
+
+const dispatchSuccessLogin = (dispatch, entity) => {
+  dispatch(hideLoginModal());
+  dispatch(reset('login-form'));
+  dispatch(login(entity.email, entity.id));
+  const redirectLoc = url.parse(window.location.href, true).query.redirect;
+  if (redirectLoc) {
+    history.push(redirectLoc);
+  }
 };
