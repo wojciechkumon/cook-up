@@ -1,7 +1,7 @@
 @import '../../style/global_variables';
 
 .Field {
-  .async-validating {
+  &.async-validating {
     background-color: #807c80;
   }
 
