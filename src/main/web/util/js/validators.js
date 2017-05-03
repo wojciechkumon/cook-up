@@ -13,7 +13,7 @@ export const required = value => value ? undefined : 'Required';
 export const validateFieldMatch = (firstFieldName, secondFieldName, message) => values => {
   const errors = {};
   if (values[firstFieldName] !== values[secondFieldName]) {
-    errors._error = message;
+    errors[secondFieldName] = message;
   }
   return errors;
 };
@@ -25,4 +25,17 @@ export const email = email => {
 export const isCorrectEmail = email => {
   const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return regex.test(email);
+};
+
+export const mapErrorCodeToMessage = (code, defaultMessage) => {
+  switch(code) {
+    case 'Size':
+      return defaultMessage;
+    case 'Email':
+      return 'Not valid email';
+    case 'EmailUnique':
+      return 'Email is taken';
+    case 'NotBlank':
+      return 'Required';
+  }
 };
