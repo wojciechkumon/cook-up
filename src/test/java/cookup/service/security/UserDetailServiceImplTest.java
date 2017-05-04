@@ -32,6 +32,7 @@ class UserDetailServiceImplTest {
   @BeforeEach
   void setUp() {
     account = new Account();
+    account.setId(17L);
     account.setEmail(EXISTING_EMAIL);
     account.setPasswordHash(HASH);
     account.setUserRoles(Collections.singleton(new UserRole(account, ROLE)));
