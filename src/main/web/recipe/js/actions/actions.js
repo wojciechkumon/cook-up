@@ -1,9 +1,12 @@
 import client from "../../../restclient/client";
+import {getHttpError} from "../../../main/js/actions/actions";
 
 export const REQUEST_RECIPE = 'REQUEST_RECIPE';
 export const RECEIVE_RECIPE = 'RECEIVE_RECIPE';
+export const RECIPE_REQUEST_ERROR = 'RECIPE_REQUEST_ERROR';
 export const REQUEST_COMMENTS = 'REQUEST_COMMENTS';
 export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS';
+export const COMMENTS_REQUEST_ERROR = 'COMMENTS_REQUEST_ERROR';
 export const INVALIDATE_COMMENTS = 'INVALIDATE_COMMENT';
 export const REQUEST_AUTHOR = 'REQUEST_AUTHOR';
 export const RECEIVE_AUTHOR = 'RECEIVE_AUTHOR';
@@ -44,13 +47,6 @@ export function fetchAuthorIfNeeded(recipeId) {
   }
 }
 
-export const setFoundRecipeIds = (recipeIds) => {
-  return {
-    type: SET_FOUND_RECIPE_IDS,
-    recipeIds: recipeIds
-  }
-};
-
 function shouldFetchRecipe(state, recipeId) {
   return shouldFetch(state.recipes.byId[recipeId]);
 }
@@ -79,7 +75,8 @@ function fetchRecipe(recipeId) {
 
     return client({method: 'GET', path: '/api/recipes/' + recipeId})
       .then(response => response.entity)
-      .then(recipe => dispatch(receiveRecipe(recipe)));
+      .then(recipe => dispatch(receiveRecipe(recipe)))
+      .catch(response => dispatch(recipeRequestError(recipeId, getHttpError(response))));
   }
 }
 
@@ -91,7 +88,8 @@ function fetchComments(recipeId) {
       {method: 'GET', path: '/api/recipes/' + recipeId + '/comments'})
       .then(response => response.entity)
       .then(entity => entity && entity._embedded ? entity._embedded.recipeCommentDtoes : [])
-      .then(comments => dispatch(receiveComments(recipeId, comments)));
+      .then(comments => dispatch(receiveComments(recipeId, comments)))
+      .catch(response => dispatch(commentsRequestError(recipeId, getHttpError(response))));
   }
 }
 
@@ -122,6 +120,15 @@ function receiveRecipe(recipe) {
   }
 }
 
+function recipeRequestError(recipeId, errorType) {
+  return {
+    type: RECIPE_REQUEST_ERROR,
+    recipeId,
+    errorType,
+    receivedAt: Date.now()
+  }
+}
+
 function requestComments(recipeId) {
   return {
     type: REQUEST_COMMENTS,
@@ -134,6 +141,15 @@ function receiveComments(recipeId, comments) {
     type: RECEIVE_COMMENTS,
     recipeId,
     comments,
+    receivedAt: Date.now()
+  }
+}
+
+function commentsRequestError(recipeId, errorType) {
+  return {
+    type: COMMENTS_REQUEST_ERROR,
+    recipeId,
+    errorType,
     receivedAt: Date.now()
   }
 }

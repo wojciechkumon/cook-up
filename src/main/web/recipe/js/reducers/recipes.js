@@ -5,8 +5,10 @@ import {
   RECEIVE_COMMENTS,
   RECEIVE_FOUND_RECIPES,
   RECEIVE_RECIPE,
+  RECIPE_REQUEST_ERROR,
   REQUEST_AUTHOR,
   REQUEST_COMMENTS,
+  COMMENTS_REQUEST_ERROR,
   REQUEST_FOUND_RECIPES,
   REQUEST_RECIPE
 } from "../actions/actions";
@@ -29,7 +31,7 @@ function foundRecipeIds(state = {isFetching: false, data: []},
   }
 }
 
-function handleRecipe(state = {isFetching: false, didInvalidate: false},
+function handleRecipe(state = {isFetching: false, didInvalidate: false, error: false},
                       action) {
   switch (action.type) {
     case REQUEST_RECIPE:
@@ -42,6 +44,14 @@ function handleRecipe(state = {isFetching: false, didInvalidate: false},
         isFetching: false,
         didInvalidate: false,
         data: action.recipe,
+        lastUpdated: action.receivedAt,
+        error: false
+      });
+    case RECIPE_REQUEST_ERROR:
+      return Object.assign({}, state, {
+        isFetching: false,
+        didInvalidate: true,
+        error: action.errorType,
         lastUpdated: action.receivedAt
       });
     default:
@@ -53,6 +63,7 @@ function byId(state = {}, action) {
   switch (action.type) {
     case REQUEST_RECIPE:
     case RECEIVE_RECIPE:
+    case RECIPE_REQUEST_ERROR:
       return Object.assign({}, state, {
         [action.recipeId]: handleRecipe(state[action.recipeId], action)
       });
@@ -74,7 +85,7 @@ function byId(state = {}, action) {
   }
 }
 
-function handleComments(state = {isFetching: false, didInvalidate: false},
+function handleComments(state = {isFetching: false, didInvalidate: false, error: false},
                         action) {
   switch (action.type) {
     case REQUEST_COMMENTS:
@@ -87,10 +98,18 @@ function handleComments(state = {isFetching: false, didInvalidate: false},
         isFetching: false,
         didInvalidate: false,
         data: action.comments,
-        lastUpdated: action.receivedAt
+        lastUpdated: action.receivedAt,
+        error: false
       });
     case INVALIDATE_COMMENTS:
-      return Object.assign({}, state, {didInvalidate: true});
+      return Object.assign({}, state, {didInvalidate: true, error: false});
+    case COMMENTS_REQUEST_ERROR:
+      return Object.assign({}, state, {
+        isFetching: false,
+        didInvalidate: true,
+        error: action.errorType,
+        lastUpdated: action.receivedAt
+      });
     default:
       return state;
   }
@@ -101,6 +120,7 @@ function commentsByRecipeId(state = {}, action) {
     case REQUEST_COMMENTS:
     case RECEIVE_COMMENTS:
     case INVALIDATE_COMMENTS:
+    case COMMENTS_REQUEST_ERROR:
       return Object.assign({}, state, {
         [action.recipeId]: handleComments(state[action.recipeId], action)
       });
