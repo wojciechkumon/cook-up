@@ -6,7 +6,7 @@ import "../style/Comment.scss";
 class Comment extends Component {
 
   render() {
-    const comment = this.props.comment;
+    const {comment} = this.props;
     const url = comment && '/user/' + comment.authorId;
     const author = (comment.authorId && comment.authorEmail) ?
         <Link to={url}>{comment.authorEmail}</Link> : ' anonymous';

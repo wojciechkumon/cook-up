@@ -1,5 +1,7 @@
 import {combineReducers} from "redux";
 import {
+  AUTHOR_REQUEST_ERROR,
+  COMMENTS_REQUEST_ERROR,
   INVALIDATE_COMMENTS,
   RECEIVE_AUTHOR,
   RECEIVE_COMMENTS,
@@ -8,7 +10,6 @@ import {
   RECIPE_REQUEST_ERROR,
   REQUEST_AUTHOR,
   REQUEST_COMMENTS,
-  COMMENTS_REQUEST_ERROR,
   REQUEST_FOUND_RECIPES,
   REQUEST_RECIPE
 } from "../actions/actions";
@@ -129,7 +130,7 @@ function commentsByRecipeId(state = {}, action) {
   }
 }
 
-function handleAuthor(state = {isFetching: false, didInvalidate: false},
+function handleAuthor(state = {isFetching: false, didInvalidate: false, error: false},
                       action) {
   switch (action.type) {
     case REQUEST_AUTHOR:
@@ -142,6 +143,14 @@ function handleAuthor(state = {isFetching: false, didInvalidate: false},
         isFetching: false,
         didInvalidate: false,
         data: action.author,
+        lastUpdated: action.receivedAt,
+        error: false
+      });
+    case AUTHOR_REQUEST_ERROR:
+      return Object.assign({}, state, {
+        isFetching: false,
+        didInvalidate: true,
+        error: action.errorType,
         lastUpdated: action.receivedAt
       });
     default:
@@ -153,6 +162,7 @@ function authorByRecipeId(state = {}, action) {
   switch (action.type) {
     case REQUEST_AUTHOR:
     case RECEIVE_AUTHOR:
+    case AUTHOR_REQUEST_ERROR:
       return Object.assign({}, state, {
         [action.recipeId]: handleAuthor(state[action.recipeId], action)
       });

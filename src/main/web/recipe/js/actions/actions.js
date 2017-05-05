@@ -10,6 +10,7 @@ export const COMMENTS_REQUEST_ERROR = 'COMMENTS_REQUEST_ERROR';
 export const INVALIDATE_COMMENTS = 'INVALIDATE_COMMENT';
 export const REQUEST_AUTHOR = 'REQUEST_AUTHOR';
 export const RECEIVE_AUTHOR = 'RECEIVE_AUTHOR';
+export const AUTHOR_REQUEST_ERROR = 'AUTHOR_REQUEST_ERROR';
 export const REQUEST_FOUND_RECIPES = 'REQUEST_FOUND_RECIPES';
 export const RECEIVE_FOUND_RECIPES = 'RECEIVE_FOUND_RECIPES';
 
@@ -100,7 +101,8 @@ function fetchAuthor(recipeId) {
     return client(
       {method: 'GET', path: '/api/recipes/' + recipeId + '/author'})
       .then(response => response.entity)
-      .then(author => dispatch(receiveAuthor(recipeId, author)));
+      .then(author => dispatch(receiveAuthor(recipeId, author)))
+      .catch(response => dispatch(authorRequestError(recipeId, getHttpError(response))));
   }
 }
 
@@ -166,6 +168,15 @@ function receiveAuthor(recipeId, author) {
     type: RECEIVE_AUTHOR,
     recipeId,
     author,
+    receivedAt: Date.now()
+  }
+}
+
+function authorRequestError(recipeId, errorType) {
+  return {
+    type: AUTHOR_REQUEST_ERROR,
+    recipeId,
+    errorType,
     receivedAt: Date.now()
   }
 }
