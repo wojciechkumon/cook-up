@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import {fetchCommentsIfNeeded} from "./actions/actions";
 import {Col, Row} from "react-bootstrap";
 import Comment from "./Comment";
+import CommentsError from "./CommentsError";
 import Loader from "../../util/js/Loader";
 
 class Comments extends Component {
@@ -19,7 +20,7 @@ class Comments extends Component {
 
     const commentsError = comments && comments.error;
     if (commentsError) {
-      return (<div>Error while fetching comments!</div>);
+      return (<CommentsError/>);
     }
 
     const commentsFetching = comments && comments.isFetching;
