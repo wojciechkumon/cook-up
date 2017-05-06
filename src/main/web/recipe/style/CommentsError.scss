@@ -1,0 +1,5 @@
+@import '../../main/style/errors';
+
+.CommentsError {
+  @extend .error-label;
+}

@@ -18,7 +18,7 @@ class RecipeAuthor extends Component {
         <div className="RecipeAuthor">
           <h3>Author</h3>
           {authorFetching && <Loader/>}
-          {authorError && 'Error while fetching author'}
+          {authorError && <div className="author-error">Error while fetching author</div>}
           <p>{author && <Link to={url}>{author.email}</Link>}</p>
         </div>
     );

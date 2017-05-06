@@ -1,4 +1,5 @@
 @import '../../main/style/global_variables';
+@import '../../main/style/errors';
 
 .RecipeAuthor {
   a {
@@ -8,5 +9,8 @@
     &:hover {
       color: $red;
     }
+  }
+  .author-error {
+    @extend .error-label;
   }
 }

@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
 import {HTTP_NOT_FOUND} from "../../main/js/actions/actions";
+import "../style/RecipeError.scss";
 
 class RecipeError extends Component {
 
@@ -8,7 +9,7 @@ class RecipeError extends Component {
     const {errorType} = this.props;
 
     return (
-      <div>
+      <div className="RecipeError">
         {errorType === HTTP_NOT_FOUND ? 'Recipe not found!' : 'Error while fetching recipe'}
       </div>
     );
