@@ -16,21 +16,14 @@
     transition: all 400ms;
     display: inline-block;
     float: left;
-
+  }
+  .glyphicon-remove {
+    cursor: pointer;
+    float: right;
+    margin-top: 2px;
+    margin-left: 5px;
     &:hover {
-      color: white;
-      background-color: $red;
-      border: 2px solid $red;
-
-    }
-    .glyphicon-remove {
-      cursor: pointer;
-      float: right;
-      margin-top: 2px;
-      margin-left: 5px;
-      &:hover {
-        color: black;
-      }
+      color: $red;
     }
   }
 }

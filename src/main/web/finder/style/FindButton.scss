@@ -1,32 +1,5 @@
 @import '../../main/style/global_variables';
 
-.btn-primary,
-.btn-primary:visited {
-  margin-left: 30px;
-  height: 70px;
-  width: 140px;
-  font-size: 15px!important;
-  color: white;
-  background: $red;
-  text-decoration: none;
-  border-radius: 2rem;
-  padding: 15px 30px;
-  border: 2px solid $red;
-  font-weight: 900;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  transition: all 400ms;
-}
 
-.btn-primary:hover,
-.btn-primary:focus,
-.btn-primary:active,
-.btn.btn-primary:active:focus,
-.open > .dropdown-toggle.btn-primary {
-  background-color: white;
-  border: 2px solid white;
-  color: $red !important;
-  outline: none;
-}
 
 

@@ -6,7 +6,7 @@ export const minLength = min => value =>
 
 export const passwordLengthWarn = (minimalLength, correctLength) => value =>
   value && value.length >= minimalLength && value.length < correctLength
-    ? 'Consider using longer password :)' : undefined;
+    ? 'Consider using longer password' : undefined;
 
 export const required = value => value ? undefined : 'Required';
 

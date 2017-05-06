@@ -1,0 +1,13 @@
+@import '../../main/style/global_variables';
+
+.SignInSuccess {
+  min-height: 300px;
+  background-color: $dark-grey;
+  padding: 30px;
+  h1, h3 {
+    padding-top: 20px;
+    text-align: center;
+    font-weight: 700;
+    color: white;
+  }
+}
