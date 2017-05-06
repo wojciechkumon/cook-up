@@ -6,7 +6,7 @@ import SingleIngredient from "./SingleIngredient";
 class IngredientList extends Component {
 
   render() {
-    const ingredients = this.props.ingredients;
+    const {ingredients} = this.props;
     const ingredientsList = ingredients.map(ingredient =>
       <SingleIngredient key={ingredient.id} ingredient={ingredient}/>);
 

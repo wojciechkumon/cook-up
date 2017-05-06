@@ -7,7 +7,9 @@ import "../style/RecipeAuthor.scss";
 class RecipeAuthor extends Component {
 
   render() {
-    let author = this.props.author;
+    let {author} = this.props;
+
+    const authorError = author && author.error;
     const authorFetching = author && author.isFetching;
     author = author ? author.data : undefined;
     const url = author && '/user/' + author.id;
@@ -16,6 +18,7 @@ class RecipeAuthor extends Component {
         <div className="RecipeAuthor">
           <h3>Author</h3>
           {authorFetching && <Loader/>}
+          {authorError && 'Error while fetching author'}
           <p>{author && <Link to={url}>{author.email}</Link>}</p>
         </div>
     );

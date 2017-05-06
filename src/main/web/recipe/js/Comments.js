@@ -16,6 +16,12 @@ class Comments extends Component {
   render() {
     const recipeId = Number(this.props.recipeId);
     let comments = this.props.allComments[recipeId];
+
+    const commentsError = comments && comments.error;
+    if (commentsError) {
+      return (<div>Error while fetching comments!</div>);
+    }
+
     const commentsFetching = comments && comments.isFetching;
     comments = comments && comments.data ? comments.data : [];
     comments = comments.map(c => <Comment key={c.id} comment={c}/>);

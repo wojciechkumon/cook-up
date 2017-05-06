@@ -7,7 +7,7 @@ import {removeIngredient} from "./actions/actions";
 class SingleIngredient extends Component {
 
   render() {
-    const ingredient = this.props.ingredient;
+    const {ingredient} = this.props;
     const remove = () => this.props.dispatch(removeIngredient(ingredient.id));
     const name = ingredient.name;
 

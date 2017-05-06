@@ -11,8 +11,9 @@ import RecipeAuthor from "./RecipeAuthor";
 import Comments from "./Comments";
 import NewCommentForm from "./NewCommentForm";
 import {handleSubmit} from "./newCommentSubmitter";
-import Share from './Share';
-import FontAwesome from 'react-fontawesome';
+import Share from "./Share";
+import FontAwesome from "react-fontawesome";
+import RecipeError from "./RecipeError";
 
 class Recipe extends Component {
 
@@ -25,6 +26,12 @@ class Recipe extends Component {
   render() {
     const recipeId = Number(this.props.match.params.recipeId);
     let recipe = this.props.recipes[recipeId];
+
+    const recipeError = recipe && recipe.error;
+    if (recipeError) {
+      return (<div className="Recipe"><RecipeError errorType={recipeError}/></div>);
+    }
+
     const recipeFetching = recipe && recipe.isFetching;
     recipe = recipe ? recipe.data : recipe;
 

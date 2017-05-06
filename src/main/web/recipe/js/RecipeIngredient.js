@@ -17,7 +17,7 @@ class RecipeIngredient extends Component {
   }
 
   render() {
-    const recipeIngredient = this.props.recipeIngredient;
+    const {recipeIngredient} = this.props;
     const substitutes = recipeIngredient.substitutes.map(
         sub => <li key={sub.id}>{sub.name}</li>);
 

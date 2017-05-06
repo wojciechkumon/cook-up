@@ -1,5 +1,7 @@
 package cookup.annotation.validator;
 
+import java.util.Optional;
+
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
@@ -18,6 +20,8 @@ public class EmailUniqueValidator implements ConstraintValidator<EmailUnique, St
 
   @Override
   public boolean isValid(String email, ConstraintValidatorContext context) {
-    return !accountService.isEmailTaken(email);
+    return Optional.ofNullable(email)
+        .map(mail -> !accountService.isEmailTaken(mail))
+        .orElse(false);
   }
 }
