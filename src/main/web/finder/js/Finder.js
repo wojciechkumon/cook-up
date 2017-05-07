@@ -29,16 +29,14 @@ class Finder extends Component {
       <div className="Finder">
         <Grid>
           <Row className="show-grid">
-            <h1>What do you have in your fridge?</h1>
-          </Row>
-          <Row className="show-grid">
             <div className="autocomplete-input">
               {allIngredients.data.length > 0 &&
               <div>
+                <h1>What do you have in your fridge?</h1>
                 <FinderAutocomplete ingredients={allIngredients.data}/>
                 <FindButton/>
               </div> }
-              {error && 'error'}
+              {error && <p className="ingredients-error">Error during downloading ingredients</p>}
               {allIngredients.isFetching &&  <Loader/>}
             </div>
             <IngredientList ingredients={this.props.chosenIngredients}/>
