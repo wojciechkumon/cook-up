@@ -1,10 +1,12 @@
 import client from "../../../restclient/client";
+import {getHttpError} from "../../../main/js/actions/actions";
 
 export const ADD_INGREDIENT = 'ADD_INGREDIENT';
 export const REMOVE_INGREDIENT = 'REMOVE_INGREDIENT';
 export const CLEAR_INGREDIENTS = 'CLEAR_INGREDIENTS';
 export const REQUEST_INGREDIENTS = 'REQUEST_INGREDIENTS';
 export const RECEIVE_INGREDIENTS = 'RECEIVE_INGREDIENTS';
+export const INGREDIENTS_REQUEST_ERROR = 'INGREDIENTS_REQUEST_ERROR';
 
 export const addIngredient = (ingredient) => {
   return {
@@ -54,7 +56,8 @@ function fetchIngredients() {
 
     return client({method: 'GET', path: '/api/ingredients'})
       .then(response => response.entity)
-      .then(ingredients => dispatch(receiveIngredients(ingredients)));
+      .then(ingredients => dispatch(receiveIngredients(ingredients)))
+      .catch(response => dispatch(ingredientsRequestError(getHttpError(response))));
   }
 }
 
@@ -68,6 +71,14 @@ function receiveIngredients(allIngredients) {
   return {
     type: RECEIVE_INGREDIENTS,
     allIngredients,
+    receivedAt: Date.now()
+  }
+}
+
+function ingredientsRequestError(errorType) {
+  return {
+    type: INGREDIENTS_REQUEST_ERROR,
+    errorType,
     receivedAt: Date.now()
   }
 }
