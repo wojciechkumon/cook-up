@@ -4,6 +4,7 @@ import {
   CLEAR_INGREDIENTS,
   RECEIVE_INGREDIENTS,
   REMOVE_INGREDIENT,
+  INGREDIENTS_REQUEST_ERROR,
   REQUEST_INGREDIENTS
 } from "../actions/actions";
 
@@ -29,8 +30,13 @@ function chosenIngredients(state = [], action) {
   }
 }
 
-function allIngredients(state = {isFetching: false, didInvalidate: false, data: []},
-                              action) {
+function allIngredients(state = {
+      isFetching: false,
+      didInvalidate: false,
+      data: [],
+      error: false
+    },
+    action) {
   switch (action.type) {
     case REQUEST_INGREDIENTS:
       return Object.assign({}, state, {
@@ -42,7 +48,16 @@ function allIngredients(state = {isFetching: false, didInvalidate: false, data: 
         isFetching: false,
         didInvalidate: false,
         data: action.allIngredients,
-        lastUpdated: action.receivedAt
+        lastUpdated: action.receivedAt,
+        error: false
+      };
+    case INGREDIENTS_REQUEST_ERROR:
+      return {
+        isFetching: false,
+        didInvalidate: false,
+        data: [],
+        lastUpdated: action.receivedAt,
+        error: action.errorType
       };
     default:
       return state;

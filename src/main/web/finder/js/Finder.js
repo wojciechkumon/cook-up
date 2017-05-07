@@ -23,6 +23,7 @@ class Finder extends Component {
 
   render() {
     const {allIngredients} = this.props;
+    const error = allIngredients && allIngredients.error;
 
     return (
       <div className="Finder">
@@ -32,9 +33,13 @@ class Finder extends Component {
           </Row>
           <Row className="show-grid">
             <div className="autocomplete-input">
-              {allIngredients.data.length > 0 ?
-               <div><FinderAutocomplete ingredients={allIngredients.data}/><FindButton/></div> :
-               <Loader/>}
+              {allIngredients.data.length > 0 &&
+              <div>
+                <FinderAutocomplete ingredients={allIngredients.data}/>
+                <FindButton/>
+              </div> }
+              {error && 'error'}
+              {allIngredients.isFetching &&  <Loader/>}
             </div>
             <IngredientList ingredients={this.props.chosenIngredients}/>
             <FoundRecipes/>
