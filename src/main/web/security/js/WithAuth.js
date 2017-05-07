@@ -2,9 +2,9 @@ import AuthChecking from "./AuthChecking";
 import {WithAuthWrapper} from "../../util/js/WithAuthWrapper";
 
 const WithAuth = WithAuthWrapper({
-  authSelector: state => state.user,
+  authSelector: state => state.auth,
   predicate: (authData) => authData.loggedIn,
-  authenticatingSelector: state => state.user.isAuthenticating,
+  authenticatingSelector: state => state.auth.isAuthenticating,
   LoadingComponent: AuthChecking
 });
 

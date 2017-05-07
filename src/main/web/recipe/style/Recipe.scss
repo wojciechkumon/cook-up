@@ -7,13 +7,6 @@
   padding: 50px;
   margin-bottom: 30px;
 
-  .pdf-icon, .heart-icon {
-    margin-left: 5px;
-    &:hover {
-      color: $red;
-    }
-  }
-
   h3 {
     margin-top: 40px;
     text-transform: uppercase;
@@ -28,11 +21,6 @@
 
   .show-grid.row {
     margin-bottom: 20px;
-  }
-
-  .glyphicon-plus:before {
-    font-size: 12px;
-    margin-right: 7px;
   }
 
   .title {
