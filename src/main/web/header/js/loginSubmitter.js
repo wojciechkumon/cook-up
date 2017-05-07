@@ -19,7 +19,7 @@ export const handleSubmit = (dispatch, history) => values => {
     .then(response => response.entity)
     .then(entity => {
       if (entity.success === "true") {
-        dispatchSuccessLogin(dispatch, entity);
+        dispatchSuccessLogin(dispatch, entity, history);
       } else {
         dispatch(logout());
         throw new SubmissionError({_error: 'Login failed!'});
@@ -41,12 +41,12 @@ export const setUserIfLoggedIn = dispatch => {
     });
 };
 
-const dispatchSuccessLogin = (dispatch, entity) => {
+const dispatchSuccessLogin = (dispatch, entity, history) => {
   dispatch(hideLoginModal());
   dispatch(reset('login-form'));
   dispatch(login(entity.email, entity.id));
   const redirectLoc = url.parse(window.location.href, true).query.redirect;
-  if (redirectLoc) {
+  if (history && redirectLoc) {
     history.push(redirectLoc);
   }
 };
