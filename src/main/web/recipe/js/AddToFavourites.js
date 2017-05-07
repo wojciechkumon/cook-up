@@ -20,18 +20,16 @@ class AddToFavourites extends Component {
       return <Loader/>;
     }
 
-    if (fullRecipe.isFavourite) {
-      return (
-        <h3 className="AddToFavourites">
-          Remove from favourites <FontAwesome className="heart-icon" name="heart"/>
-        </h3>
-      );
-    }
+    const {isFavourite} = fullRecipe;
     return (
-      <h3 className="AddToFavourites">
-        Add to favourites <FontAwesome className="heart-icon" name="heart"/>
-      </h3>
+      <h3 className="AddToFavourites">{this.getContent(isFavourite)}</h3>
     );
+  }
+
+  getContent = isFavourite => {
+    return isFavourite ?
+           <span>Remove from favourites <FontAwesome className="heart-icon" name="heart"/></span> :
+           <span>Add to favourites <FontAwesome className="heart-icon" name="heart"/></span>;
   }
 }
 
