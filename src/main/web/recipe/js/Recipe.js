@@ -12,8 +12,9 @@ import Comments from "./Comments";
 import NewCommentForm from "./NewCommentForm";
 import {handleSubmit} from "./newCommentSubmitter";
 import Share from "./Share";
-import FontAwesome from "react-fontawesome";
 import RecipeError from "./RecipeError";
+import SaveToPdf from "./SaveToPdf";
+import AddToFavourites from "./AddToFavourites";
 
 class Recipe extends Component {
 
@@ -61,8 +62,8 @@ class Recipe extends Component {
                 <h3>Directions</h3>
                 <p className="directions">{recipe
                 && recipe.cookingDescription}</p>
-                <h3>Save recipe to pdf <FontAwesome className="pdf-icon" name="file-pdf-o"/></h3>
-                <h3>Add to favourites <FontAwesome className="heart-icon" name="heart"/></h3>
+                <SaveToPdf/>
+                <AddToFavourites/>
               </Col>
             </Row>
             <Comments recipeId={recipeId}/>

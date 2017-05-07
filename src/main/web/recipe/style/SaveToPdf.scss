@@ -1,0 +1,10 @@
+@import '../../main/style/global_variables';
+
+.SaveToPdf {
+  .pdf-icon {
+    margin-left: 5px;
+    &:hover {
+      color: $red;
+    }
+  }
+}

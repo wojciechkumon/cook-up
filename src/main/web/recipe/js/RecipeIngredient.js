@@ -24,7 +24,7 @@ class RecipeIngredient extends Component {
     return (
         <div className="RecipeIngredient">
           <p>
-            <Glyphicon glyph="plus"/>
+            <Glyphicon className="plus" glyph="plus"/>
             {recipeIngredient.amount + ' '
             + recipeIngredient.ingredient.ingredientUnit + ' '
             + recipeIngredient.ingredient.name}
