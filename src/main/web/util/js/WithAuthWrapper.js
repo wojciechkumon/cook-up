@@ -5,10 +5,13 @@ import hoistStatics from "hoist-non-react-statics";
 import url from "url";
 
 const defaults = {
+  LoadingComponent: () => null,
   failureRedirectPath: '/login',
   redirectQueryParamName: 'redirect',
   wrapperDisplayName: 'WithAuthWrapper',
+  authSelector: state => null,
   predicate: x => x === {},
+  authenticatingSelector: () => false,
   allowRedirectBack: true,
   propMapper: ({authData, failureRedirectPath, ...otherProps}) => ({
     authData, ...otherProps
@@ -17,7 +20,7 @@ const defaults = {
 
 export const WithAuthWrapper = (args) => {
   const {
-    authSelector, failureRedirectPath,
+    authSelector, failureRedirectPath, authenticatingSelector, LoadingComponent,
     wrapperDisplayName, predicate, allowRedirectBack, redirectQueryParamName, propMapper
   } = {
     ...defaults,
@@ -59,7 +62,8 @@ export const WithAuthWrapper = (args) => {
       (state, ownProps) => {
         return {
           authData: authSelector(state, ownProps),
-          failureRedirectPath
+          failureRedirectPath,
+          isAuthenticating: authenticatingSelector(state, ownProps)
         }
       }
     )
@@ -68,31 +72,37 @@ export const WithAuthWrapper = (args) => {
       static displayName = `${wrapperDisplayName}(${displayName})`;
 
       componentWillMount() {
-        if (!isAuthorized(this.props.authData)) {
-          createRedirect(this.props.location, this.redirect,
-            this.props.failureRedirectPath)
+        if (!this.props.isAuthenticating && !isAuthorized(this.props.authData)) {
+          createRedirect(this.props.location, this.redirect, this.props.failureRedirectPath)
         }
       }
 
       componentWillReceiveProps(nextProps) {
         const willBeAuthorized = isAuthorized(nextProps.authData);
+        const willBeAuthenticating = nextProps.isAuthenticating;
         const wasAuthorized = isAuthorized(this.props.authData);
+        const wasAuthenticating = this.props.isAuthenticating;
 
-        if ((wasAuthorized && !willBeAuthorized) || !willBeAuthorized) {
+        if (willBeAuthenticating) {
+          return;
+        }
+
+        if ((wasAuthorized && !willBeAuthorized) || (wasAuthenticating && !willBeAuthorized)) {
           createRedirect(nextProps.location, this.redirect,
-            nextProps.failureRedirectPath)
+            nextProps.failureRedirectPath);
         }
       }
 
       redirect = (location) => this.props.history.push(location);
 
       render() {
-        const {authData} = this.props;
+        const {authData, isAuthenticating} = this.props;
         if (isAuthorized(authData)) {
           return <DecoratedComponent {...propMapper(this.props)} />
-        } else {
-          return null;
+        } else if (isAuthenticating) {
+          return <LoadingComponent {...propMapper(this.props)} />
         }
+        return null;
       }
     }
 
@@ -108,8 +118,9 @@ export const WithAuthWrapper = (args) => {
 
   wrapComponent.onEnter = (store, nextState, replace) => {
     const authData = authSelector(store.getState(), nextState);
+    const isAuthenticating = authenticatingSelector(store.getState(), nextState);
 
-    if (!isAuthorized(authData)) {
+    if (!isAuthorized(authData) && !isAuthenticating) {
       const redirectPath = typeof failureRedirectPath === 'function' ? failureRedirectPath(
         store.getState(), nextState) : failureRedirectPath;
       createRedirect(nextState.location, replace, redirectPath);

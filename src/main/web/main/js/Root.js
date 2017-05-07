@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import createBrowserHistory from "history/createBrowserHistory";
 import {Provider} from "react-redux";
-import {WithAuthWrapper} from "../../util/js/WithAuthWrapper";
 import "bootstrap/dist/css/bootstrap.css";
 import "font-awesome/scss/font-awesome.scss";
 import "../style/App.scss";
@@ -19,13 +18,9 @@ import MePage from "../../me/js/MePage";
 import LoginPage from "../../loginPage/js/LoginPage";
 import SignInSuccess from "../../signInSuccessPage/js/SignInSuccess";
 import NotFoundPage from "../../notFoundPage/js/NotFoundPage";
+import WithAuth from "../../security/js/WithAuth";
 
 const history = createBrowserHistory();
-
-const WithAuth = WithAuthWrapper({
-  authSelector: state => state.user,
-  predicate: (authData) => authData.loggedIn
-});
 
 class Root extends Component {
 
