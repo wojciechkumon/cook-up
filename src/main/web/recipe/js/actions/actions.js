@@ -4,6 +4,8 @@ import {getHttpError} from "../../../main/js/actions/actions";
 export const REQUEST_RECIPE = 'REQUEST_RECIPE';
 export const RECEIVE_RECIPE = 'RECEIVE_RECIPE';
 export const RECIPE_REQUEST_ERROR = 'RECIPE_REQUEST_ERROR';
+export const REQUEST_RECIPE_FAVOURITE = 'REQUEST_RECIPE_FAVOURITE';
+export const RECEIVE_RECIPE_FAVOURITE = 'RECEIVE_RECIPE_FAVOURITE';
 export const REQUEST_COMMENTS = 'REQUEST_COMMENTS';
 export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS';
 export const COMMENTS_REQUEST_ERROR = 'COMMENTS_REQUEST_ERROR';
@@ -178,6 +180,33 @@ function authorRequestError(recipeId, errorType) {
     recipeId,
     errorType,
     receivedAt: Date.now()
+  }
+}
+
+export function fetchRecipeFavourite(recipeId, userId) {
+  return dispatch => {
+    dispatch(requestRecipeFavourite(recipeId));
+
+    const path = '/api/accounts/' + userId + '/favouriteRecipes/' + recipeId;
+    return client(
+      {method: 'GET', path})
+      .then(() => dispatch(receiveRecipeFavourite(recipeId, true)))
+      .catch(response => dispatch(receiveRecipeFavourite(recipeId, false)));
+  };
+}
+
+function requestRecipeFavourite(recipeId) {
+  return {
+    type: REQUEST_RECIPE_FAVOURITE,
+    recipeId
+  }
+}
+
+function receiveRecipeFavourite(recipeId, isFavourite) {
+  return {
+    type: RECEIVE_RECIPE_FAVOURITE,
+    recipeId,
+    isFavourite
   }
 }
 

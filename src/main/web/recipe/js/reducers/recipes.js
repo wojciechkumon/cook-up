@@ -7,11 +7,13 @@ import {
   RECEIVE_COMMENTS,
   RECEIVE_FOUND_RECIPES,
   RECEIVE_RECIPE,
+  RECEIVE_RECIPE_FAVOURITE,
   RECIPE_REQUEST_ERROR,
   REQUEST_AUTHOR,
   REQUEST_COMMENTS,
   REQUEST_FOUND_RECIPES,
-  REQUEST_RECIPE
+  REQUEST_RECIPE,
+  REQUEST_RECIPE_FAVOURITE
 } from "../actions/actions";
 
 function foundRecipeIds(state = {isFetching: false, data: []},
@@ -32,7 +34,12 @@ function foundRecipeIds(state = {isFetching: false, data: []},
   }
 }
 
-function handleRecipe(state = {isFetching: false, didInvalidate: false, error: false},
+function handleRecipe(state = {
+                        isFetching: false,
+                        didInvalidate: false,
+                        error: false,
+                        isFavouriteFetching: false
+                      },
                       action) {
   switch (action.type) {
     case REQUEST_RECIPE:
@@ -55,6 +62,15 @@ function handleRecipe(state = {isFetching: false, didInvalidate: false, error: f
         error: action.errorType,
         lastUpdated: action.receivedAt
       });
+    case REQUEST_RECIPE_FAVOURITE:
+      return Object.assign({}, state, {
+        isFavouriteFetching: true
+      });
+    case RECEIVE_RECIPE_FAVOURITE:
+      return Object.assign({}, state, {
+        isFavouriteFetching: false,
+        isFavourite: action.isFavourite
+      });
     default:
       return state;
   }
@@ -65,6 +81,8 @@ function byId(state = {}, action) {
     case REQUEST_RECIPE:
     case RECEIVE_RECIPE:
     case RECIPE_REQUEST_ERROR:
+    case REQUEST_RECIPE_FAVOURITE:
+    case RECEIVE_RECIPE_FAVOURITE:
       return Object.assign({}, state, {
         [action.recipeId]: handleRecipe(state[action.recipeId], action)
       });

@@ -26,20 +26,21 @@ class Recipe extends Component {
 
   render() {
     const recipeId = Number(this.props.match.params.recipeId);
-    let recipe = this.props.recipes[recipeId];
+    const fullRecipe = this.props.recipes[recipeId];
 
-    const recipeError = recipe && recipe.error;
+    const recipeError = fullRecipe && fullRecipe.error;
     if (recipeError) {
       return (<div className="Recipe"><RecipeError errorType={recipeError}/></div>);
     }
 
-    const recipeFetching = recipe && recipe.isFetching;
-    recipe = recipe ? recipe.data : recipe;
+    const recipeFetching = fullRecipe && fullRecipe.isFetching;
+    const recipe = fullRecipe ? fullRecipe.data : fullRecipe;
 
     const recipeIngredients = (recipe && recipe.ingredients)
         ? recipe.ingredients : [];
 
     const author = this.props.authors[recipeId];
+    const {loggedIn} = this.props;
 
     return (
         <div className="Recipe">
@@ -63,7 +64,8 @@ class Recipe extends Component {
                 <p className="directions">{recipe
                 && recipe.cookingDescription}</p>
                 <SaveToPdf/>
-                <AddToFavourites/>
+                {recipe && loggedIn && <AddToFavourites recipeId={recipeId}
+                                                        fullRecipe={fullRecipe}/>}
               </Col>
             </Row>
             <Comments recipeId={recipeId}/>
@@ -77,13 +79,15 @@ class Recipe extends Component {
 
 Recipe.propTypes = {
   recipes: PropTypes.object.isRequired,
-  authors: PropTypes.object.isRequired
+  authors: PropTypes.object.isRequired,
+  loggedIn: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => {
   return {
     recipes: state.recipes.byId,
-    authors: state.recipes.authorByRecipeId
+    authors: state.recipes.authorByRecipeId,
+    loggedIn: state.auth.loggedIn
   }
 };
 
