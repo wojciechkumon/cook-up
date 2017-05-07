@@ -9,11 +9,12 @@ class Comment extends Component {
     const {comment} = this.props;
     const url = comment && '/user/' + comment.authorId;
     const author = (comment.authorId && comment.authorEmail) ?
-        <Link to={url}>{comment.authorEmail}</Link> : ' anonymous';
+                   <Link className="author" to={url}>{comment.authorEmail}</Link> :
+                   <span className="anonymous">anonymous</span>;
 
     return (
         <div className="Comment">
-          <p className="author">{author}</p>
+          <p>{author}</p>
           <p className="comment-content">{comment.content}</p>
         </div>
     );
