@@ -105,7 +105,6 @@ export const WithAuthWrapper = args => {
         return null;
       }
     }
-
     return hoistStatics(WithAuthWrapper, DecoratedComponent)
   }
 
