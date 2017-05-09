@@ -16,7 +16,7 @@ import {
   REQUEST_RECIPE_FAVOURITE
 } from "../actions/actions";
 
-function foundRecipeIds(state = {isFetching: false, data: []},
+function foundRecipeIds(state = {isFetching: false, data: [], afterSearch: false},
                         action) {
   switch (action.type) {
     case REQUEST_FOUND_RECIPES:
@@ -27,7 +27,8 @@ function foundRecipeIds(state = {isFetching: false, data: []},
       return {
         isFetching: false,
         data: action.recipes.map(recipe => recipe.id),
-        lastUpdated: action.receivedAt
+        lastUpdated: action.receivedAt,
+        afterSearch: true
       };
     default:
       return state;

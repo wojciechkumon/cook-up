@@ -9,11 +9,16 @@ class FoundRecipes extends Component {
 
   render() {
     const fetching = this.props.ids.isFetching;
+    const {afterSearch} = this.props.ids;
     const ids = this.props.ids.data;
     const recipesToRender = ids.map(id => this.props.recipes[id])
       .filter(fullRecipe => fullRecipe)
       .map(recipe => recipe.data)
       .filter(recipe => recipe);
+
+    if (!afterSearch) {
+      return (<div className="nothing-found-label"/>);
+    }
 
     if (recipesToRender.length === 0) {
       return (
@@ -36,8 +41,8 @@ FoundRecipes.propTypes = {
   recipes: PropTypes.object.isRequired,
   ids: PropTypes.shape({
     data: PropTypes.arrayOf(PropTypes.number).isRequired,
-    isFetching: PropTypes.bool,
-    didInvalidate: PropTypes.bool
+    afterSearch: PropTypes.bool.isRequired,
+    isFetching: PropTypes.bool
   }).isRequired
 };
 
