@@ -2,6 +2,8 @@ package cookup.domain.recipe.comment;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,6 +23,9 @@ public class Comment {
 
   @Column(nullable = false)
   private String content;
+
+  @Column(nullable = false)
+  private LocalDateTime created;
 
   @ManyToOne
   @JoinColumn(name = "author_id")
@@ -69,5 +74,13 @@ public class Comment {
 
   public void setRecipe(Recipe recipe) {
     this.recipe = recipe;
+  }
+
+  public LocalDateTime getCreated() {
+    return created;
+  }
+
+  public void setCreated(LocalDateTime created) {
+    this.created = created;
   }
 }

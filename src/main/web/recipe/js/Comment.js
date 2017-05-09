@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
+import moment from "moment-timezone";
 import "../style/Comment.scss";
 
 class Comment extends Component {
@@ -12,9 +13,10 @@ class Comment extends Component {
                    <Link className="author" to={url}>{comment.authorEmail}</Link> :
                    <span className="anonymous">anonymous</span>;
 
+    const createdFromNow = moment.utc(comment.created).fromNow();
     return (
         <div className="Comment">
-          <p>{author}</p>
+          <p>{author} {createdFromNow}</p>
           <p className="comment-content">{comment.content}</p>
         </div>
     );
@@ -26,7 +28,8 @@ Comment.propTypes = {
     id: PropTypes.number.isRequired,
     content: PropTypes.string.isRequired,
     authorId: PropTypes.number,
-    authorEmail: PropTypes.string
+    authorEmail: PropTypes.string,
+    created: PropTypes.string
   }).isRequired
 };
 

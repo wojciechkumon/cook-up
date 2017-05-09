@@ -3,6 +3,8 @@ package cookup.service.comments;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+
 import cookup.dao.AccountDao;
 import cookup.dao.CommentsDao;
 import cookup.dao.RecipeDao;
@@ -10,6 +12,7 @@ import cookup.domain.account.Account;
 import cookup.domain.recipe.Recipe;
 import cookup.domain.recipe.comment.Comment;
 import cookup.dto.CommentDto;
+import cookup.service.util.TimeUtil;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -26,6 +29,7 @@ class CommentsServiceImplTest {
   private RecipeDao recipeDao;
   private CommentsDao commentsDao;
   private AccountDao accountDao;
+  private TimeUtil timeUtil;
 
   private CommentsServiceImpl commentsService;
 
@@ -34,13 +38,16 @@ class CommentsServiceImplTest {
     recipeDao = mock(RecipeDao.class);
     commentsDao = mock(CommentsDao.class);
     accountDao = mock(AccountDao.class);
+    timeUtil = mock(TimeUtil.class);
 
-    commentsService = new CommentsServiceImpl(recipeDao, commentsDao, accountDao);
+    commentsService = new CommentsServiceImpl(recipeDao, commentsDao, accountDao, timeUtil);
   }
 
   @Test
   void should_add_anonymous_comment() {
     // given
+    LocalDateTime dateTime = LocalDateTime.now();
+    when(timeUtil.now()).thenReturn(dateTime);
     Recipe recipe = new Recipe();
     recipe.setId(5L);
     when(recipeDao.findOne(recipe.getId())).thenReturn(recipe);
@@ -59,11 +66,12 @@ class CommentsServiceImplTest {
     assertNull(comment.getAuthor());
     assertEquals(commentDto.getContent(), comment.getContent());
     assertEquals(9L, (long) comment.getId());
+    assertEquals(dateTime,  comment.getCreated());
     verify(commentsDao, only()).save(any());
   }
 
   @Test
-  void should_throw_excpetion_on_adding_anonymous_comment_to_not_existing_recipe() {
+  void should_throw_exception_on_adding_anonymous_comment_to_not_existing_recipe() {
     // given
     when(recipeDao.findOne(any())).thenReturn(null);
     CommentDto commentDto = new CommentDto("new comment :)");
@@ -77,6 +85,8 @@ class CommentsServiceImplTest {
   @Test
   void should_add_user_comment() {
     // given
+    LocalDateTime dateTime = LocalDateTime.now();
+    when(timeUtil.now()).thenReturn(dateTime);
     Recipe recipe = new Recipe();
     recipe.setId(5L);
     when(recipeDao.findOne(recipe.getId())).thenReturn(recipe);
@@ -99,6 +109,7 @@ class CommentsServiceImplTest {
     assertTrue(comment.getAuthor() == account);
     assertEquals(commentDto.getContent(), comment.getContent());
     assertEquals(9L, (long) comment.getId());
+    assertEquals(dateTime,  comment.getCreated());
     verify(commentsDao, only()).save(any());
   }
 
