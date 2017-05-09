@@ -13,18 +13,21 @@ import cookup.domain.recipe.Recipe;
 import cookup.domain.recipe.comment.Comment;
 import cookup.dto.CommentDto;
 import cookup.dto.RecipeCommentDto;
+import cookup.service.util.TimeUtil;
 
 @Service
 public class CommentsServiceImpl implements CommentsService {
   private final RecipeDao recipeDao;
   private final CommentsDao commentsDao;
   private final AccountDao accountDao;
+  private final TimeUtil timeUtil;
 
   CommentsServiceImpl(RecipeDao recipeDao, CommentsDao commentsDao,
-                      AccountDao accountDao) {
+                      AccountDao accountDao, TimeUtil timeUtil) {
     this.recipeDao = recipeDao;
     this.commentsDao = commentsDao;
     this.accountDao = accountDao;
+    this.timeUtil = timeUtil;
   }
 
   @Override
@@ -45,6 +48,7 @@ public class CommentsServiceImpl implements CommentsService {
     Comment comment = new Comment(commentDto.getContent());
     comment.setRecipe(getRecipe(recipeId));
     comment.setAuthor(author);
+    comment.setCreated(timeUtil.now());
     return commentsDao.save(comment);
   }
 
@@ -67,9 +71,9 @@ public class CommentsServiceImpl implements CommentsService {
   private RecipeCommentDto toRecipeCommentDto(Comment comment) {
     Account author = comment.getAuthor();
     if (author == null) {
-      return new RecipeCommentDto(comment.getId(), comment.getContent());
+      return new RecipeCommentDto(comment.getId(), comment.getContent(), comment.getCreated());
     }
     return new RecipeCommentDto(comment.getId(), comment.getContent(), author.getId(),
-        author.getEmail());
+        author.getEmail(), comment.getCreated());
   }
 }
