@@ -1,30 +1,15 @@
 import {combineReducers} from "redux";
 import {
-  ADD_INGREDIENT,
-  CLEAR_INGREDIENTS,
-  RECEIVE_INGREDIENTS,
-  REMOVE_INGREDIENT,
   INGREDIENTS_REQUEST_ERROR,
-  REQUEST_INGREDIENTS
+  RECEIVE_INGREDIENTS,
+  REQUEST_INGREDIENTS,
+  SET_CHOSEN_INGREDIENTS
 } from "../actions/actions";
-
-function idAlreadyOnList(state, newIngredient) {
-  return state.find((element) => element.id === newIngredient.id);
-}
 
 function chosenIngredients(state = [], action) {
   switch (action.type) {
-    case ADD_INGREDIENT:
-      const ingredient = action.ingredient;
-
-      if (idAlreadyOnList(state, ingredient)) {
-        return state;
-      }
-      return state.concat([ingredient]);
-    case REMOVE_INGREDIENT:
-      return state.filter((ingredient) => ingredient.id !== action.id);
-    case CLEAR_INGREDIENTS:
-      return [];
+    case SET_CHOSEN_INGREDIENTS:
+      return action.ingredients;
     default:
       return state;
   }

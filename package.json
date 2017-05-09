@@ -17,6 +17,7 @@
     "react-redux": "^5.0.4",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
+    "react-select": "^1.0.0-rc.3",
     "react-share": "^1.13.2",
     "react-tap-event-plugin": "^2.0.1",
     "react-toggle-display": "^2.2.0",

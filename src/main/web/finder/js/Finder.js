@@ -3,19 +3,12 @@ import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import "../style/Finder.scss";
 import {Grid, Row} from "react-bootstrap";
-import IngredientList from "./IngredientList";
 import FoundRecipes from "./FoundRecipes";
 import {fetchIngredientsIfNeeded} from "./actions/actions";
-import Loader from "../../util/js/Loader";
 import FindButton from "./FindButton";
 import FinderAutocomplete from "./FinderAutocomplete";
 
 class Finder extends Component {
-
-  constructor() {
-    super();
-    this.state = {searchText: ''};
-  }
 
   componentDidMount() {
     this.props.dispatch(fetchIngredientsIfNeeded());
@@ -24,22 +17,23 @@ class Finder extends Component {
   render() {
     const {allIngredients} = this.props;
     const error = allIngredients && allIngredients.error;
+    const disabled = (error || allIngredients.data.length <= 0) !== false;
 
     return (
       <div className="Finder">
         <Grid>
           <Row className="show-grid">
             <div className="autocomplete-input">
-              {allIngredients.data.length > 0 &&
               <div>
                 <h1>What do you have in your fridge?</h1>
-                <FinderAutocomplete ingredients={allIngredients.data}/>
-                <FindButton/>
-              </div> }
+                <FinderAutocomplete ingredients={allIngredients.data}
+                                    chosenIngredients={this.props.chosenIngredients}
+                                    isFetching={allIngredients.isFetching}
+                                    disabled={disabled}/>
+                <FindButton disabled={disabled}/>
+              </div>
               {error && <p className="ingredients-error">Error during downloading ingredients</p>}
-              {allIngredients.isFetching &&  <Loader/>}
             </div>
-            <IngredientList ingredients={this.props.chosenIngredients}/>
             <FoundRecipes/>
           </Row>
         </Grid>

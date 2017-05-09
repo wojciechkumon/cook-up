@@ -1,30 +1,15 @@
 import client from "../../../restclient/client";
 import {getHttpError} from "../../../main/js/actions/actions";
 
-export const ADD_INGREDIENT = 'ADD_INGREDIENT';
-export const REMOVE_INGREDIENT = 'REMOVE_INGREDIENT';
-export const CLEAR_INGREDIENTS = 'CLEAR_INGREDIENTS';
+export const SET_CHOSEN_INGREDIENTS = 'SET_CHOSEN_INGREDIENTS';
 export const REQUEST_INGREDIENTS = 'REQUEST_INGREDIENTS';
 export const RECEIVE_INGREDIENTS = 'RECEIVE_INGREDIENTS';
 export const INGREDIENTS_REQUEST_ERROR = 'INGREDIENTS_REQUEST_ERROR';
 
-export const addIngredient = (ingredient) => {
+export const setChosenIngredients = ingredients => {
   return {
-    type: ADD_INGREDIENT,
-    ingredient: ingredient
-  }
-};
-
-export const removeIngredient = (id) => {
-  return {
-    type: REMOVE_INGREDIENT,
-    id: id
-  }
-};
-
-export const clearIngredients = () => {
-  return {
-    type: CLEAR_INGREDIENTS
+    type: SET_CHOSEN_INGREDIENTS,
+    ingredients
   }
 };
 

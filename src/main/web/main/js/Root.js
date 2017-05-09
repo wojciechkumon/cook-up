@@ -5,6 +5,7 @@ import createBrowserHistory from "history/createBrowserHistory";
 import {Provider} from "react-redux";
 import "bootstrap/dist/css/bootstrap.css";
 import "font-awesome/scss/font-awesome.scss";
+import "react-select/dist/react-select.css";
 import "../style/App.scss";
 import "../style/buttons.scss";
 import "../style/errors.scss";
