@@ -17,13 +17,20 @@ class FoundRecipes extends Component {
       .filter(recipe => recipe);
 
     if (!afterSearch) {
-      return (<div className="nothing-found-label"/>);
+      return (
+        <div>
+          {fetching && <Loader/>}
+          <div className="nothing-found-label"/>
+        </div>);
     }
 
     if (recipesToRender.length === 0) {
       return (
-        <div className="nothing-found-label">
-          nothing found
+        <div>
+          {fetching && <Loader/>}
+          <div className="nothing-found-label">
+            nothing found
+          </div>
         </div>
       );
     }
