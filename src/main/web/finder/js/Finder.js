@@ -23,17 +23,16 @@ class Finder extends Component {
       <div className="Finder">
         <Grid>
           <Row className="show-grid">
-            <div className="autocomplete-input">
-              <div>
-                <h1>What do you have in your fridge?</h1>
-                <FinderAutocomplete ingredients={allIngredients.data}
-                                    chosenIngredients={this.props.chosenIngredients}
-                                    isFetching={allIngredients.isFetching}
-                                    disabled={disabled}/>
-                <FindButton disabled={disabled}/>
-              </div>
-              {error && <p className="ingredients-error">Error during downloading ingredients</p>}
+            <h1>What do you have in your fridge?</h1>
+            <div>
+              <FinderAutocomplete ingredients={allIngredients.data}
+                                  chosenIngredients={this.props.chosenIngredients}
+                                  isFetching={allIngredients.isFetching}
+                                  disabled={disabled}/>
+              <FindButton disabled={disabled}/>
             </div>
+            {error && <p className="ingredients-error">Error during downloading
+              ingredients</p>}
             <FoundRecipes/>
           </Row>
         </Grid>

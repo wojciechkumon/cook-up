@@ -1,37 +1,63 @@
 @import '../../main/style/global_variables';
 
-.autocomplete-input {
-  margin: 0 auto;
-  display: table;
-  padding-top: 20px;
-  padding-bottom: 50px;
+.FinderAutocomplete {
+  display: inline-block;
+  width: 50%;
+  vertical-align: middle;
+
+  .Select-value {
+    color: $dark-grey;
+    background: $light-grey;
+    text-decoration: none;
+    border-radius: 2rem;
+    border: 2px solid $light-grey;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: all 400ms;
+  }
+
+  .Select-value-icon {
+    border-right: 1px solid rgba(48, 50, 63, 0.24);
+    &:hover {
+      background-color: transparent;
+      color: $red;
+    }
+  }
 }
 
-.autocomplete-highlighted-item {
-  color: white;
-  background: $red;
-  padding: 2px 6px;
-  cursor: default;
+
+
+.Select--multi a.Select-value-label {
+  color: $red !important;
 }
 
-.autocomplete-item {
-  padding: 2px 6px;
-  cursor: default;
+.Select--multi .Select-value-icon:hover,
+.Select--multi .Select-value-icon:focus {
+  color: $red !important;
 }
 
-.ingredient-autocomplete {
-  background: white;
-  width: 350px;
-  height: 70px;
-  text-decoration: none;
-  border-radius: 2rem;
-  padding: 15px 30px;
-  border: 2px solid white;
-  font-weight: 900;
-  letter-spacing: 0.1em;
-  font-size: 12px;
-  &:focus {
-    outline: none;
-    border: 2px solid $red;
+.Select--multi .Select-value-icon:active {
+  background-color: $red !important;
+}
+
+.has-value.Select--single > .Select-control .Select-value a.Select-value-label:hover,
+.has-value.is-pseudo-focused.Select--single > .Select-control .Select-value a.Select-value-label:hover,
+.has-value.Select--single > .Select-control .Select-value a.Select-value-label:focus,
+.has-value.is-pseudo-focused.Select--single > .Select-control .Select-value a.Select-value-label:focus {
+  color: $red !important;
+}
+
+.is-focused:not(.is-open) > .Select-control {
+  border: none;
+}
+
+.Select-menu-outer {
+  .Select-option.is-selected {
+    background-color: #A6030D !important;
+  }
+
+  .Select-option.is-selected {
+    background-color: #A6030D !important;
   }
 }

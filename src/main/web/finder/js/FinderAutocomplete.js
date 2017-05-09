@@ -15,19 +15,18 @@ class FinderAutocomplete extends Component {
     const {ingredients, disabled, isFetching, chosenIngredients} = this.props;
 
     return (
-      <div>
         <Select
-          placeholder="Select your products"
-          valueKey="id"
-          labelKey="name"
-          multi
-          disabled={disabled}
-          value={chosenIngredients}
-          options={ingredients}
-          onChange={this.handleSelectChange}
-          isLoading={isFetching}
+            placeholder="Select your products"
+            className="FinderAutocomplete"
+            valueKey="id"
+            labelKey="name"
+            multi
+            disabled={disabled}
+            value={chosenIngredients}
+            options={ingredients}
+            onChange={this.handleSelectChange}
+            isLoading={isFetching}
         />
-      </div>
     );
   }
 }

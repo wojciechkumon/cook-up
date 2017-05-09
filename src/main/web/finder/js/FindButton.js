@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {Button} from "react-bootstrap";
 import {fetchMatchingRecipesIfNeeded} from "../../recipe/js/actions/actions";
+import "../style/FindButton.scss";
 
 class FindButton extends Component {
 
@@ -13,9 +14,10 @@ class FindButton extends Component {
   render() {
     return (
         <Button
-          bsStyle="primary"
-          onClick={this.find}
-          disabled={this.props.disabled}
+            className="FindButton"
+            bsStyle="primary"
+            onClick={this.find}
+            disabled={this.props.disabled}
         >Find</Button>
     );
   }

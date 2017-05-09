@@ -25,5 +25,8 @@
     &:hover {
       background-color: $light-red;
     }
+    td:first-child {
+      font-weight: bold;
+    }
   }
 }
