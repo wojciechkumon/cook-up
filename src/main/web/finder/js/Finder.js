@@ -60,7 +60,7 @@ Finder.propTypes = {
   }).isRequired
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     chosenIngredients: state.ingredients.chosenIngredients,
     allIngredients: state.ingredients.allIngredients

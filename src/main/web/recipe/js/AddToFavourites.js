@@ -39,7 +39,7 @@ AddToFavourites.propTypes = {
   userId: PropTypes.number.isRequired
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     userId: state.auth.id
   }

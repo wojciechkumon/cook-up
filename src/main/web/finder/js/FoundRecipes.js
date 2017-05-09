@@ -40,7 +40,7 @@ FoundRecipes.propTypes = {
   }).isRequired
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     recipes: state.recipes.byId,
     ids: state.recipes.foundRecipeIds

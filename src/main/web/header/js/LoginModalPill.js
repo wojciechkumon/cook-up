@@ -52,7 +52,7 @@ LoginModalPill.propTypes = {
   submitting: PropTypes.bool.isRequired
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     showModal: state.frontend.modals.showLoginModal,
     submitting: state.form['login-form']

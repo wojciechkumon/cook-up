@@ -83,7 +83,7 @@ Recipe.propTypes = {
   loggedIn: PropTypes.bool.isRequired
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     recipes: state.recipes.byId,
     authors: state.recipes.authorByRecipeId,

@@ -18,7 +18,7 @@ const defaults = {
   })
 };
 
-export const WithAuthWrapper = (args) => {
+export const WithAuthWrapper = args => {
   const {
     authSelector, failureRedirectPath, authenticatingSelector, LoadingComponent,
     wrapperDisplayName, predicate, allowRedirectBack, redirectQueryParamName, propMapper
@@ -27,7 +27,7 @@ export const WithAuthWrapper = (args) => {
     ...args
   };
 
-  const isAuthorized = (authData) => predicate(authData);
+  const isAuthorized = authData => predicate(authData);
 
   const createRedirect = (location, redirect, redirectPath) => {
     const redirectLoc = url.parse(redirectPath, true);
@@ -93,7 +93,7 @@ export const WithAuthWrapper = (args) => {
         }
       }
 
-      redirect = (location) => this.props.history.push(location);
+      redirect = location => this.props.history.push(location);
 
       render() {
         const {authData, isAuthenticating} = this.props;
