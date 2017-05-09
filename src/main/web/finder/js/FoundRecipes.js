@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import RecipeList from "./RecipeList";
 import Loader from "../../util/js/Loader";
+import "../style/FoundRecipes.scss";
 
 class FoundRecipes extends Component {
 
@@ -16,7 +17,7 @@ class FoundRecipes extends Component {
 
     if (recipesToRender.length === 0) {
       return (
-        <div>
+        <div className="nothing-found-label">
           nothing found
         </div>
       );
