@@ -16,8 +16,9 @@ class Comment extends Component {
     const createdFromNow = moment.utc(comment.created).fromNow();
     return (
         <div className="Comment">
-          <p>{author} {createdFromNow}</p>
+          <p>{author}</p>
           <p className="comment-content">{comment.content}</p>
+          <span className="createdTime">{createdFromNow}</span>
         </div>
     );
   }

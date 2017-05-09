@@ -20,5 +20,9 @@
   }
   .comment-content {
     word-wrap: break-word;
+    margin-bottom: inherit;
+  }
+  .createdTime {
+    color: $red;
   }
 }
