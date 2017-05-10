@@ -1,7 +1,7 @@
 import {LOGIN, LOGOUT, SERVER_LOGOUT} from "../actions/actions";
 import client from "../../../restclient/client";
 
-function user(state = {loggedIn: false, isAuthenticating: true}, action) {
+function auth(state = {loggedIn: false, isAuthenticating: true}, action) {
   switch (action.type) {
     case LOGIN:
       return {
@@ -21,4 +21,4 @@ function user(state = {loggedIn: false, isAuthenticating: true}, action) {
   }
 }
 
-export default user;
+export default auth;
