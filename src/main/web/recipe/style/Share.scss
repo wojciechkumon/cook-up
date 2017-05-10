@@ -1,16 +1,27 @@
+@import './social-colors';
+
 .Share {
   .SocialMediaShareButton {
     display: inline-block;
     margin-right: 10px;
   }
 
-  .fb:hover circle {
-    fill: black;
+  .fb circle {
+    fill: $fb;
+    &:hover {
+      fill: $fb-hover;
+    }
   }
-  .google-plus:hover circle {
-    fill: black;
+  .google-plus circle {
+    fill: $google-plus;
+    &:hover {
+      fill: $google-plus-hover;
+    }
   }
-  .twitter:hover circle {
-    fill: black;
+  .twitter circle {
+    fill: $twitter;
+    &:hover {
+      fill: $twitter-hover;
+    }
   }
 }
