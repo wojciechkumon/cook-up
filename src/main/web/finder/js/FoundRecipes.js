@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import RecipeList from "./RecipeList";
 import Loader from "../../util/js/Loader";
 import "../style/FoundRecipes.scss";
+import "../img/error.png";
+
 
 class FoundRecipes extends Component {
 
@@ -30,6 +32,7 @@ class FoundRecipes extends Component {
           {fetching && <Loader/>}
           <div className="nothing-found-label">
             nothing found
+            <img src="/img/error.png"/>
           </div>
         </div>
       );
