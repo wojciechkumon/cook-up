@@ -7,6 +7,7 @@ import FoundRecipes from "./FoundRecipes";
 import {fetchIngredientsIfNeeded} from "./actions/actions";
 import FindButton from "./FindButton";
 import FinderAutocomplete from "./FinderAutocomplete";
+import "../img/error.png";
 
 class Finder extends Component {
 
@@ -32,7 +33,7 @@ class Finder extends Component {
               <FindButton disabled={disabled}/>
             </div>
             {error && <p className="ingredients-error">Error during downloading
-              ingredients</p>}
+              ingredients <img src="/img/error.png"/></p>}
             <FoundRecipes/>
           </Row>
         </Grid>
