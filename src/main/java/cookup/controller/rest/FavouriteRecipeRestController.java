@@ -1,9 +1,9 @@
 package cookup.controller.rest;
 
 import org.springframework.data.rest.webmvc.BasePathAwareController;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
@@ -19,15 +19,13 @@ public class FavouriteRecipeRestController {
     this.recipeService = recipeService;
   }
 
-  @GetMapping("/recipes/{recipeId}/favourite")
-  void toggleFavourite(@PathVariable Long recipeId,
-                       @RequestParam(defaultValue = "true") boolean add, Principal principal) {
+  @PostMapping("/recipes/{recipeId}/favourite")
+  void addToFavourites(@PathVariable Long recipeId, Principal principal) {
+    recipeService.addToFavourites(recipeId, principal.getName());
+  }
 
-    String userEmail = principal.getName();
-    if (add) {
-      recipeService.addToFavourites(recipeId, userEmail);
-    } else {
-      recipeService.removeFromFavourites(recipeId, userEmail);
-    }
+  @DeleteMapping("/recipes/{recipeId}/favourite")
+  void removeFromFavourites(@PathVariable Long recipeId, Principal principal) {
+    recipeService.removeFromFavourites(recipeId, principal.getName());
   }
 }
