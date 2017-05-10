@@ -4,7 +4,7 @@ import {Button, Modal} from "react-bootstrap";
 import {connect} from "react-redux";
 import {submit} from "redux-form/es/actions";
 import {withRouter} from "react-router-dom";
-import {showSignInModal, hideSignInModal} from "./actions/actions";
+import {hideSignInModal, showSignInModal} from "./actions/actions";
 import "../style/modals.scss";
 import SignInForm from "./SignInForm";
 import {handleSubmit} from "./signInSubmitter";
@@ -24,6 +24,7 @@ class SignInModalPill extends Component {
   };
 
   render() {
+    const {submitting} = this.props;
     return (
         <li>
           <a onClick={this.openSignInModal}>Sign In</a>
@@ -36,9 +37,8 @@ class SignInModalPill extends Component {
               <SignInForm onSubmit={handleSubmit(this.props.dispatch, this.props.history)}/>
             </Modal.Body>
             <Modal.Footer>
-              <Button type="submit" onClick={this.signIn}>Submit</Button>
-              {this.props.submitting && 'submt'}
-              <Button onClick={this.closeSignInModal}>Close</Button>
+              <Button type="submit" disabled={submitting} onClick={this.signIn}>Submit</Button>
+              <Button disabled={submitting} onClick={this.closeSignInModal}>Close</Button>
             </Modal.Footer>
           </Modal>
         </li>
