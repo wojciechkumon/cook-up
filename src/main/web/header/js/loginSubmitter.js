@@ -1,5 +1,6 @@
 import client from "../../restclient/client";
-import {reset, SubmissionError} from "redux-form";
+import {reset} from "redux-form/es/actions";
+import SubmissionError from "redux-form/es/SubmissionError";
 import url from "url";
 import {hideLoginModal} from "../../header/js/actions/actions";
 import {login, logout} from "../../security/js/actions/actions";

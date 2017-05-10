@@ -1,4 +1,4 @@
-@import './social-colors';
+@import '../../main/style/global_variables';
 
 .Share {
   .SocialMediaShareButton {
@@ -6,21 +6,29 @@
     margin-right: 10px;
   }
 
-  .fb circle {
-    fill: $fb;
-    &:hover {
+  .fb {
+    circle {
+      fill: $fb;
+    }
+    &:hover circle {
       fill: $fb-hover;
     }
   }
-  .google-plus circle {
-    fill: $google-plus;
-    &:hover {
+
+  .google-plus {
+    circle {
+      fill: $google-plus;
+    }
+    &:hover circle {
       fill: $google-plus-hover;
     }
   }
-  .twitter circle {
-    fill: $twitter;
-    &:hover {
+
+  .twitter {
+    circle {
+      fill: $twitter;
+    }
+    &:hover circle {
       fill: $twitter-hover;
     }
   }

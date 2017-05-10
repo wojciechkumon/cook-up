@@ -13,7 +13,8 @@ function user(state = {loggedIn: false, isAuthenticating: true}, action) {
     case LOGOUT:
       return {loggedIn: false, isAuthenticating: false};
     case SERVER_LOGOUT:
-      client({method: 'POST', path: '/api/logout'});
+      client({method: 'POST', path: '/api/logout'})
+        .catch(() => {});
       return {loggedIn: false, isAuthenticating: false};
     default:
       return state;

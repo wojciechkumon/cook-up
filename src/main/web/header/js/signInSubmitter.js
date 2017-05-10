@@ -1,5 +1,6 @@
 import client from "../../restclient/client";
-import {reset, SubmissionError} from "redux-form";
+import {reset} from "redux-form/es/actions";
+import SubmissionError from "redux-form/es/SubmissionError";
 import {hideSignInModal} from "../../header/js/actions/actions";
 import {mapErrorCodeToMessage} from "../../util/js/validators";
 

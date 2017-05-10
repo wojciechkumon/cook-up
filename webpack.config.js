@@ -16,8 +16,8 @@ module.exports = {
       "/api": "http://localhost:8080"
     },
     setup: function (app) {
-      const urls = ['/', '/about', '/me', '/login', '/signInSuccess', '/logout', '/addRecipe'];
-      const urlStarts = ['/recipe/', '/user/'];
+      const urls = ['/', '/about', '/me', '/signInSuccess', '/logout', '/addRecipe'];
+      const urlStarts = ['/recipe/', '/user/', '/login'];
 
       app.use(function pushStateHook(req, res, next) {
         if (urls.includes(req.url)

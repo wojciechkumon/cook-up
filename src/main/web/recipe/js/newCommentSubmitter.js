@@ -1,5 +1,5 @@
 import client from "../../restclient/client";
-import {reset} from "redux-form";
+import {reset} from "redux-form/es/actions";
 import {fetchCommentsIfNeeded, invalidateComments} from "./actions/actions";
 
 export const handleSubmit = (recipeId, dispatch) => values => {

@@ -1,5 +1,6 @@
 import React, {Component} from "react";
-import {Field, reduxForm} from "redux-form";
+import Field from "redux-form/es/Field";
+import reduxForm from "redux-form/es/reduxForm";
 import {required} from "../../util/js/validators";
 import {FormError, renderField} from "../../util/js/forms";
 import {onEnter} from "../../util/js/keyboard";
