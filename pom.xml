@@ -14,10 +14,10 @@
         <nekohtml.version>1.9.22</nekohtml.version>
         <postgresql.version>42.0.0.jre7</postgresql.version>
         <pdfbox.version>2.0.5</pdfbox.version>
-        <frontend-plugin.version>1.3</frontend-plugin.version>
+        <frontend-plugin.version>1.4</frontend-plugin.version>
         <jena.version>3.2.0</jena.version>
-        <junit.platform.version>1.0.0-M3</junit.platform.version>
-        <junit.jupiter.version>5.0.0-M3</junit.jupiter.version>
+        <junit.platform.version>1.0.0-M4</junit.platform.version>
+        <junit.jupiter.version>5.0.0-M4</junit.jupiter.version>
         <maven-surfire.version>2.19.1</maven-surfire.version>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -28,7 +28,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.2.RELEASE</version>
+        <version>1.5.3.RELEASE</version>
     </parent>
 
 
