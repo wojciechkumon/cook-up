@@ -3,4 +3,14 @@
     display: inline-block;
     margin-right: 10px;
   }
+
+  .fb:hover circle {
+    fill: black;
+  }
+  .google-plus:hover circle {
+    fill: black;
+  }
+  .twitter:hover circle {
+    fill: black;
+  }
 }

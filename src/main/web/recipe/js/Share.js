@@ -1,8 +1,7 @@
 import React, {Component} from "react";
-import {connect} from "react-redux";
 import "../style/Share.scss";
 import PropTypes from "prop-types";
-import {ShareButtons, generateShareIcon} from 'react-share';
+import {generateShareIcon, ShareButtons} from "react-share";
 
 class Share extends Component {
 
@@ -24,13 +23,13 @@ class Share extends Component {
     return (
         <div className="Share">
           <FacebookShareButton url={shareUrl}>
-            <FacebookIcon size={iconSize} round/>
+            <FacebookIcon className="fb" size={iconSize} round/>
           </FacebookShareButton>
           <GooglePlusShareButton url={shareUrl}>
-            <GooglePlusIcon size={iconSize} round/>
+            <GooglePlusIcon className="google-plus" size={iconSize} round/>
           </GooglePlusShareButton>
           <TwitterShareButton url={shareUrl}>
-            <TwitterIcon size={iconSize} round/>
+            <TwitterIcon className="twitter" size={iconSize} round/>
           </TwitterShareButton>
         </div>
     );
