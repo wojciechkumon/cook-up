@@ -7,7 +7,6 @@ import {Col, Grid, Row} from "react-bootstrap";
 import SignInModalPill from "./SignInModalPill";
 import LoginModalPill from "./LoginModalPill";
 import LogoutPill from "./LogoutPill";
-import MePill from "./MePill";
 
 class Header extends Component {
 
@@ -22,13 +21,11 @@ class Header extends Component {
             </Col>
             <Col md={8}>
               <ul className="nav nav-pills">
-                <li>
-                  <Link to="/about">About</Link>
-                </li>
-                <li>
-                  <Link to="/">Finder</Link>
-                </li>
-                {loggedIn && <MePill/>}
+                <li><Link to="/about">About</Link></li>
+                <li><Link to="/">Finder</Link></li>
+
+                {loggedIn && <li><Link to="/addRecipe">Add recipe</Link></li>}
+                {loggedIn && <li><Link to="/me">Me</Link></li>}
                 {loggedIn && <LogoutPill/>}
                 {!loggedIn && <SignInModalPill/>}
                 {!loggedIn && <LoginModalPill/>}
