@@ -210,6 +210,30 @@ function receiveRecipeFavourite(recipeId, isFavourite) {
   }
 }
 
+export function addRecipeToFavourite(recipeId) {
+  return dispatch => {
+    dispatch(requestRecipeFavourite(recipeId));
+
+    const path = '/api/recipes/' + recipeId + '/favourite';
+    return client(
+      {method: 'POST', path})
+      .then(() => dispatch(receiveRecipeFavourite(recipeId, true)))
+      .catch(response => dispatch(receiveRecipeFavourite(recipeId, false)));
+  };
+}
+
+export function removeRecipeFromFavourite(recipeId) {
+  return dispatch => {
+    dispatch(requestRecipeFavourite(recipeId));
+
+    const path = '/api/recipes/' + recipeId + '/favourite';
+    return client(
+      {method: 'DELETE', path})
+      .then(() => dispatch(receiveRecipeFavourite(recipeId, false)))
+      .catch(response => dispatch(receiveRecipeFavourite(recipeId, true)));
+  };
+}
+
 export function fetchMatchingRecipesIfNeeded() {
   return (dispatch, getState) => {
     const state = getState();
