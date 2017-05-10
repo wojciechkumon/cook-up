@@ -6,7 +6,6 @@ import Loader from "../../util/js/Loader";
 import "../style/FoundRecipes.scss";
 import "../img/error.png";
 
-
 class FoundRecipes extends Component {
 
   render() {
