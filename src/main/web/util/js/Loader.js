@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import FontAwesome from 'react-fontawesome';
+import FontAwesome from "react-fontawesome";
 import "../style/Loader.scss";
 
 class Loader extends Component {

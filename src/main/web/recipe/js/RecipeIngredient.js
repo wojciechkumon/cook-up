@@ -1,8 +1,8 @@
 import React, {Component} from "react";
 import {Glyphicon} from "react-bootstrap";
 import PropTypes from "prop-types";
-import '../style/RecipeIngredient.scss';
-import ToggleDisplay from 'react-toggle-display';
+import "../style/RecipeIngredient.scss";
+import ToggleDisplay from "react-toggle-display";
 
 class RecipeIngredient extends Component {
   constructor() {
