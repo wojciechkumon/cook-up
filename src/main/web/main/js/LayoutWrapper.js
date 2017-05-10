@@ -1,14 +1,14 @@
 import React, {Component} from "react";
-import Header from "../../header/js/Header";
+import NavMenu from "../../header/js/NavMenu";
 import Footer from "../../footer/js/Footer";
-import Wrapper from "../../wrapper/js/Wrapper";
+import Header from "../../header/js/Header";
 
 class LayoutWrapper extends Component {
   render() {
     return (
         <div>
+          <NavMenu/>
           <Header/>
-          <Wrapper/>
           <div>
             {this.props.children}
           </div>

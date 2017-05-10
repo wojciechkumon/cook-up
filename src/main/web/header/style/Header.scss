@@ -1,49 +1,71 @@
-@import '../../main/style/global_variables';
+@import "variables";
 
 .Header {
-  background-color: white;
-  text-align: center;
-  padding: 20px;
-
+  height: 400px;
+  background: url($backgroundImgPath) no-repeat center center;
+  background-size: cover;
   h1 {
-    font-weight: bold;
+    color: white;
+    text-align: center;
   }
 
-  ul {
-    margin-top: 20px;
-    list-style: none;
-    float: right;
-  }
-  li {
-    display: inline;
-    margin-right: 30px;
-  }
-  .nav {
-    margin-top: 15px;
+  .content {
+    font-size: 65px;
+    line-height: 70px;
+    padding-top: 120px;
+    color: white;
+
+    &-container {
+      font-weight: 600;
+      overflow: hidden;
+      height: 70px;
+      padding: 0 70px;
+      margin-top: 20px;
+
+      &-list {
+        margin-top: 0;
+        text-align: left;
+        list-style: none;
+
+        -webkit-animation-name: change;
+        -webkit-animation-duration: 10s;
+        -webkit-animation-iteration-count: infinite;
+        animation-name: change;
+        animation-duration: 5s;
+        animation-iteration-count: infinite;
+
+        &-item {
+          line-height: 70px;
+          margin: 0;
+          .single-word {
+            text-align: center;
+          }
+        }
+      }
+    }
   }
 
-  .nav-pills li a,
-  .nav-pills li a:focus,
-  .nav-pills li a:visited,
-  .nav-pills li a:active,
-  .nav-pills li a:active:focus {
-    color: $red;
-    background: none;
-    text-decoration: none;
-    border-radius: 2rem;
-    padding: 15px 30px;
-    border: 2px solid $red;
-    font-weight: 900;
-    letter-spacing: 0.1em;
-    font-size: 12px;
-    margin-top: 0;
-    text-transform: uppercase;
-    transition: all 400ms;
+  @keyframes opacity {
+    0%, 100% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
   }
 
-  .nav-pills li.active a:hover,
-  .nav-pills li a:hover {
-    background-color: $red;
-    color: white !important;
+  @keyframes change {
+    0%, 29.3%, 100% {
+      transform: translate3d(0, 0, 0);
+    }
+    33.3%, 62.6% {
+      transform: translate3d(0, -33%, 0);
+    }
+    66.6%, 95.9% {
+      transform: translate3d(0, -66%, 0);
+    }
+    100%, 100% {
+      transform: translate3d(0, -0%, 0);
+    }
   }
 }

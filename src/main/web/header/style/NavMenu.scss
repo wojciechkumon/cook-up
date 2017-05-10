@@ -1,0 +1,49 @@
+@import '../../main/style/global_variables';
+
+.NavMenu {
+  background-color: white;
+  text-align: center;
+  padding: 20px;
+
+  h1 {
+    font-weight: bold;
+  }
+
+  ul {
+    margin-top: 20px;
+    list-style: none;
+    float: right;
+  }
+  li {
+    display: inline;
+    margin-right: 30px;
+  }
+  .nav {
+    margin-top: 15px;
+  }
+
+  .nav-pills li a,
+  .nav-pills li a:focus,
+  .nav-pills li a:visited,
+  .nav-pills li a:active,
+  .nav-pills li a:active:focus {
+    color: $red;
+    background: none;
+    text-decoration: none;
+    border-radius: 2rem;
+    padding: 15px 30px;
+    border: 2px solid $red;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    font-size: 12px;
+    margin-top: 0;
+    text-transform: uppercase;
+    transition: all 400ms;
+  }
+
+  .nav-pills li.active a:hover,
+  .nav-pills li a:hover {
+    background-color: $red;
+    color: white !important;
+  }
+}
