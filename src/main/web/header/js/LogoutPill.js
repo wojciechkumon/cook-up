@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {serverLogout} from "../../security/js/actions/actions"
+import {serverLogout} from "../../security/js/actions/actions";
 
 class LogoutPill extends Component {
 
