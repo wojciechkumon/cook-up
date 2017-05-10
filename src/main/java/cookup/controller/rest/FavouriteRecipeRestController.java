@@ -20,12 +20,12 @@ public class FavouriteRecipeRestController {
   }
 
   @PostMapping("/recipes/{recipeId}/favourite")
-  void addToFavourites(@PathVariable Long recipeId, Principal principal) {
+  void addToFavourites(@PathVariable long recipeId, Principal principal) {
     recipeService.addToFavourites(recipeId, principal.getName());
   }
 
   @DeleteMapping("/recipes/{recipeId}/favourite")
-  void removeFromFavourites(@PathVariable Long recipeId, Principal principal) {
+  void removeFromFavourites(@PathVariable long recipeId, Principal principal) {
     recipeService.removeFromFavourites(recipeId, principal.getName());
   }
 }

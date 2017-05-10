@@ -61,9 +61,8 @@ class Recipe extends Component {
               </Col>
               <Col md={6}>
                 <h3>Directions</h3>
-                <p className="directions">{recipe
-                && recipe.cookingDescription}</p>
-                <SaveToPdf/>
+                <p className="directions">{recipe && recipe.cookingDescription}</p>
+                <SaveToPdf recipeId={recipeId}/>
                 {recipe && loggedIn && <AddToFavourites recipeId={recipeId}
                                                         fullRecipe={fullRecipe}/>}
               </Col>

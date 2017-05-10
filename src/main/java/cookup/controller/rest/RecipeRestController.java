@@ -41,7 +41,7 @@ public class RecipeRestController {
   @ResponseStatus(HttpStatus.NO_CONTENT)
   @ResponseBody
   void updateRecipe(@Valid @RequestBody RecipeDto recipeDto,
-                    @PathVariable Long recipeId, Principal principal) {
+                    @PathVariable long recipeId, Principal principal) {
     recipeService.updateRecipe(recipeId, recipeDto, principal.getName());
   }
 }

@@ -2,7 +2,9 @@
 
 .SaveToPdf {
   .pdf-icon {
-    margin-left: 5px;
+    margin-left: 10px;
+    color: white;
+
     &:hover {
       color: $red;
     }

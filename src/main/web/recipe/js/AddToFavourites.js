@@ -41,10 +41,10 @@ class AddToFavourites extends Component {
 
   getContent = isFavourite => {
     return isFavourite ?
-           <span>Remove from favourites <FontAwesome onClick={this.removeFromFavourites}
+           <span>Remove from favourites<FontAwesome onClick={this.removeFromFavourites}
                                                      className="heart-icon favourite"
                                                      name="heart"/></span> :
-           <span>Add to favourites <FontAwesome onClick={this.addToFavourites}
+           <span>Add to favourites<FontAwesome onClick={this.addToFavourites}
                                                 className="heart-icon"
                                                 name="heart"/></span>;
   }

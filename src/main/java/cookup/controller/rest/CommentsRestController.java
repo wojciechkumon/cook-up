@@ -32,7 +32,7 @@ public class CommentsRestController {
 
   @PostMapping("/recipes/{recipeId}/comments")
   @ResponseStatus(HttpStatus.CREATED)
-  void addComment(@PathVariable Long recipeId,
+  void addComment(@PathVariable long recipeId,
                   @Valid @RequestBody CommentDto comment, Principal principal) {
     if (principal != null) {
       commentsService.addUserComment(comment, recipeId, principal.getName());
@@ -42,7 +42,7 @@ public class CommentsRestController {
   }
 
   @GetMapping("/recipes/{recipeId}/comments")
-  ResponseEntity<?> getComments(@PathVariable Long recipeId) {
+  ResponseEntity<?> getComments(@PathVariable long recipeId) {
     List<RecipeCommentDto> recipeComments = commentsService.getRecipeComments(recipeId);
 
     Resources<RecipeCommentDto> resources = new Resources<>(recipeComments);
