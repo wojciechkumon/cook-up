@@ -1,5 +1,6 @@
 import React, {Component} from "react";
-import {Field, reduxForm} from "redux-form";
+import Field from "redux-form/es/Field";
+import reduxForm from "redux-form/es/reduxForm";
 import {maxLength, required} from "../../util/js/validators";
 import {renderField} from "../../util/js/forms";
 import "../style/NewCommentForm.scss";
