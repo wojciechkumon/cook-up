@@ -1,14 +1,14 @@
 import React, {Component} from "react";
+import Loader from "../../util/js/Loader";
+import "../style/AuthChecking.scss";
 
 class AuthChecking extends Component {
 
   render() {
     return (
-      <div>
-        Authentication checking<br/>
-        Authentication checking<br/>
-        Authentication checking<br/>
-        Authentication checking
+      <div className="AuthChecking">
+        <div className="auth-label">Authentication checking</div>
+        <div><Loader/></div>
       </div>
     );
   }
