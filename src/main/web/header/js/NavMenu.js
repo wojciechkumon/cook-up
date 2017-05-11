@@ -15,7 +15,7 @@ class NavMenu extends Component {
     return (
       <div className="NavMenu">
         <Grid>
-          <Row className="show-grid">
+          <Row>
             <Col md={4}>
               <h1>Cook up</h1>
             </Col>

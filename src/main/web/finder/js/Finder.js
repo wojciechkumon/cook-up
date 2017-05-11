@@ -23,7 +23,7 @@ class Finder extends Component {
     return (
       <div className="Finder">
         <Grid>
-          <Row className="show-grid">
+          <Row>
             <h1>What do you have in your fridge?</h1>
             <div>
               <FinderAutocomplete ingredients={allIngredients.data}

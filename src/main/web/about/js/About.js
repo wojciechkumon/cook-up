@@ -7,10 +7,10 @@ class About extends Component {
     return (
         <div className="About">
           <Grid>
-            <Row className="show-grid">
+            <Row>
               <h1>Find a perfect recipe for today.</h1>
             </Row>
-            <Row className="show-grid">
+            <Row>
               <Col md={4}>
                 <p>1 Type all products you have in your fridge and select the
                   perfect recipe for today.</p>

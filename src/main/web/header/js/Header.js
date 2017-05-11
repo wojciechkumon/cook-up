@@ -8,7 +8,7 @@ class Header extends Component {
     return (
         <div className="Header">
           <Grid>
-            <Row className="show-grid">
+            <Row>
               <div className="content">
                 <div className="content-container">
                   <ul className="content-container-list">

@@ -45,7 +45,7 @@ class Recipe extends Component {
     return (
         <div className="Recipe">
           <Grid>
-            <Row className="show-grid">
+            <Row>
               <Col md={6} className="title">
                 {recipeFetching && <Loader/>}
                 <h1>{recipe && recipe.name}</h1>
@@ -54,7 +54,7 @@ class Recipe extends Component {
               <RecipeTable recipe={recipe}/>
             </Row>
 
-            <Row className="show-grid">
+            <Row>
               <Col md={6}>
                 <RecipeAuthor author={author}/>
                 <RecipeIngredients recipeIngredients={recipeIngredients}/>

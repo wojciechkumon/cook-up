@@ -28,7 +28,7 @@ class Comments extends Component {
     comments = comments.map(c => <Comment key={c.id} comment={c}/>);
 
     return (
-        <Row className="show-grid">
+        <Row>
           <Col md={6}>
             <h3>Comments {'(' + comments.length + ')'}</h3>
             {commentsFetching && <Loader/>}

@@ -13,7 +13,7 @@ class RecipeList extends Component {
 
     return (
         <div className="RecipeList">
-          <Row className="show-grid">
+          <Row>
             <Table>
               <thead>
               <tr>

@@ -9,7 +9,7 @@ class Footer extends Component {
     return (
         <div className="Footer">
           <Grid>
-            <Row className="show-grid">
+            <Row>
               <Col md={4}>
                 <p>Cook up</p>
               </Col>
