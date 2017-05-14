@@ -3,7 +3,8 @@ package cookup.dto;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import java.util.Set;
+import java.util.HashSet;
+import java.util.List;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -35,8 +36,9 @@ public class RecipeDto {
   @NotNull
   private Integer servings;
 
+  @NotNull
   @NotEmpty
-  private Set<RecipeIngredient> ingredients;
+  private List<RecipeIngredient> ingredients;
 
 
   public RecipeDto() {}
@@ -59,7 +61,7 @@ public class RecipeDto {
     recipe.setDifficultyLevel(this.getDifficultyLevel());
     recipe.setKcal(this.getKcal());
     recipe.setServings(this.getServings());
-    recipe.setIngredients(this.getIngredients());
+    recipe.setIngredients(new HashSet<>(this.getIngredients()));
     return recipe;
   }
 
@@ -122,11 +124,11 @@ public class RecipeDto {
     this.servings = servings;
   }
 
-  public Set<RecipeIngredient> getIngredients() {
+  public List<RecipeIngredient> getIngredients() {
     return ingredients;
   }
 
-  public void setIngredients(Set<RecipeIngredient> ingredients) {
+  public void setIngredients(List<RecipeIngredient> ingredients) {
     this.ingredients = ingredients;
   }
 
@@ -137,7 +139,7 @@ public class RecipeDto {
     private DifficultyLevel difficultyLevel;
     private Integer kcal;
     private Integer servings;
-    private Set<RecipeIngredient> ingredients;
+    private List<RecipeIngredient> ingredients;
 
     public Builder() {}
 
@@ -171,7 +173,7 @@ public class RecipeDto {
       return this;
     }
 
-    public Builder ingredients(Set<RecipeIngredient> val) {
+    public Builder ingredients(List<RecipeIngredient> val) {
       ingredients = val;
       return this;
     }

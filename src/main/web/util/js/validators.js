@@ -10,6 +10,16 @@ export const passwordLengthWarn = (minimalLength, correctLength) => value =>
 
 export const required = value => value ? undefined : 'Required';
 
+export const isInteger = value => !isNaN(value)
+                                  && parseInt(Number(value)) == value
+                                  && !isNaN(parseInt(value, 10));
+
+export const isIntegerValidator = value => isInteger(value)
+  ? undefined : 'Not a valid number';
+
+export const lessThen = max => value =>
+  value >= max ? `Must be less then ${max}` : undefined;
+
 export const validateFieldMatch = (firstFieldName, secondFieldName, message) => values => {
   const errors = {};
   if (values[firstFieldName] !== values[secondFieldName]) {
@@ -28,7 +38,7 @@ export const isCorrectEmail = email => {
 };
 
 export const mapErrorCodeToMessage = (code, defaultMessage) => {
-  switch(code) {
+  switch (code) {
     case 'Size':
       return defaultMessage;
     case 'Email':
