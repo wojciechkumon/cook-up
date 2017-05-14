@@ -46,6 +46,10 @@ const renderIngredients = ({fields, meta: {error, submitFailed}}) => (
           component={IngredientAutocomplete}
         />
         <Field
+          name={`${ingredient}.substitutes`}
+          component={SubstituteAutocomplete}
+        />
+        <Field
           name={`${ingredient}.amount`}
           type="text"
           component={renderField}
@@ -53,38 +57,11 @@ const renderIngredients = ({fields, meta: {error, submitFailed}}) => (
           normalize={doubleNormalizer}
           label="Amount"
         />
-        <Field
-          name={`${ingredient}.substitutes`}
-          component={SubstituteAutocomplete}
-        />
       </li>
     ))}
     <li>
       <Button type="button" onClick={() => fields.push({})}>Add ingredient</Button>
       {submitFailed && error && <span>{error}</span>}
-    </li>
-  </ul>
-);
-
-const renderSubstitutes = ({fields, meta: {error}}) => (
-  <ul>
-    {fields.map((substitute, index) => (
-      <li key={index}>
-        <Button
-          type="button"
-          title="Remove substitute"
-          onClick={() => fields.remove(index)}>x</Button>
-        <Field
-          name={substitute}
-          type="text"
-          component={renderField}
-          label={`Substitute #${index + 1}`}
-        />
-      </li>
-    ))}
-    {error && <li className="error">{error}</li>}
-    <li>
-      <Button type="button" onClick={() => fields.push()}>Add substitute</Button>
     </li>
   </ul>
 );
