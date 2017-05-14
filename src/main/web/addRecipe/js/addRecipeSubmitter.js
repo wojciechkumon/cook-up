@@ -10,7 +10,7 @@ export const handleSubmit = dispatch => values => {
     difficultyLevel: values.difficultyLevel,
     kcal: parseInt(Number(values.kcal)),
     servings: parseInt(Number(values.servings)),
-    ingredients: []
+    ingredients: values.ingredients
   };
 
   return client({method: 'POST', path, entity: recipeDto})

@@ -3,9 +3,11 @@ import Field from "redux-form/es/Field";
 import reduxForm from "redux-form/es/reduxForm";
 import FieldArray from "redux-form/es/FieldArray";
 import {renderField} from "../../util/js/forms";
-import {maxLength, required, isDoubleValidator} from "../../util/js/validators";
+import {isDoubleValidator, maxLength, required} from "../../util/js/validators";
 import {doubleNormalizer} from "../../util/js/formNormalizers";
 import IngredientAutocomplete from "./IngredientAutocomplete";
+import {Button} from "react-bootstrap";
+import SubstituteAutocomplete from "./SubstituteAutocomplete";
 
 const maxLength64 = maxLength(64);
 
@@ -23,7 +25,7 @@ class WizardFormFirstPage extends Component {
                  validate={[required, maxLength64]}
                  label="Recipe name"/>
           <FieldArray name="ingredients" component={renderIngredients}/>
-          <button type="submit">Next</button>
+          <Button type="submit">Next</Button>
         </div>
       </form>
     );
@@ -34,17 +36,14 @@ const renderIngredients = ({fields, meta: {error, submitFailed}}) => (
   <ul>
     {fields.map((ingredient, index) => (
       <li key={index}>
-        <button
+        <Button
           type="button"
           title="Remove ingredient"
-          onClick={() => fields.remove(index)}
-        />
+          onClick={() => fields.remove(index)}>x</Button>
         <h4>Ingredient #{index + 1}</h4>
         <Field
           name={`${ingredient}.ingredient`}
-          type="text"
-          component={renderField}
-          label="Ingredient"
+          component={IngredientAutocomplete}
         />
         <Field
           name={`${ingredient}.amount`}
@@ -54,12 +53,14 @@ const renderIngredients = ({fields, meta: {error, submitFailed}}) => (
           normalize={doubleNormalizer}
           label="Amount"
         />
-        <IngredientAutocomplete ingredientNumber={ingredient}/>
-        <FieldArray name={`${ingredient}.substitutes`} component={renderSubstitutes}/>
+        <Field
+          name={`${ingredient}.substitutes`}
+          component={SubstituteAutocomplete}
+        />
       </li>
     ))}
     <li>
-      <button type="button" onClick={() => fields.push({})}>Add ingredient</button>
+      <Button type="button" onClick={() => fields.push({})}>Add ingredient</Button>
       {submitFailed && error && <span>{error}</span>}
     </li>
   </ul>
@@ -69,11 +70,10 @@ const renderSubstitutes = ({fields, meta: {error}}) => (
   <ul>
     {fields.map((substitute, index) => (
       <li key={index}>
-        <button
+        <Button
           type="button"
           title="Remove substitute"
-          onClick={() => fields.remove(index)}
-        />
+          onClick={() => fields.remove(index)}>x</Button>
         <Field
           name={substitute}
           type="text"
@@ -84,7 +84,7 @@ const renderSubstitutes = ({fields, meta: {error}}) => (
     ))}
     {error && <li className="error">{error}</li>}
     <li>
-      <button type="button" onClick={() => fields.push()}>Add substitute</button>
+      <Button type="button" onClick={() => fields.push()}>Add substitute</Button>
     </li>
   </ul>
 );

@@ -4,6 +4,7 @@ import reduxForm from "redux-form/es/reduxForm";
 import {renderError, renderField} from "../../util/js/forms";
 import {isIntegerValidator, lessThen} from "../../util/js/validators";
 import {integerNormalizer} from "../../util/js/formNormalizers";
+import {Button} from "react-bootstrap";
 
 const lessThenInt = lessThen(Math.pow(2, 31) - 1);
 const validateDifficultyLevel = values => {
@@ -68,8 +69,8 @@ class WizardFormSecondPage extends Component {
         </div>
 
         <div>
-          <button type="button" className="previous" onClick={previousPage}>Previous</button>
-          <button type="submit" className="next">Next</button>
+          <Button type="button" className="previous" onClick={previousPage}>Previous</Button>
+          <Button type="submit" className="next">Next</Button>
         </div>
       </form>
     );

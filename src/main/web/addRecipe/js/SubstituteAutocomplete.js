@@ -4,33 +4,34 @@ import PropTypes from "prop-types";
 import Select from "react-select";
 import {fetchIngredientsIfNeeded} from "../../finder/js/actions/actions";
 
-class IngredientAutocomplete extends Component {
+class SubstituteAutocomplete extends Component {
 
   constructor() {
     super();
-    this.state = {chosenIngredient: undefined};
+    this.state = {chosenIngredients: undefined};
   }
 
   componentDidMount() {
     this.props.dispatch(fetchIngredientsIfNeeded());
   }
 
-  handleSelectChange = chosenIngredient => {
+  handleSelectChange = chosenIngredients => {
     const {input: {onChange}} = this.props;
-    onChange(chosenIngredient);
-    this.setState({chosenIngredient});
+    onChange(chosenIngredients);
+    this.setState({chosenIngredients});
   };
 
   render() {
     const {ingredients, isFetching} = this.props;
-    const {chosenIngredient} = this.state;
+    const {chosenIngredients} = this.state;
     return (
       <Select
-        placeholder="Select ingredient"
+        placeholder="Select substitutes"
         valueKey="id"
         labelKey="name"
-        value={chosenIngredient}
+        value={chosenIngredients}
         options={ingredients}
+        multi
         onChange={this.handleSelectChange}
         isLoading={isFetching}
       />
@@ -38,7 +39,7 @@ class IngredientAutocomplete extends Component {
   }
 }
 
-IngredientAutocomplete.propTypes = {
+SubstituteAutocomplete.propTypes = {
   ingredients: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
@@ -54,6 +55,6 @@ const mapStateToProps = state => {
   }
 };
 
-IngredientAutocomplete = connect(mapStateToProps)(IngredientAutocomplete);
+SubstituteAutocomplete = connect(mapStateToProps)(SubstituteAutocomplete);
 
-export default IngredientAutocomplete;
+export default SubstituteAutocomplete;
