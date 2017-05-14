@@ -3,6 +3,7 @@ import Field from "redux-form/es/Field";
 import reduxForm from "redux-form/es/reduxForm";
 import {renderTextArea} from "../../util/js/forms";
 import {maxLength, required} from "../../util/js/validators";
+import {Button} from "react-bootstrap";
 
 const maxLength2048 = maxLength(2048);
 
@@ -24,10 +25,10 @@ class WizardFormThirdPage extends Component {
         </div>
 
         <div>
-          <button type="button" className="previous" onClick={previousPage}>
+          <Button type="button" className="previous" onClick={previousPage}>
             Previous
-          </button>
-          <button type="submit" disabled={pristine || submitting}>Submit</button>
+          </Button>
+          <Button type="submit" disabled={pristine || submitting}>Submit</Button>
         </div>
       </form>
     );
