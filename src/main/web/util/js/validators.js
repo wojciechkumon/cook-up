@@ -17,6 +17,11 @@ export const isInteger = value => !isNaN(value)
 export const isIntegerValidator = value => isInteger(value)
   ? undefined : 'Not a valid number';
 
+export const isDouble = value => !isNaN(value) && Number(value) == value;
+
+export const isDoubleValidator = value => isDouble(value)
+  ? undefined : 'Not a valid number';
+
 export const lessThen = max => value =>
   value >= max ? `Must be less then ${max}` : undefined;
 

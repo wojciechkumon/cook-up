@@ -6,10 +6,10 @@ export const handleSubmit = dispatch => values => {
   const recipeDto = {
     name: values.name,
     cookingDescription: values.cookingDescription,
-    cookingTimeMinutes: Number(values.cookingTimeMinutes),
+    cookingTimeMinutes: parseInt(Number(values.cookingTimeMinutes)),
     difficultyLevel: values.difficultyLevel,
-    kcal: Number(values.kcal),
-    servings: Number(values.servings),
+    kcal: parseInt(Number(values.kcal)),
+    servings: parseInt(Number(values.servings)),
     ingredients: []
   };
 
