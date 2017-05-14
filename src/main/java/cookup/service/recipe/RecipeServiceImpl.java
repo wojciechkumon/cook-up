@@ -52,6 +52,12 @@ public class RecipeServiceImpl implements RecipeService {
     }
     Objects.requireNonNull(recipeIngredient.getAmount());
     this.validateIngredient(recipeIngredient.getIngredient());
+
+    if (recipeIngredient.getSubstitutes() != null) {
+      recipeIngredient.getSubstitutes()
+          .removeIf(substitute ->
+              recipeIngredient.getIngredient().getId().equals(substitute.getId()));
+    }
   }
 
   private void validateIngredient(Ingredient ingredient) {
