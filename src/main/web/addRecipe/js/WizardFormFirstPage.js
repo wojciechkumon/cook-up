@@ -5,6 +5,7 @@ import FieldArray from "redux-form/es/FieldArray";
 import {renderField} from "../../util/js/forms";
 import {maxLength, required, isDoubleValidator} from "../../util/js/validators";
 import {doubleNormalizer} from "../../util/js/formNormalizers";
+import IngredientAutocomplete from "./IngredientAutocomplete";
 
 const maxLength64 = maxLength(64);
 
@@ -31,7 +32,7 @@ class WizardFormFirstPage extends Component {
 
 const renderIngredients = ({fields, meta: {error, submitFailed}}) => (
   <ul>
-    {fields.map((member, index) => (
+    {fields.map((ingredient, index) => (
       <li key={index}>
         <button
           type="button"
@@ -40,20 +41,21 @@ const renderIngredients = ({fields, meta: {error, submitFailed}}) => (
         />
         <h4>Ingredient #{index + 1}</h4>
         <Field
-          name={`${member}.ingredient`}
+          name={`${ingredient}.ingredient`}
           type="text"
           component={renderField}
           label="Ingredient"
         />
         <Field
-          name={`${member}.amount`}
+          name={`${ingredient}.amount`}
           type="text"
           component={renderField}
           validate={[isDoubleValidator]}
           normalize={doubleNormalizer}
           label="Amount"
         />
-        <FieldArray name={`${member}.substitutes`} component={renderSubstitutes}/>
+        <IngredientAutocomplete ingredientNumber={ingredient}/>
+        <FieldArray name={`${ingredient}.substitutes`} component={renderSubstitutes}/>
       </li>
     ))}
     <li>
