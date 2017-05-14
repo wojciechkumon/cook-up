@@ -95,6 +95,7 @@ public class PdfGeneratorImpl implements PdfGenerator {
 
   private List<String> splitToLines(PDFont pdfFont, float fontSize, float width, String text)
       throws IOException {
+    text = text.replaceAll("(\n\r)|(\r)|(\n)", " ");
     List<String> lines = new ArrayList<>();
     int lastSpace = -1;
     while (text.length() > 0) {
