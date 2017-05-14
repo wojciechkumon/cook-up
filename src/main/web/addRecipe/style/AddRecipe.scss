@@ -2,6 +2,9 @@
 
 .AddRecipe {
   background-color: $dark-grey;
-  padding-top: 25px;
-  padding-bottom: 25px;
+  padding: 50px 100px;
+  color: white;
+  h1 {
+    font-weight: 700;
+  }
 }
