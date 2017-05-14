@@ -1,7 +1,7 @@
 import client from "../../restclient/client";
 import {reset} from "redux-form/es/actions";
 
-export const handleSubmit = dispatch => values => {
+export const handleSubmit = (dispatch, history) => values => {
   const path = '/api/recipes';
   const recipeDto = {
     name: values.name,
@@ -14,6 +14,7 @@ export const handleSubmit = dispatch => values => {
   };
 
   return client({method: 'POST', path, entity: recipeDto})
+    .then(response => history.push('/recipe/' + response.entity.id))
     .then(() => dispatch(reset('add-recipe-wizard')))
     .catch(response => {
       console.log(response);

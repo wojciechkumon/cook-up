@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
+import {withRouter} from "react-router-dom";
 import AddRecipeWizardForm from "./AddRecipeWizardForm";
 import "../style/AddRecipe.scss";
 import {handleSubmit} from "./addRecipeSubmitter";
@@ -7,10 +8,12 @@ import {handleSubmit} from "./addRecipeSubmitter";
 class AddRecipe extends Component {
 
   render() {
+    const {dispatch, history} = this.props;
+
     return (
       <div className="AddRecipe">
         <h3>Add recipe</h3>
-        <AddRecipeWizardForm onSubmit={handleSubmit(this.props.dispatch)}/>
+        <AddRecipeWizardForm onSubmit={handleSubmit(dispatch, history)}/>
       </div>
     );
   }
@@ -18,4 +21,4 @@ class AddRecipe extends Component {
 
 AddRecipe = connect()(AddRecipe);
 
-export default AddRecipe;
+export default withRouter(AddRecipe);

@@ -24,17 +24,17 @@ class SignInModalPill extends Component {
   };
 
   render() {
-    const {submitting} = this.props;
+    const {submitting, showModal, dispatch, history} = this.props;
     return (
         <li>
           <a onClick={this.openSignInModal}>Sign In</a>
-          <Modal show={this.props.showModal}
+          <Modal show={showModal}
                  onHide={this.closeSignInModal}>
             <Modal.Header closeButton>
               <Modal.Title>Sign in</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <SignInForm onSubmit={handleSubmit(this.props.dispatch, this.props.history)}/>
+              <SignInForm onSubmit={handleSubmit(dispatch, history)}/>
             </Modal.Body>
             <Modal.Footer>
               <Button type="submit" disabled={submitting} onClick={this.signIn}>Submit</Button>
