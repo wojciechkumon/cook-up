@@ -4,13 +4,10 @@ import reduxForm from "redux-form/es/reduxForm";
 import {renderError, renderField} from "../../util/js/forms";
 import {isIntegerValidator, lessThen} from "../../util/js/validators";
 import {integerNormalizer} from "../../util/js/formNormalizers";
+import {validateDifficultyLevel} from "./addRecipeValidators";
 import {Button} from "react-bootstrap";
 
 const lessThenInt = lessThen(Math.pow(2, 31) - 1);
-const validateDifficultyLevel = values => {
-  return values.difficultyLevel && ['EASY', 'MEDIUM', 'HARD'].includes(values.difficultyLevel)
-    ? {} : {difficultyLevel: 'Specify difficulty level'}
-};
 
 class WizardFormSecondPage extends Component {
 

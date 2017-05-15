@@ -4,6 +4,7 @@ import reduxForm from "redux-form/es/reduxForm";
 import FieldArray from "redux-form/es/FieldArray";
 import {renderField} from "../../util/js/forms";
 import {isDoubleValidator, maxLength, required} from "../../util/js/validators";
+import {validateIngredients} from "./addRecipeValidators";
 import {doubleNormalizer} from "../../util/js/formNormalizers";
 import IngredientAutocomplete from "./IngredientAutocomplete";
 import {Button} from "react-bootstrap";
@@ -69,5 +70,6 @@ const renderIngredients = ({fields, meta: {error, submitFailed}}) => (
 export default reduxForm({
   form: 'add-recipe-wizard',
   destroyOnUnmount: false,
-  forceUnregisterOnUnmount: true
+  forceUnregisterOnUnmount: true,
+  validate: validateIngredients
 })(WizardFormFirstPage);
