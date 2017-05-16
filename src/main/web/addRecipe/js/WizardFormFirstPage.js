@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import Field from "redux-form/es/Field";
 import reduxForm from "redux-form/es/reduxForm";
 import FieldArray from "redux-form/es/FieldArray";
-import {renderField} from "../../util/js/forms";
+import {renderError, renderField} from "../../util/js/forms";
 import {isDoubleValidator, maxLength, required} from "../../util/js/validators";
 import {validateIngredients} from "./addRecipeValidators";
 import {doubleNormalizer} from "../../util/js/formNormalizers";
@@ -47,14 +47,22 @@ const renderIngredients = ({fields, meta: {error, submitFailed}}) => (
           component={IngredientAutocomplete}
         />
         <Field
+          name={`${ingredient}.ingredient`}
+          component={renderError}
+        />
+        <Field
           name={`${ingredient}.substitutes`}
           component={SubstituteAutocomplete}
+        />
+        <Field
+          name={`${ingredient}.substitutes`}
+          component={renderError}
         />
         <Field
           name={`${ingredient}.amount`}
           type="text"
           component={renderField}
-          validate={[isDoubleValidator]}
+          validate={[required, isDoubleValidator]}
           normalize={doubleNormalizer}
           label="Amount"
         />
@@ -63,6 +71,9 @@ const renderIngredients = ({fields, meta: {error, submitFailed}}) => (
     <li>
       <Button type="button" onClick={() => fields.push({})}>Add ingredient</Button>
       {submitFailed && error && <span>{error}</span>}
+    </li>
+    <li>
+      <Field name="ingredientsError" component={renderError}/>
     </li>
   </ul>
 );

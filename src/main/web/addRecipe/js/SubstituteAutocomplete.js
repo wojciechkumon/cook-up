@@ -13,6 +13,9 @@ class SubstituteAutocomplete extends Component {
 
   componentDidMount() {
     this.props.dispatch(fetchIngredientsIfNeeded());
+    const {input: {onChange}} = this.props;
+    const {chosenIngredients} = this.state;
+    onChange(chosenIngredients);
   }
 
   handleSelectChange = chosenIngredients => {
