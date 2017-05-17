@@ -13,7 +13,7 @@ class NavMenu extends Component {
   render() {
     const {loggedIn} = this.props.user;
     return (
-      <div className="NavMenu">
+      <nav className="NavMenu">
         <Grid>
           <Row>
             <Col md={4}>
@@ -33,7 +33,7 @@ class NavMenu extends Component {
             </Col>
           </Row>
         </Grid>
-      </div>
+      </nav>
     );
   }
 }

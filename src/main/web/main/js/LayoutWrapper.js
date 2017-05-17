@@ -9,9 +9,9 @@ class LayoutWrapper extends Component {
         <div>
           <NavMenu/>
           <Header/>
-          <div>
+          <main>
             {this.props.children}
-          </div>
+          </main>
           <Footer/>
         </div>
     );

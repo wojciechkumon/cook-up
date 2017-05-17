@@ -6,7 +6,7 @@ import "../img/cook.jpg";
 class Header extends Component {
   render() {
     return (
-        <div className="Header">
+        <header className="Header">
           <Grid>
             <Row>
               <div className="content">
@@ -26,7 +26,7 @@ class Header extends Component {
               </div>
             </Row>
           </Grid>
-        </div>
+        </header>
     );
   }
 }

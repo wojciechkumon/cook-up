@@ -7,7 +7,7 @@ class Footer extends Component {
     const year = new Date().getFullYear();
 
     return (
-        <div className="Footer">
+        <footer className="Footer">
           <Grid>
             <Row>
               <Col md={4}>
@@ -21,7 +21,7 @@ class Footer extends Component {
               </Col>
             </Row>
           </Grid>
-        </div>
+        </footer>
     );
   }
 }

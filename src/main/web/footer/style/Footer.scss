@@ -1,11 +1,14 @@
 @import "../../main/style/global_variables";
 
 .Footer {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
   padding: 40px;
   background-color: $light-grey;
   font-size: 14px;
   clear: both;
-  position: relative;
   p {
     text-align: center;
     font-weight: 700;
