@@ -14,9 +14,7 @@ class TimeUtilImplTest {
   @Test
   void shouldBeUtcZone() {
     // given
-    Instant instant = Instant.now();
-    ZoneId zoneId = ZoneId.systemDefault();
-    Clock clock = Clock.fixed(instant, zoneId);
+    Clock clock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
     TimeUtilImpl timeUtil = new TimeUtilImpl(clock);
 
     // when
