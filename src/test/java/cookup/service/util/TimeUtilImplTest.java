@@ -1,31 +1,28 @@
 package cookup.service.util;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.Clock;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TimeUtilImplTest {
 
-  private TimeUtilImpl timeUtil;
-
-  @BeforeEach
-  void setUp() {
-    timeUtil = new TimeUtilImpl();
-  }
-
   @Test
   void shouldBeUtcZone() {
+    // given
+    Instant instant = Instant.now();
+    ZoneId zoneId = ZoneId.systemDefault();
+    Clock clock = Clock.fixed(instant, zoneId);
+    TimeUtilImpl timeUtil = new TimeUtilImpl(clock);
+
     // when
     LocalDateTime now = timeUtil.now();
-    ZonedDateTime utcNow = now.atZone(ZoneId.of("UTC"));
 
     // then
-    assertEquals(utcNow.getHour(), now.getHour());
-    assertEquals(utcNow.getMinute(), now.getMinute());
+    assertEquals(LocalDateTime.now(clock), now);
   }
 }
