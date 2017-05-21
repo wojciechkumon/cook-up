@@ -7,20 +7,18 @@ export const RECEIVE_CREATED_RECIPES = 'RECEIVE_CREATED_RECIPES';
 
 export function fetchFavouriteRecipesIfNeeded() {
   return (dispatch, getState) => {
-    if (shouldFetchFavouriteRecipes(getState())) {
+    if (shouldFetchRecipes(getState().me.favouriteRecipeIds)) {
       return dispatch(fetchFavouriteRecipes(getState()));
     }
     return Promise.resolve();
   }
 }
 
-function shouldFetchFavouriteRecipes(state) {
-  const favouriteRecipes = state.me.favouriteRecipeIds;
-
-  if (!favouriteRecipes) {
+function shouldFetchRecipes(recipes) {
+  if (!recipes) {
     return true;
   } else {
-    return !favouriteRecipes.isFetching;
+    return !recipes.isFetching;
   }
 }
 
@@ -46,6 +44,42 @@ function requestFavouriteRecipes() {
 function receiveFavouriteRecipes(recipes) {
   return {
     type: RECEIVE_FAVOURITE_RECIPES,
+    recipes,
+    receivedAt: Date.now()
+  }
+}
+
+export function fetchCreatedRecipesIfNeeded() {
+  return (dispatch, getState) => {
+    if (shouldFetchRecipes(getState().me.createdRecipes)) {
+      return dispatch(fetchCreatedRecipes(getState()));
+    }
+    return Promise.resolve();
+  }
+}
+
+function fetchCreatedRecipes(state) {
+  return dispatch => {
+    dispatch(requestCreatedRecipes());
+    const userId = state.auth.id;
+    const path = '/api/accounts/' + userId + '/createdRecipes';
+    return client({method: 'GET', path})
+      .then(response => response.entity)
+      .then(
+        entity => (entity._embedded && entity._embedded.recipes) ? entity._embedded.recipes : [])
+      .then(recipes => dispatch(receiveCreatedRecipes(recipes)));
+  }
+}
+
+function requestCreatedRecipes() {
+  return {
+    type: REQUEST_CREATED_RECIPES
+  }
+}
+
+function receiveCreatedRecipes(recipes) {
+  return {
+    type: RECEIVE_CREATED_RECIPES,
     recipes,
     receivedAt: Date.now()
   }

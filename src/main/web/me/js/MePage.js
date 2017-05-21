@@ -7,7 +7,6 @@ class MePage extends Component {
   render() {
     return (
       <div>
-        <span>It's me!</span>
         <MyRecipes/>
         <FavouriteRecipes/>
       </div>
