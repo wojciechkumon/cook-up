@@ -10,4 +10,7 @@ import cookup.domain.recipe.Recipe;
 public interface RecipeFinder {
 
   Page<Recipe> findMatchingRecipes(List<Long> ingredientIds, Pageable pageable);
+
+  Page<Recipe> findMatchingRecipesWithSimilarIngredients(List<Long> ingredientIds,
+                                                         Pageable pageable);
 }
