@@ -8,6 +8,7 @@ import {fetchIngredientsIfNeeded} from "./actions/actions";
 import FindButton from "./FindButton";
 import FinderAutocomplete from "./FinderAutocomplete";
 import "../img/error.png";
+import SimilarIngredientsCheckbox from "./SimilarIngredientsCheckbox";
 
 class Finder extends Component {
 
@@ -30,6 +31,7 @@ class Finder extends Component {
                                   chosenIngredients={this.props.chosenIngredients}
                                   isFetching={allIngredients.isFetching}
                                   disabled={disabled}/>
+              <SimilarIngredientsCheckbox disabled={disabled}/>
               <FindButton disabled={disabled}/>
             </div>
             {error && <p className="ingredients-error">Error during downloading
