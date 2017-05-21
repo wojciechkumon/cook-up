@@ -1,14 +1,21 @@
 package cookup.service.ingredients;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.SimpleSelector;
 import org.apache.jena.rdf.model.Statement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -16,9 +23,13 @@ import java.util.stream.Collectors;
 
 import cookup.dao.IngredientDao;
 import cookup.domain.recipe.Ingredient;
+import cookup.domain.recipe.IngredientWithType;
 
 @Service
 public class SimilarIngredientsFinderImpl implements SimilarIngredientsFinder {
+  private static final Logger LOG = LoggerFactory.getLogger(SimilarIngredientsFinderImpl.class);
+  private static final String INGREDIENT_TYPES_FILE = "data/ingredientTypes.json";
+  private static final String URI_START = "cookup://";
   private final IngredientDao ingredientDao;
   private final Model model;
   private final Property type;
@@ -34,13 +45,33 @@ public class SimilarIngredientsFinderImpl implements SimilarIngredientsFinder {
 
   private void init() {
     ingredients.addAll(ingredientDao.findAll());
+    readIngredientTypes()
+        .forEach(ingredient -> addResource(ingredient.getName(), ingredient.getType()));
+  }
 
-    model.createResource("cookup://milk")
-        .addProperty(type, "milk");
-    model.createResource("cookup://soy_milk")
-        .addProperty(type, "milk");
-    model.createResource("cookup://hemp_milk")
-        .addProperty(type, "milk");
+  private List<IngredientWithType> readIngredientTypes() {
+    InputStream inputStream = getClass().getClassLoader()
+        .getResourceAsStream(INGREDIENT_TYPES_FILE);
+    ObjectMapper mapper = new ObjectMapper();
+    try {
+      return Arrays.asList(mapper.readValue(inputStream, IngredientWithType[].class));
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  private void addResource(String name, String typeValue) {
+    if (!validIngredient(name)) {
+      LOG.error("Ingredient no exists: " + name);
+      throw new IllegalArgumentException("Ingredient no exists: " + name);
+    }
+    String uri = URI_START + transformSpacesToUnderscores(name);
+    model.createResource(uri)
+        .addProperty(type, typeValue);
+  }
+
+  private boolean validIngredient(String name) {
+    return ingredientDao.findByName(name) != null;
   }
 
   @Override
@@ -58,7 +89,7 @@ public class SimilarIngredientsFinderImpl implements SimilarIngredientsFinder {
 
   private String getIngredientTypeValue(Ingredient ingredient) {
     String ingredientLocalName = transformSpacesToUnderscores(ingredient.getName());
-    String ingredientUri = "cookup://" + ingredientLocalName;
+    String ingredientUri = URI_START + ingredientLocalName;
 
     return Optional.ofNullable(model.getResource(ingredientUri))
         .map(resource -> resource.getProperty(type))

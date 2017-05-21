@@ -7,4 +7,6 @@ import cookup.domain.recipe.Ingredient;
 
 @RestResource(exported = false)
 public interface IngredientDao extends JpaRepository<Ingredient, Long> {
+
+  Ingredient findByName(String name);
 }
