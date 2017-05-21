@@ -5,8 +5,8 @@ import {withRouter} from "react-router-dom";
 class RecipeListRow extends Component {
 
   click = () => {
-    const {recipe} = this.props;
-    this.props.history.push('/recipe/' + recipe.id);
+    const {history, recipe} = this.props;
+    history.push('/recipe/' + recipe.id);
   };
 
   render() {

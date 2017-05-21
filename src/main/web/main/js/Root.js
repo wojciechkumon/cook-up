@@ -27,8 +27,10 @@ const history = createBrowserHistory();
 class Root extends Component {
 
   render() {
+    const {store} = this.props;
+
     return (
-      <Provider store={this.props.store}>
+      <Provider store={store}>
         <Router history={history}>
           <LayoutWrapper>
             <Switch>
