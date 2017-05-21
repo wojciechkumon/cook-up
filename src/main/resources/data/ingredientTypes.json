@@ -1,0 +1,18 @@
+[
+  {
+    "name": "milk",
+    "type": "milk"
+  },
+  {
+    "name": "soy milk",
+    "type": "milk"
+  },
+  {
+    "name": "hemp milk",
+    "type": "milk"
+  },
+  {
+    "name": "walnut",
+    "type": "nut"
+  }
+]

@@ -11,8 +11,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import cookup.dao.IngredientDao;
 import cookup.dao.RecipeDao;
 import cookup.domain.recipe.Recipe;
+import cookup.service.ingredients.SimilarIngredientsFinder;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -21,13 +23,18 @@ import static org.mockito.Mockito.when;
 class RecipeFinderImplTest {
 
   private RecipeDao recipeDao;
+  private IngredientDao ingredientDao;
+  private SimilarIngredientsFinder similarIngredientsFinder;
 
   private RecipeFinderImpl recipeFinder;
 
   @BeforeEach
   void setUp() {
     recipeDao = mock(RecipeDao.class);
-    recipeFinder = new RecipeFinderImpl(recipeDao);
+    ingredientDao = mock(IngredientDao.class);
+    similarIngredientsFinder = mock(SimilarIngredientsFinder.class);
+    recipeDao = mock(RecipeDao.class);
+    recipeFinder = new RecipeFinderImpl(recipeDao, ingredientDao, similarIngredientsFinder);
   }
 
   @Test

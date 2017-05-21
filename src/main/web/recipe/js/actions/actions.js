@@ -234,11 +234,11 @@ export function removeRecipeFromFavourite(recipeId) {
   };
 }
 
-export function fetchMatchingRecipesIfNeeded() {
+export function fetchMatchingRecipesIfNeeded(useSimilarIngredients) {
   return (dispatch, getState) => {
     const state = getState();
     if (shouldFetchMatchingRecipes(state)) {
-      return dispatch(fetchMatchingRecipes(state));
+      return dispatch(fetchMatchingRecipes(state, useSimilarIngredients));
     }
     return Promise.resolve();
   }
@@ -257,13 +257,17 @@ function shouldFetchMatchingRecipes(state) {
   }
 }
 
-function fetchMatchingRecipes(state) {
+function fetchMatchingRecipes(state, useSimilarIngredients) {
   return dispatch => {
     dispatch(requestMatchingRecipes());
     const ingredientIds = state.ingredients.chosenIngredients
       .map(i => i.id)
       .join();
-    return client({method: 'GET', path: '/api/matchingRecipes?ingredients=' + ingredientIds})
+    let path = '/api/matchingRecipes?ingredients=' + ingredientIds;
+    if (useSimilarIngredients) {
+      path += '&useSimilar=true';
+    }
+    return client({method: 'GET', path})
       .then(response => response.entity)
       .then(
         entity => (entity._embedded && entity._embedded.recipes) ? entity._embedded.recipes : [])

@@ -34,9 +34,17 @@ public class RecipeMatcherRestController {
   @SuppressWarnings("unchecked")
   PagedResources<PersistentEntityResource> getMatchingRecipes(
       @RequestParam("ingredients") List<Long> ingredientIds,
+      @RequestParam(defaultValue = "false") boolean useSimilar,
       PersistentEntityResourceAssembler resourceAssembler, Pageable pageable) {
 
-    Page<Recipe> page = recipeFinder.findMatchingRecipes(ingredientIds, pageable);
+    Page<Recipe> page = getRecipes(ingredientIds, pageable, useSimilar);
     return pagedResourcesAssembler.toResource(page, resourceAssembler);
+  }
+
+  private Page<Recipe> getRecipes(List<Long> ingredientIds, Pageable pageable, boolean useSimilar) {
+    if (useSimilar) {
+      return recipeFinder.findMatchingRecipesWithSimilarIngredients(ingredientIds, pageable);
+    }
+    return recipeFinder.findMatchingRecipes(ingredientIds, pageable);
   }
 }

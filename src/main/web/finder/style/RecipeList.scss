@@ -10,7 +10,6 @@
   }
 
   th {
-    color: white;
     text-transform: uppercase;
     text-align: center;
     &:hover {
@@ -19,11 +18,10 @@
   }
 
   tbody > tr {
-    color: white;
     text-align: center;
     padding: 10px;
     &:hover {
-      background-color: $light-red;
+      background-color: $dark-red;
     }
     td:first-child {
       font-weight: bold;

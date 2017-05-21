@@ -1,7 +1,7 @@
 @import '../../main/style/global_variables';
 
 .About {
-  background-color: $dark-grey;
+  background-color: $dark-blue;
   min-height: 300px;
 }
 
@@ -9,13 +9,11 @@
   margin: 0;
   padding: 30px;
   font-weight: 700;
-  color: white;
   text-align: center;
 }
 
 .About p {
   padding: 40px;
-  color: white;
 
   &:first-letter {
     z-index: 1;

@@ -1,11 +1,10 @@
 @import '../../main/style/global_variables';
 
 .RecipeTable {
-  background-color: $light-red;
+  background-color: $dark-red;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-  color: white;
   table > thead > tr > th {
-    border-color: $dark-grey;
+    border-color: $dark-blue;
   }
   th {
     text-align: center;
