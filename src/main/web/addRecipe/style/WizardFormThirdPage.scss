@@ -1,6 +1,9 @@
 @import '../../main/style/global_variables';
 
 .WizardFormThirdPage {
+  margin: auto;
+  width: 50%;
+
   textarea {
     width: 400px;
     min-height: 400px;

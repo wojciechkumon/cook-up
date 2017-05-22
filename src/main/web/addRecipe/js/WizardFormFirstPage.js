@@ -39,7 +39,6 @@ const renderIngredients = ({fields, meta: {error, submitFailed}}) => (
     <div>
       {fields.map((ingredient, index) => (
           <div key={index}>
-
             <h4>
               <FontAwesome onClick={() => fields.remove(index)}
                            className="close-button"
@@ -74,13 +73,12 @@ const renderIngredients = ({fields, meta: {error, submitFailed}}) => (
           </div>
       ))}
 
-        <Button type="button" onClick={() => fields.push({})}>Add
-          ingredient</Button>
-    <div className="nav-buttons">
-    {submitFailed && error && <span>{error}</span>}
-      <Field name="ingredientsError" component={renderError}/>
-    </div>
-
+      <Button type="button" onClick={() => fields.push({})}>Add
+        ingredient</Button>
+      <div className="nav-buttons">
+        {submitFailed && error && <span>{error}</span>}
+        <Field name="ingredientsError" component={renderError}/>
+      </div>
     </div>
 );
 

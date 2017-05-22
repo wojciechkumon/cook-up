@@ -1,6 +1,8 @@
 @import '../../main/style/global_variables';
 
 .WizardFormSecondPage {
+  margin: auto;
+  width: 30%;
 
   .difficulty-level {
     ul {
@@ -15,10 +17,7 @@
       position: relative;
       float: left;
       width: 100%;
-      height: 45px;
-      &:hover {
-        color: #3095d3;
-      }
+      height: 50px;
     }
 
     ul li input[type=radio] {
