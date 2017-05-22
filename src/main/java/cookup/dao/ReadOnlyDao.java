@@ -21,13 +21,13 @@ public interface ReadOnlyDao<T, ID extends Serializable> {
   T findOne(ID id);
 
   @RestResource(exported = false)
-  T save(T recipe);
+  T save(T entity);
 
   @RestResource(exported = false)
   void deleteAll();
 
   @RestResource(exported = false)
-  void delete(T recipe);
+  void delete(T entity);
 
   @RestResource(exported = false)
   void delete(ID id);

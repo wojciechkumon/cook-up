@@ -40,3 +40,14 @@ props: # creates one row for every recipe ingredient with substitutes in array
         group by r2.id) as "ingredients_count_table"
           on matching_count_table.id=ingredients_count_table.id and
           matching_count_table.matching_count=ingredients_count_table.ingredients_count;
+
+# spring actuator only for ADMIN role
+management:
+  context-path: /actuator
+  security:
+    roles: ADMIN
+endpoints:
+  health:
+    sensitive: true
+  info:
+    sensitive: true

@@ -16,6 +16,8 @@ import cookup.dao.CommentsDao;
 import cookup.dao.IngredientDao;
 import cookup.dao.RecipeDao;
 import cookup.domain.account.Account;
+import cookup.domain.account.UserRole;
+import cookup.domain.account.UserRoleType;
 import cookup.domain.recipe.Ingredient;
 import cookup.domain.recipe.Recipe;
 import cookup.dto.CommentDto;
@@ -76,7 +78,10 @@ public class RecipeDbInitializer {
     registrationDto.setEmail(email);
     registrationDto.setPassword("lolek");
     registrationDto.setMatchingPassword("lolek");
-    return accountService.addAccount(registrationDto);
+    Account account = accountService.addAccount(registrationDto);
+    UserRole adminRole = new UserRole(account, UserRoleType.ADMIN);
+    account.getUserRoles().add(adminRole);
+    return accountDao.save(account);
   }
 
   private Map<String, Ingredient> putIngredientsToDb() {
