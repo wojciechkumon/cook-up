@@ -28,16 +28,18 @@ class SubstituteAutocomplete extends Component {
     const {ingredients, isFetching} = this.props;
     const {chosenIngredients} = this.state;
     return (
-      <Select
-        placeholder="Select substitutes"
-        valueKey="id"
-        labelKey="name"
-        value={chosenIngredients}
-        options={ingredients}
-        multi
-        onChange={this.handleSelectChange}
-        isLoading={isFetching}
-      />
+        <div className="autocomplete-substitute">
+          <Select
+              placeholder="Select substitutes"
+              valueKey="id"
+              labelKey="name"
+              value={chosenIngredients}
+              options={ingredients}
+              multi
+              onChange={this.handleSelectChange}
+              isLoading={isFetching}
+          />
+        </div>
     );
   }
 }

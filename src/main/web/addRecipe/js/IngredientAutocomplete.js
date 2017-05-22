@@ -25,15 +25,17 @@ class IngredientAutocomplete extends Component {
     const {ingredients, isFetching} = this.props;
     const {chosenIngredient} = this.state;
     return (
-      <Select
-        placeholder="Select ingredient"
-        valueKey="id"
-        labelKey="name"
-        value={chosenIngredient}
-        options={ingredients}
-        onChange={this.handleSelectChange}
-        isLoading={isFetching}
-      />
+        <div className="autocomplete-ingredient">
+          <Select
+              placeholder="Select ingredient"
+              valueKey="id"
+              labelKey="name"
+              value={chosenIngredient}
+              options={ingredients}
+              onChange={this.handleSelectChange}
+              isLoading={isFetching}
+          />
+        </div>
     );
   }
 }

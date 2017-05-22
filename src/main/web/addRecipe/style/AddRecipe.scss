@@ -1,9 +1,68 @@
 @import '../../main/style/global_variables';
 
+@mixin autocomplete-text {
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: $dark-blue;
+}
+
 .AddRecipe {
   background-color: $dark-blue;
   padding: 50px 100px;
-  h1 {
-    font-weight: 700;
+
+  h2 {
+    text-transform: uppercase;
+    font-weight: bold;
+    padding-bottom: 30px;
+  }
+
+  label {
+    font-size: 18px;
+    color: #eee;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding-top: 30px;
+  }
+
+  .nav-buttons {
+    padding-top: 30px;
+  }
+
+  .autocomplete-substitute, .autocomplete-ingredient {
+    width: 50%;
+    margin-top: 20px;
+  }
+
+  .autocomplete-ingredient {
+    .Select-value {
+      @include autocomplete-text;
+    }
+
+    .Select-value-icon {
+      border-right: 1px solid rgba(48, 50, 63, 0.24);
+      &:hover {
+        background-color: transparent;
+        color: $red;
+      }
+    }
+  }
+
+  .autocomplete-substitute {
+    .Select-value {
+      @include autocomplete-text;
+      background: $light-grey;
+      border-radius: 2rem;
+      border: 2px solid $light-grey;
+      transition: all 400ms;
+    }
+    .Select-value-icon {
+      border-right: 1px solid rgba(48, 50, 63, 0.24);
+      &:hover {
+        background-color: transparent;
+        color: $red;
+      }
+    }
   }
 }

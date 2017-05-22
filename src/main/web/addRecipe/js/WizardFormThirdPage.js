@@ -4,6 +4,7 @@ import reduxForm from "redux-form/es/reduxForm";
 import {renderTextArea} from "../../util/js/forms";
 import {maxLength, required} from "../../util/js/validators";
 import {Button} from "react-bootstrap";
+import "../style/WizardFormThirdPage.scss";
 
 const maxLength2048 = maxLength(2048);
 
@@ -12,7 +13,7 @@ class WizardFormThirdPage extends Component {
   render() {
     const {handleSubmit, pristine, previousPage, submitting} = this.props;
     return (
-      <form onSubmit={handleSubmit}>
+      <form className="WizardFormThirdPage" onSubmit={handleSubmit}>
         <div>
           <label htmlFor="cookingTime">Cooking description</label>
           <Field name="cookingDescription"
@@ -24,7 +25,7 @@ class WizardFormThirdPage extends Component {
                  cols="100"/>
         </div>
 
-        <div>
+        <div className="nav-buttons">
           <Button type="button" className="previous" onClick={previousPage}>
             Previous
           </Button>

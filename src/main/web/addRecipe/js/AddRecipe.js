@@ -12,7 +12,7 @@ class AddRecipe extends Component {
 
     return (
       <div className="AddRecipe">
-        <h3>Add recipe</h3>
+        <h2>Add recipe</h2>
         <AddRecipeWizardForm onSubmit={handleSubmit(dispatch, history)}/>
       </div>
     );

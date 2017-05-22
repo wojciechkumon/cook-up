@@ -1,0 +1,21 @@
+@import '../../main/style/global_variables';
+
+.WizardFormFirstPage {
+  margin: auto;
+  button.btn.btn-default {
+    margin-top: 20px;
+  }
+
+  .close-button {
+    margin-right: 10px;
+    &:hover {
+      color: $red;
+    }
+  }
+
+  h4 {
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+
+}
