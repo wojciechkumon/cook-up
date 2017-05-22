@@ -15,6 +15,7 @@ import {
   REQUEST_RECIPE,
   REQUEST_RECIPE_FAVOURITE
 } from "../actions/actions";
+import {RECEIVE_CREATED_RECIPES, RECEIVE_FAVOURITE_RECIPES} from "../../../me/js/actions/actions";
 
 function foundRecipeIds(state = {isFetching: false, data: [], afterSearch: false},
                         action) {
@@ -88,6 +89,8 @@ function byId(state = {}, action) {
         [action.recipeId]: handleRecipe(state[action.recipeId], action)
       });
     case RECEIVE_FOUND_RECIPES:
+    case RECEIVE_FAVOURITE_RECIPES:
+    case RECEIVE_CREATED_RECIPES:
       const recipes = action.recipes.map(recipe => {
         return {
           isFetching: false,

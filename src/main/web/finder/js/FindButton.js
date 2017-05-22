@@ -14,12 +14,13 @@ class FindButton extends Component {
   };
 
   render() {
+    const {disabled} = this.props;
     return (
       <Button
         className="FindButton"
         bsStyle="primary"
         onClick={this.find}
-        disabled={this.props.disabled}
+        disabled={disabled}
       >Find</Button>
     );
   }

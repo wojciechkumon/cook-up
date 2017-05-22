@@ -19,14 +19,17 @@ import AddToFavourites from "./AddToFavourites";
 class Recipe extends Component {
 
   componentDidMount() {
-    const recipeId = Number(this.props.match.params.recipeId);
-    this.props.dispatch(fetchRecipeIfNeeded(recipeId));
-    this.props.dispatch(fetchAuthorIfNeeded(recipeId));
+    const {match, dispatch} = this.props;
+    const recipeId = Number(match.params.recipeId);
+    dispatch(fetchRecipeIfNeeded(recipeId));
+    dispatch(fetchAuthorIfNeeded(recipeId));
   }
 
   render() {
-    const recipeId = Number(this.props.match.params.recipeId);
-    const fullRecipe = this.props.recipes[recipeId];
+    const {loggedIn, dispatch, recipes, match, authors} = this.props;
+
+    const recipeId = Number(match.params.recipeId);
+    const fullRecipe = recipes[recipeId];
 
     const recipeError = fullRecipe && fullRecipe.error;
     if (recipeError) {
@@ -39,8 +42,7 @@ class Recipe extends Component {
     const recipeIngredients = (recipe && recipe.ingredients)
         ? recipe.ingredients : [];
 
-    const author = this.props.authors[recipeId];
-    const {loggedIn} = this.props;
+    const author = authors[recipeId];
 
     return (
         <div className="Recipe">
@@ -69,7 +71,7 @@ class Recipe extends Component {
             </Row>
             <Comments recipeId={recipeId}/>
             <NewCommentForm
-                onSubmit={handleSubmit(recipeId, this.props.dispatch)}/>
+                onSubmit={handleSubmit(recipeId, dispatch)}/>
           </Grid>
         </div>
     );

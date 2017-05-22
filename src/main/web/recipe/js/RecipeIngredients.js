@@ -5,12 +5,12 @@ import RecipeIngredient from "./RecipeIngredient";
 class RecipeIngredients extends Component {
 
   render() {
-    const ingredients = this.props.recipeIngredients;
+    const {recipeIngredients} = this.props;
     return (
         <div>
           <h3>Ingredients</h3>
           <div>
-            {ingredients.map(i => <RecipeIngredient key={i.id} recipeIngredient={i}/>)}
+            {recipeIngredients.map(i => <RecipeIngredient key={i.id} recipeIngredient={i}/>)}
           </div>
         </div>
     );

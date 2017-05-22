@@ -13,18 +13,18 @@ import "../style/AddToFavourites.scss";
 class AddToFavourites extends Component {
 
   componentDidMount() {
-    const {recipeId, userId} = this.props;
-    this.props.dispatch(fetchRecipeFavourite(recipeId, userId));
+    const {recipeId, userId, dispatch} = this.props;
+    dispatch(fetchRecipeFavourite(recipeId, userId));
   }
 
   addToFavourites = () => {
-    const {recipeId} = this.props;
-    this.props.dispatch(addRecipeToFavourite(recipeId));
+    const {recipeId, dispatch} = this.props;
+    dispatch(addRecipeToFavourite(recipeId));
   };
 
   removeFromFavourites = () => {
-    const {recipeId} = this.props;
-    this.props.dispatch(removeRecipeFromFavourite(recipeId));
+    const {recipeId, dispatch} = this.props;
+    dispatch(removeRecipeFromFavourite(recipeId));
   };
 
   render() {

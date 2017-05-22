@@ -72,8 +72,9 @@ export const WithAuthWrapper = args => {
       static displayName = `${wrapperDisplayName}(${displayName})`;
 
       componentWillMount() {
-        if (!this.props.isAuthenticating && !isAuthorized(this.props.authData)) {
-          createRedirect(this.props.location, this.redirect, this.props.failureRedirectPath)
+        const {isAuthenticating, authData, location, failureRedirectPath} = this.props;
+        if (!isAuthenticating && !isAuthorized(authData)) {
+          createRedirect(location, this.redirect, failureRedirectPath)
         }
       }
 

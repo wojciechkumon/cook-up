@@ -17,7 +17,7 @@ class Finder extends Component {
   }
 
   render() {
-    const {allIngredients} = this.props;
+    const {allIngredients, chosenIngredients} = this.props;
     const error = allIngredients && allIngredients.error;
     const disabled = (error || allIngredients.data.length <= 0) !== false;
 
@@ -28,7 +28,7 @@ class Finder extends Component {
             <h1>What do you have in your fridge?</h1>
             <div>
               <FinderAutocomplete ingredients={allIngredients.data}
-                                  chosenIngredients={this.props.chosenIngredients}
+                                  chosenIngredients={chosenIngredients}
                                   isFetching={allIngredients.isFetching}
                                   disabled={disabled}/>
               <SimilarIngredientsCheckbox disabled={disabled}/>
