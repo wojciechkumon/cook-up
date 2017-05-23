@@ -1,5 +1,7 @@
 import React, {Component} from "react";
 import Field from "redux-form/es/Field";
+import {connect} from "react-redux";
+import formValueSelector from "redux-form/es/formValueSelector";
 import reduxForm from "redux-form/es/reduxForm";
 import FieldArray from "redux-form/es/FieldArray";
 import {renderError, renderField} from "../../util/js/forms";
@@ -17,7 +19,7 @@ const maxLength64 = maxLength(64);
 class WizardFormFirstPage extends Component {
 
   render() {
-    const {handleSubmit} = this.props;
+    const {handleSubmit, chosenIngredients} = this.props;
     return (
         <form className="WizardFormFirstPage" onSubmit={handleSubmit}>
           <div className="basic-info">
@@ -27,7 +29,9 @@ class WizardFormFirstPage extends Component {
                    component={renderField}
                    validate={[required, maxLength64]}
                    label="Recipe name"/>
-            <FieldArray name="ingredients" component={renderIngredients}/>
+            <FieldArray name="ingredients"
+                        component={renderIngredients}
+                        chosenIngredients={chosenIngredients}/>
             <div className="nav-buttons">
               <Button type="submit">Next</Button>
             </div>
@@ -37,7 +41,7 @@ class WizardFormFirstPage extends Component {
   }
 }
 
-const renderIngredients = ({fields, meta: {error, submitFailed}}) => (
+const renderIngredients = ({chosenIngredients, fields, meta: {error, submitFailed}}) => (
     <div>
       {fields.map((ingredient, index) => (
           <div key={index}>
@@ -51,6 +55,7 @@ const renderIngredients = ({fields, meta: {error, submitFailed}}) => (
             <Field
                 name={`${ingredient}.ingredient`}
                 component={IngredientAutocomplete}
+                chosenIngredient={chosenIngredients[index].ingredient}
             />
             <Field
                 name={`${ingredient}.ingredient`}
@@ -59,6 +64,7 @@ const renderIngredients = ({fields, meta: {error, submitFailed}}) => (
             <Field
                 name={`${ingredient}.substitutes`}
                 component={SubstituteAutocomplete}
+                chosenSubstitutes={chosenIngredients[index].substitutes}
             />
             <Field
                 name={`${ingredient}.substitutes`}
@@ -83,6 +89,15 @@ const renderIngredients = ({fields, meta: {error, submitFailed}}) => (
       </div>
     </div>
 );
+
+const selector = formValueSelector('add-recipe-wizard');
+const mapStateToProps = state => {
+  return {
+    chosenIngredients: selector(state, 'ingredients')
+  }
+};
+
+WizardFormFirstPage = connect(mapStateToProps)(WizardFormFirstPage);
 
 export default reduxForm({
   form: 'add-recipe-wizard',

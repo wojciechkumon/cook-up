@@ -16,8 +16,5 @@ export const handleSubmit = (dispatch, history) => values => {
   return client({method: 'POST', path, entity: recipeDto})
     .then(response => history.push('/recipe/' + response.entity.id))
     .then(() => dispatch(reset('add-recipe-wizard')))
-    .catch(response => {
-      console.log(response);
-      console.log('error');
-    });
+    .catch(response => {});
 };

@@ -6,34 +6,24 @@ import {fetchIngredientsIfNeeded} from "../../finder/js/actions/actions";
 
 class SubstituteAutocomplete extends Component {
 
-  constructor() {
-    super();
-    this.state = {chosenIngredients: undefined};
-  }
-
   componentDidMount() {
-    const {dispatch, input: {onChange}} = this.props;
-    dispatch(fetchIngredientsIfNeeded());
-    const {chosenIngredients} = this.state;
-    onChange(chosenIngredients);
+    this.props.dispatch(fetchIngredientsIfNeeded());
   }
 
-  handleSelectChange = chosenIngredients => {
+  handleSelectChange = chosenSubstitutes => {
     const {input: {onChange}} = this.props;
-    onChange(chosenIngredients);
-    this.setState({chosenIngredients});
+    onChange(chosenSubstitutes);
   };
 
   render() {
-    const {ingredients, isFetching} = this.props;
-    const {chosenIngredients} = this.state;
+    const {ingredients, isFetching, chosenSubstitutes} = this.props;
     return (
         <div className="autocomplete-substitute">
           <Select
               placeholder="Select substitutes"
               valueKey="id"
               labelKey="name"
-              value={chosenIngredients}
+              value={chosenSubstitutes}
               options={ingredients}
               multi
               onChange={this.handleSelectChange}
@@ -44,13 +34,16 @@ class SubstituteAutocomplete extends Component {
   }
 }
 
+const ingredientPropType = PropTypes.shape({
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  ingredientUnit: PropTypes.string.isRequired
+});
+
 SubstituteAutocomplete.propTypes = {
-  ingredients: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    ingredientUnit: PropTypes.string.isRequired
-  })).isRequired,
-  isFetching: PropTypes.bool.isRequired
+  ingredients: PropTypes.arrayOf(ingredientPropType).isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  chosenSubstitutes: PropTypes.arrayOf(ingredientPropType)
 };
 
 const mapStateToProps = state => {

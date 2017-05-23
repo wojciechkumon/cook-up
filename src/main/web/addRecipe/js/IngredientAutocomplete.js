@@ -6,11 +6,6 @@ import {fetchIngredientsIfNeeded} from "../../finder/js/actions/actions";
 
 class IngredientAutocomplete extends Component {
 
-  constructor() {
-    super();
-    this.state = {chosenIngredient: undefined};
-  }
-
   componentDidMount() {
     this.props.dispatch(fetchIngredientsIfNeeded());
   }
@@ -18,12 +13,10 @@ class IngredientAutocomplete extends Component {
   handleSelectChange = chosenIngredient => {
     const {input: {onChange}} = this.props;
     onChange(chosenIngredient);
-    this.setState({chosenIngredient});
   };
 
   render() {
-    const {ingredients, isFetching} = this.props;
-    const {chosenIngredient} = this.state;
+    const {ingredients, isFetching, chosenIngredient} = this.props;
     return (
         <div className="autocomplete-ingredient">
           <Select
@@ -40,13 +33,16 @@ class IngredientAutocomplete extends Component {
   }
 }
 
+const ingredientPropType = PropTypes.shape({
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  ingredientUnit: PropTypes.string.isRequired
+});
+
 IngredientAutocomplete.propTypes = {
-  ingredients: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    ingredientUnit: PropTypes.string.isRequired
-  })).isRequired,
-  isFetching: PropTypes.bool.isRequired
+  ingredients: PropTypes.arrayOf(ingredientPropType).isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  chosenIngredient: ingredientPropType
 };
 
 const mapStateToProps = state => {
