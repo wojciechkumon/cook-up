@@ -2,6 +2,7 @@ package cookup.service.pdf;
 
 import cookup.domain.recipe.Ingredient;
 import cookup.domain.recipe.RecipeIngredient;
+import java.awt.Color;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
@@ -65,7 +66,7 @@ public class PdfGeneratorImpl implements PdfGenerator {
     float margin = 72;
     float width = mediaBox.getWidth() - 2 * margin;
     float startX = mediaBox.getLowerLeftX() + margin;
-    float startY = mediaBox.getUpperRightY() - margin;
+    float startY = mediaBox.getUpperRightY() - margin + 20;
 
     String cookingTime = "Cooking time: " + recipe.getCookingTimeMinutes().toString() + " min";
     String kcal = "Kcal: " + recipe.getKcal().toString() + " kcal";
@@ -83,6 +84,7 @@ public class PdfGeneratorImpl implements PdfGenerator {
       contentStream.beginText();
       contentStream.newLineAtOffset(startX, startY);
 
+      printCookUp(leading, contentStream, width);
       printTitle(leading, titleLines, contentStream);
       printCookingTimeMinutes(leading, cookingTimeLines, contentStream);
       printKcal(leading, kcalLines, contentStream);
@@ -94,9 +96,19 @@ public class PdfGeneratorImpl implements PdfGenerator {
     }
   }
 
+  private void printCookUp(float leading, PDPageContentStream contentStream, float width)
+      throws IOException {
+    contentStream.newLineAtOffset(width - 50, 0);
+    contentStream.setFont(TITLE_FONT, 20);
+    contentStream.setNonStrokingColor(166, 3, 13);
+    printLine(leading, "Cook Up", contentStream);
+    contentStream.newLineAtOffset(50 - width, -20);
+    contentStream.setNonStrokingColor(Color.BLACK);
+  }
+
   private void printTitle(float leading, List<String> titleLines, PDPageContentStream contentStream)
       throws IOException {
-    contentStream.setFont(TITLE_FONT, TITLE_FONT_SIZE);
+    contentStream.setFont(PDType1Font.HELVETICA_BOLD, TITLE_FONT_SIZE);
     printLines(leading, titleLines, contentStream);
     contentStream.newLineAtOffset(0, -1.5F * leading);
   }
