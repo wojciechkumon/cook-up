@@ -5,7 +5,7 @@ import {renderError, renderField} from "../../util/js/forms";
 import {isIntegerValidator, lessThen} from "../../util/js/validators";
 import {integerNormalizer} from "../../util/js/formNormalizers";
 import {validateDifficultyLevel} from "./addRecipeValidators";
-import {Button} from "react-bootstrap";
+import {Button, Col, Row} from "react-bootstrap";
 import "../style/WizardFormSecondPage.scss";
 
 const lessThenInt = lessThen(Math.pow(2, 31) - 1);
@@ -16,65 +16,81 @@ class WizardFormSecondPage extends Component {
     const {handleSubmit, previousPage} = this.props;
     return (
         <form className="WizardFormSecondPage" onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="cookingTimeMinutes">Cooking time (minutes)</label>
-            <Field name="cookingTimeMinutes"
-                   type="text"
-                   component={renderField}
-                   validate={[isIntegerValidator, lessThenInt]}
-                   normalize={integerNormalizer}
-                   label="Cooking time"/>
-          </div>
-          <div className="difficulty-level">
-            <label>Difficulty level</label>
 
-            <ul>
-              <li className="difficulty-radio-wrapper">
-                <Field name="difficultyLevel" component="input" type="radio"
-                       value="EASY" id="easy-option"/>
-                {' '}
-                <label htmlFor="easy-option">Easy</label>
-                <div className="check"/>
-              </li>
-              <li className="difficulty-radio-wrapper">
-                <Field name="difficultyLevel" component="input" type="radio"
-                       value="MEDIUM" id="medium-option"/>
-                {' '}
-                <label htmlFor="medium-option">Medium</label>
-                <div className="check"><div className="inside" /></div>
-              </li>
-              <li className="difficulty-radio-wrapper">
-                <Field name="difficultyLevel" component="input" type="radio"
-                       value="HARD" id="hard-option"/>
-                {' '}
-                <label htmlFor="hard-option">Hard</label>
-                <div className="check"><div className="inside" /></div>
-              </li>
-              <Field name="difficultyLevel"
-                     component={renderError}/>
-            </ul>
+          <Row>
+            <Col md={6}>
+              <div>
+                <label htmlFor="cookingTimeMinutes">Cooking time
+                  (minutes)</label>
+                <Field name="cookingTimeMinutes"
+                       type="text"
+                       component={renderField}
+                       validate={[isIntegerValidator, lessThenInt]}
+                       normalize={integerNormalizer}
+                       label="Cooking time"/>
+              </div>
+            </Col>
+            <Col md={6}>
+              <div className="difficulty-level">
+                <label>Difficulty level</label>
 
+                <ul>
+                  <li className="difficulty-radio-wrapper">
+                    <Field name="difficultyLevel" component="input" type="radio"
+                           value="EASY" id="easy-option"/>
+                    {' '}
+                    <label htmlFor="easy-option">Easy</label>
+                    <div className="check"/>
+                  </li>
+                  <li className="difficulty-radio-wrapper">
+                    <Field name="difficultyLevel" component="input" type="radio"
+                           value="MEDIUM" id="medium-option"/>
+                    {' '}
+                    <label htmlFor="medium-option">Medium</label>
+                    <div className="check">
+                      <div className="inside"/>
+                    </div>
+                  </li>
+                  <li className="difficulty-radio-wrapper">
+                    <Field name="difficultyLevel" component="input" type="radio"
+                           value="HARD" id="hard-option"/>
+                    {' '}
+                    <label htmlFor="hard-option">Hard</label>
+                    <div className="check">
+                      <div className="inside"/>
+                    </div>
+                  </li>
+                  <Field name="difficultyLevel"
+                         component={renderError}/>
+                </ul>
+              </div>
+            </Col>
+          </Row>
 
-          </div>
-          <div>
-            <label htmlFor="kcal">Calories</label>
-            <Field name="kcal"
-                   type="text"
-                   component={renderField}
-                   validate={[isIntegerValidator, lessThenInt]}
-                   normalize={integerNormalizer}
-                   label="kcal"/>
-          </div>
-          <div>
-            <label htmlFor="servings">Servings</label>
-            <Field name="servings"
-                   type="text"
-                   component={renderField}
-                   validate={[isIntegerValidator, lessThenInt]}
-                   normalize={integerNormalizer}
-                   label="Servings"/>
-          </div>
-
+          <Row>
+            <Col md={6}>
+              <div>
+                <label htmlFor="kcal">Calories</label>
+                <Field name="kcal"
+                       type="text"
+                       component={renderField}
+                       validate={[isIntegerValidator, lessThenInt]}
+                       normalize={integerNormalizer}
+                       label="kcal"/>
+              </div>
+            </Col>
+            <Col md={6}>
+              <div>
+                <label htmlFor="servings">Servings</label>
+                <Field name="servings"
+                       type="text"
+                       component={renderField}
+                       validate={[isIntegerValidator, lessThenInt]}
+                       normalize={integerNormalizer}
+                       label="Servings"/>
+              </div>
+            </Col>
+          </Row>
           <div className="nav-buttons">
             <Button type="button" className="previous" onClick={previousPage}>Previous</Button>
             <Button type="submit" className="next">Next</Button>

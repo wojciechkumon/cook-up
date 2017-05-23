@@ -20,7 +20,7 @@ class WizardFormFirstPage extends Component {
     const {handleSubmit} = this.props;
     return (
         <form className="WizardFormFirstPage" onSubmit={handleSubmit}>
-          <div>
+          <div className="basic-info">
             <label htmlFor="name">Recipe name</label>
             <Field name="name"
                    type="text"
@@ -28,7 +28,9 @@ class WizardFormFirstPage extends Component {
                    validate={[required, maxLength64]}
                    label="Recipe name"/>
             <FieldArray name="ingredients" component={renderIngredients}/>
-            <Button type="submit">Next</Button>
+            <div className="nav-buttons">
+              <Button type="submit">Next</Button>
+            </div>
           </div>
         </form>
     );

@@ -2,9 +2,10 @@
 
 .WizardFormThirdPage {
   margin: auto;
-  width: 50%;
+  width: 70%;
 
   textarea {
+    color: black;
     width: 400px;
     min-height: 400px;
     border-radius: 2rem;
@@ -14,5 +15,10 @@
       outline: none;
       border: 2px solid $red;
     }
+  }
+
+  .cookingDescription {
+    width: 50%;
+    margin: 0 auto;
   }
 }

@@ -14,7 +14,7 @@ class WizardFormThirdPage extends Component {
     const {handleSubmit, pristine, previousPage, submitting} = this.props;
     return (
       <form className="WizardFormThirdPage" onSubmit={handleSubmit}>
-        <div>
+        <div className="cookingDescription">
           <label htmlFor="cookingTime">Cooking description</label>
           <Field name="cookingDescription"
                  type="text"
