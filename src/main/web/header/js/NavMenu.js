@@ -16,10 +16,10 @@ class NavMenu extends Component {
       <nav className="NavMenu">
         <Grid>
           <Row>
-            <Col md={4}>
+            <Col md={3}>
               <h1>Cook up</h1>
             </Col>
-            <Col md={8}>
+            <Col md={9}>
               <ul className="nav nav-pills">
                 <li><Link to="/about">About</Link></li>
                 <li><Link to="/">Finder</Link></li>
