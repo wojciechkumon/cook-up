@@ -1,5 +1,11 @@
 package cookup.service.pdf;
 
+import cookup.domain.recipe.Ingredient;
+import cookup.domain.recipe.RecipeIngredient;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
+import java.util.stream.Collectors;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -20,6 +26,8 @@ import cookup.exception.PdfGeneratingException;
 
 @Service
 public class PdfGeneratorImpl implements PdfGenerator {
+  private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.##",
+      DecimalFormatSymbols.getInstance(Locale.US));
   private static final PDFont TITLE_FONT = PDType1Font.HELVETICA_BOLD;
   private static final PDFont FONT = PDType1Font.HELVETICA;
   private static final float TITLE_FONT_SIZE = 16;
@@ -59,7 +67,15 @@ public class PdfGeneratorImpl implements PdfGenerator {
     float startX = mediaBox.getLowerLeftX() + margin;
     float startY = mediaBox.getUpperRightY() - margin;
 
+    String cookingTime = "Cooking time: " + recipe.getCookingTimeMinutes().toString() + " min";
+    String kcal = "Kcal: " + recipe.getKcal().toString() + " kcal";
+    String servings = "Servings: " + recipe.getServings().toString();
+
     List<String> titleLines = splitToLines(TITLE_FONT, TITLE_FONT_SIZE, width, recipe.getName());
+    List<String> cookingTimeLines = splitToLines(TITLE_FONT, TITLE_FONT_SIZE, width, cookingTime);
+    List<String> kcalLines = splitToLines(TITLE_FONT, TITLE_FONT_SIZE, width, kcal);
+    List<String> ingredientLines = getIngredientLines(recipe);
+    List<String> servingsLines = splitToLines(TITLE_FONT, TITLE_FONT_SIZE, width, servings);
     List<String> descriptionLines = splitToLines(FONT, FONT_SIZE, width,
         recipe.getCookingDescription());
 
@@ -68,6 +84,10 @@ public class PdfGeneratorImpl implements PdfGenerator {
       contentStream.newLineAtOffset(startX, startY);
 
       printTitle(leading, titleLines, contentStream);
+      printCookingTimeMinutes(leading, cookingTimeLines, contentStream);
+      printKcal(leading, kcalLines, contentStream);
+      printServings(leading, servingsLines, contentStream);
+      printIngredients(leading, ingredientLines, contentStream);
       printDescription(leading, descriptionLines, contentStream);
 
       contentStream.endText();
@@ -77,25 +97,78 @@ public class PdfGeneratorImpl implements PdfGenerator {
   private void printTitle(float leading, List<String> titleLines, PDPageContentStream contentStream)
       throws IOException {
     contentStream.setFont(TITLE_FONT, TITLE_FONT_SIZE);
-    for (String line : titleLines) {
-      contentStream.showText(line);
-      contentStream.newLineAtOffset(0, -leading);
-    }
+    printLines(leading, titleLines, contentStream);
+    contentStream.newLineAtOffset(0, -1.5F * leading);
+  }
+
+  private void printCookingTimeMinutes(float leading, List<String> cookingTimeLines,
+      PDPageContentStream contentStream) throws IOException {
+    contentStream.setFont(FONT, FONT_SIZE);
+    printLines(leading, cookingTimeLines, contentStream);
+    contentStream.newLineAtOffset(0, -leading);
+  }
+
+  private void printKcal(float leading, List<String> kcalLines,
+      PDPageContentStream contentStream) throws IOException {
+    contentStream.setFont(FONT, FONT_SIZE);
+    printLines(leading, kcalLines, contentStream);
+    contentStream.newLineAtOffset(0, -leading);
+  }
+
+  private void printServings(float leading, List<String> cookingTimeLines,
+      PDPageContentStream contentStream) throws IOException {
+    contentStream.setFont(FONT, FONT_SIZE);
+    printLines(leading, cookingTimeLines, contentStream);
+    contentStream.newLineAtOffset(0, -leading);
+  }
+
+  private List<String> getIngredientLines(Recipe recipe) {
+    return recipe.getIngredients()
+        .stream()
+        .map(this::recipeIngredientToString)
+        .collect(Collectors.toList());
+  }
+
+  private String recipeIngredientToString(RecipeIngredient recipeIngredient) {
+    String amount = DECIMAL_FORMAT.format(recipeIngredient.getAmount());
+    Ingredient ingredient = recipeIngredient.getIngredient();
+    String unit = ingredient.getIngredientUnit().name().toLowerCase();
+    String name = ingredient.getName();
+
+    return "- " + amount + " " + unit + " " + name;
+  }
+
+  private void printIngredients(float leading, List<String> ingredientsLines,
+      PDPageContentStream contentStream) throws IOException {
+    contentStream.setFont(FONT, FONT_SIZE);
+    printLine(leading, "Ingredients: ", contentStream);
+    printLines(leading, ingredientsLines, contentStream);
     contentStream.newLineAtOffset(0, -leading);
   }
 
   private void printDescription(float leading, List<String> descriptionLines,
-                                PDPageContentStream contentStream) throws IOException {
+      PDPageContentStream contentStream) throws IOException {
     contentStream.setFont(FONT, FONT_SIZE);
+    printLine(leading, "Directions: ", contentStream);
+    printLines(leading, descriptionLines, contentStream);
+  }
+
+  private void printLines(float leading, List<String> descriptionLines,
+      PDPageContentStream contentStream) throws IOException {
     for (String line : descriptionLines) {
-      contentStream.showText(line);
-      contentStream.newLineAtOffset(0, -leading);
+      printLine(leading, line, contentStream);
     }
+  }
+
+  private void printLine(float leading, String line, PDPageContentStream contentStream)
+      throws IOException {
+    contentStream.showText(line);
+    contentStream.newLineAtOffset(0, -leading);
   }
 
   private List<String> splitToLines(PDFont pdfFont, float fontSize, float width, String text)
       throws IOException {
-    text = text.replaceAll("(\n\r)|(\r)|(\n)", " ");
+    text = text.replaceAll("(\r\n)|(\n\r)|(\r)|(\n)", " ");
     List<String> lines = new ArrayList<>();
     int lastSpace = -1;
     while (text.length() > 0) {
