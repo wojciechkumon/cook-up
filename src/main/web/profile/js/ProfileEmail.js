@@ -22,7 +22,7 @@ class ProfileEmail extends Component {
     return (
       <div>
         {fetching && <Loader/>}
-        {account && account.email}
+        <h4>{account && account.email}</h4>
       </div>
     );
   }
