@@ -12,4 +12,6 @@ public interface RecipeService {
   void addToFavourites(long recipeId, String userEmail);
 
   void removeFromFavourites(long recipeId, String userEmail);
+
+  void deleteRecipe(long recipeId, String userEmail);
 }

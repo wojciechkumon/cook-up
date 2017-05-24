@@ -72,7 +72,8 @@ public class RecipeServiceImpl implements RecipeService {
   }
 
   private void setIngredientsReferences(Recipe recipe) {
-    recipe.getIngredients().forEach(ingredient -> ingredient.setRecipe(recipe));
+    recipe.getIngredients()
+        .forEach(ingredient -> ingredient.setRecipe(recipe));
   }
 
   @Override
@@ -80,7 +81,8 @@ public class RecipeServiceImpl implements RecipeService {
   public Recipe updateRecipe(Long recipeId, RecipeDto recipeDto, String userEmail) {
     Recipe recipeToUpdate = getRecipe(recipeId);
     checkOwnership(userEmail, recipeToUpdate);
-    recipeDto.getIngredients().forEach(this::validateRecipeIngredient);
+    recipeDto.getIngredients()
+        .forEach(this::validateRecipeIngredient);
 
     recipeDto.putDataToRecipe(recipeToUpdate);
     setIngredientsReferences(recipeToUpdate);
@@ -121,8 +123,18 @@ public class RecipeServiceImpl implements RecipeService {
     accountDao.save(account);
   }
 
+  @Override
+  @Transactional
+  public void deleteRecipe(long recipeId, String userEmail) {
+    Recipe recipe = getRecipe(recipeId);
+    checkOwnership(userEmail, recipe);
+
+    recipeDao.delete(recipeId);
+  }
+
   private boolean recipeNotPresentInFavourites(Recipe recipe, Set<Recipe> favouriteRecipes) {
-    return favouriteRecipes.stream().noneMatch(r -> recipe.getId().equals(r.getId()));
+    return favouriteRecipes.stream()
+        .noneMatch(r -> recipe.getId().equals(r.getId()));
   }
 
   private Recipe getRecipe(long recipeId) {

@@ -4,6 +4,7 @@ import org.springframework.data.rest.webmvc.PersistentEntityResource;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -43,5 +44,12 @@ public class RecipeRestController {
   void updateRecipe(@Valid @RequestBody RecipeDto recipeDto,
                     @PathVariable long recipeId, Principal principal) {
     recipeService.updateRecipe(recipeId, recipeDto, principal.getName());
+  }
+
+  @DeleteMapping("/recipes/{recipeId}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  @ResponseBody
+  void deleteRecipe(@PathVariable long recipeId, Principal principal) {
+    recipeService.deleteRecipe(recipeId, principal.getName());
   }
 }

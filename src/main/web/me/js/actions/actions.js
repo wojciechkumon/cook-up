@@ -4,6 +4,7 @@ export const REQUEST_FAVOURITE_RECIPES = 'REQUEST_FAVOURITE_RECIPES';
 export const RECEIVE_FAVOURITE_RECIPES = 'RECEIVE_FAVOURITE_RECIPES';
 export const REQUEST_CREATED_RECIPES = 'REQUEST_CREATED_RECIPES';
 export const RECEIVE_CREATED_RECIPES = 'RECEIVE_CREATED_RECIPES';
+export const REMOVE_CREATED_RECIPE = 'REMOVE_CREATED_RECIPE';
 
 export function fetchFavouriteRecipesIfNeeded() {
   return (dispatch, getState) => {
@@ -82,5 +83,21 @@ function receiveCreatedRecipes(recipes) {
     type: RECEIVE_CREATED_RECIPES,
     recipes,
     receivedAt: Date.now()
+  }
+}
+
+export function deleteCreatedRecipe(recipeId) {
+  return dispatch => {
+    dispatch(removeCreatedRecipe(recipeId));
+
+    const path = '/api/recipes/' + recipeId;
+    return client({method: 'DELETE', path});
+  };
+}
+
+function removeCreatedRecipe(recipeId) {
+  return {
+    type: REMOVE_CREATED_RECIPE,
+    recipeId
   }
 }

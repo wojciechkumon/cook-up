@@ -1,6 +1,8 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
+import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
+import {deleteCreatedRecipe} from "./actions/actions";
 
 class EditableRecipeListRow extends Component {
 
@@ -15,7 +17,8 @@ class EditableRecipeListRow extends Component {
   };
 
   deleteRecipe = e => {
-    this.props.history.push('/delete');
+    const {dispatch, recipe} = this.props;
+    dispatch(deleteCreatedRecipe(recipe.id));
     e.stopPropagation();
   };
 
@@ -38,5 +41,7 @@ class EditableRecipeListRow extends Component {
 EditableRecipeListRow.propTypes = {
   recipe: PropTypes.object.isRequired
 };
+
+EditableRecipeListRow = connect()(EditableRecipeListRow);
 
 export default withRouter(EditableRecipeListRow);

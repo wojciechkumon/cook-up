@@ -2,6 +2,7 @@ import {combineReducers} from "redux";
 import {
   RECEIVE_CREATED_RECIPES,
   RECEIVE_FAVOURITE_RECIPES,
+  REMOVE_CREATED_RECIPE,
   REQUEST_CREATED_RECIPES,
   REQUEST_FAVOURITE_RECIPES
 } from "../actions/actions";
@@ -17,6 +18,10 @@ function createdRecipeIds(state = {isFetching: false, data: []}, action) {
         isFetching: false,
         data: action.recipes.map(recipe => recipe.id),
         lastUpdated: action.receivedAt
+      };
+    case REMOVE_CREATED_RECIPE:
+      return {
+        data: state.data.filter(id => id !== action.recipeId)
       };
     default:
       return state;
