@@ -16,8 +16,7 @@ function createdRecipeIds(state = {isFetching: false, data: []}, action) {
       return {
         isFetching: false,
         data: action.recipes.map(recipe => recipe.id),
-        lastUpdated: action.receivedAt,
-        afterSearch: true
+        lastUpdated: action.receivedAt
       };
     default:
       return state;
@@ -34,8 +33,7 @@ function favouriteRecipeIds(state = {isFetching: false, data: []}, action) {
       return {
         isFetching: false,
         data: action.recipes.map(recipe => recipe.id),
-        lastUpdated: action.receivedAt,
-        afterSearch: true
+        lastUpdated: action.receivedAt
       };
     default:
       return state;

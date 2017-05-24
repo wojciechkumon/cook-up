@@ -4,6 +4,8 @@ export const REQUEST_PROFILE_FAVOURITE_RECIPES = 'REQUEST_PROFILE_FAVOURITE_RECI
 export const RECEIVE_PROFILE_FAVOURITE_RECIPES = 'RECEIVE_PROFILE_FAVOURITE_RECIPES';
 export const REQUEST_PROFILE_CREATED_RECIPES = 'REQUEST_PROFILE_CREATED_RECIPES';
 export const RECEIVE_PROFILE_CREATED_RECIPES = 'RECEIVE_PROFILE_CREATED_RECIPES';
+export const REQUEST_PROFILE_ACCOUNT = 'REQUEST_PROFILE_ACCOUNT';
+export const RECEIVE_PROFILE_ACCOUNT = 'RECEIVE_PROFILE_ACCOUNT';
 
 export function fetchFavouriteRecipesIfNeeded(profileId) {
   return (dispatch, getState) => {
@@ -91,6 +93,55 @@ function receiveCreatedRecipes(recipes, profileId) {
     type: RECEIVE_PROFILE_CREATED_RECIPES,
     profileId,
     recipes,
+    receivedAt: Date.now()
+  }
+}
+
+export function fetchProfileAccountIfNeeded(profileId) {
+  return (dispatch, getState) => {
+    if (shouldFetchProfileAccount(getState().profiles.byId[profileId])) {
+      return dispatch(fetchProfileAccount(profileId));
+    }
+    return Promise.resolve();
+  }
+}
+
+function shouldFetchProfileAccount(profile) {
+  if (!profile || !profile.account) {
+    return true;
+  } else if (profile.account.isFetching) {
+    return false;
+  }
+  return profile.account.data === undefined;
+}
+
+function fetchProfileAccount(profileId) {
+  return dispatch => {
+    dispatch(requestProfileAccount(profileId));
+    const path = '/api/accounts/' + profileId;
+    return client({method: 'GET', path})
+      .then(response => response.entity)
+      .then(entity => {
+        return {
+          id: entity.id,
+          email: entity.email
+        }
+      }).then(account => dispatch(receiveProfileAccount(account, profileId)));
+  }
+}
+
+function requestProfileAccount(profileId) {
+  return {
+    type: REQUEST_PROFILE_ACCOUNT,
+    profileId
+  }
+}
+
+function receiveProfileAccount(account, profileId) {
+  return {
+    type: RECEIVE_PROFILE_ACCOUNT,
+    profileId,
+    account,
     receivedAt: Date.now()
   }
 }
