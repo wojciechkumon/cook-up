@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import RecipeList from "../../finder/js/RecipeList";
+import EditableRecipeList from "./EditableRecipeList";
 import Loader from "../../util/js/Loader";
 import {fetchCreatedRecipesIfNeeded} from "./actions/actions";
 
@@ -23,7 +23,7 @@ class MyRecipes extends Component {
       <div>
         <h3>My recipes</h3>
         {fetching && <Loader/>}
-        <RecipeList recipes={recipesToRender}/>
+        <EditableRecipeList recipes={recipesToRender}/>
       </div>
     );
   }
