@@ -1,0 +1,16 @@
+@import '../../main/style/global_variables';
+
+.Profile {
+  padding: 50px 100px 50px 100px;
+
+  h4 {
+    font-weight: bold;
+    color: $red;
+    float: right;
+  }
+
+  h3 {
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+}
