@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
 import FontAwesome from "react-fontawesome";
 import "../style/EditableRecipeListRow.scss";
-import {deleteCreatedRecipe} from "./actions/actions";
+import DeleteRecipeListRow from "./DeleteRecipeListRow";
 
 class EditableRecipeListRow extends Component {
 
@@ -18,27 +18,20 @@ class EditableRecipeListRow extends Component {
     e.stopPropagation();
   };
 
-  deleteRecipe = e => {
-    const {dispatch, recipe} = this.props;
-    dispatch(deleteCreatedRecipe(recipe.id));
-    e.stopPropagation();
-  };
-
   render() {
-    const {recipe} = this.props;
+    const {recipe, dispatch} = this.props;
     return (
-        <tr onClick={this.goToRecipe} className="EditableRecipeListRow">
-          <td>{recipe.name}</td>
-          <td>{recipe.cookingTimeMinutes + ' min'}</td>
-          <td>{recipe.difficultyLevel}</td>
-          <td>{recipe.kcal + ' kcal'}</td>
-          <td>{recipe.servings + ' serving' + (recipe.servings > 1 ? 's'
-              : '')}</td>
-          <td className="edit-button" onClick={this.editRecipe}><FontAwesome
-              name="pencil-square-o"/></td>
-          <td className="remove-button" onClick={this.deleteRecipe}><FontAwesome
-              name="times"/></td>
-        </tr>
+      <tr onClick={this.goToRecipe} className="EditableRecipeListRow">
+        <td>{recipe.name}</td>
+        <td>{recipe.cookingTimeMinutes + ' min'}</td>
+        <td>{recipe.difficultyLevel}</td>
+        <td>{recipe.kcal + ' kcal'}</td>
+        <td>{recipe.servings + ' serving' + (recipe.servings > 1 ? 's'
+          : '')}</td>
+        <td className="edit-button" onClick={this.editRecipe}><FontAwesome
+          name="pencil-square-o"/></td>
+        <DeleteRecipeListRow recipe={recipe} dispatch={dispatch}/>
+      </tr>
     );
   }
 }
