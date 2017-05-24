@@ -1,0 +1,7 @@
+@import '../../main/style/global_variables';
+
+.EditableRecipeListRow {
+  .remove-button:hover, .edit-button:hover {
+    color: $maroon;
+  }
+}
