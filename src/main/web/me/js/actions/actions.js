@@ -51,7 +51,7 @@ function receiveFavouriteRecipes(recipes) {
 
 export function fetchCreatedRecipesIfNeeded() {
   return (dispatch, getState) => {
-    if (shouldFetchRecipes(getState().me.createdRecipes)) {
+    if (shouldFetchRecipes(getState().me.createdRecipeIds)) {
       return dispatch(fetchCreatedRecipes(getState()));
     }
     return Promise.resolve();

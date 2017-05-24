@@ -6,7 +6,7 @@ import {
   REQUEST_FAVOURITE_RECIPES
 } from "../actions/actions";
 
-function createdRecipes(state = {isFetching: false, data: []}, action) {
+function createdRecipeIds(state = {isFetching: false, data: []}, action) {
   switch (action.type) {
     case REQUEST_CREATED_RECIPES:
       return Object.assign({}, state, {
@@ -43,7 +43,7 @@ function favouriteRecipeIds(state = {isFetching: false, data: []}, action) {
 }
 
 const me = combineReducers({
-  createdRecipes,
+  createdRecipeIds,
   favouriteRecipeIds
 });
 

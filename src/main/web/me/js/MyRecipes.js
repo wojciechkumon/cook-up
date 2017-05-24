@@ -40,7 +40,7 @@ MyRecipes.propTypes = {
 const mapStateToProps = state => {
   return {
     recipes: state.recipes.byId,
-    ids: state.me.createdRecipes
+    ids: state.me.createdRecipeIds
   }
 };
 
