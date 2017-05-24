@@ -128,8 +128,12 @@ public class RecipeServiceImpl implements RecipeService {
   public void deleteRecipe(long recipeId, String userEmail) {
     Recipe recipe = getRecipe(recipeId);
     checkOwnership(userEmail, recipe);
-
-    recipeDao.delete(recipeId);
+    Set<Account> recipeLovers = recipe.getRecipeLovers();
+    recipeLovers.forEach(account ->
+        account.getFavouriteRecipes()
+            .removeIf(r -> r.getId() == recipeId));
+    recipeLovers.clear();
+    recipeDao.delete(recipe);
   }
 
   private boolean recipeNotPresentInFavourites(Recipe recipe, Set<Recipe> favouriteRecipes) {

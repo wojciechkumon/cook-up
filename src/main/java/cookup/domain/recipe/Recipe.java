@@ -15,6 +15,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -65,6 +66,9 @@ public class Recipe {
 
   @Column(nullable = false)
   private LocalDateTime updated;
+
+  @ManyToMany(cascade = CascadeType.MERGE, mappedBy = "favouriteRecipes")
+  private Set<Account> recipeLovers = new HashSet<>(0);
 
 
   public Long getId() {
@@ -163,6 +167,13 @@ public class Recipe {
     this.updated = updated;
   }
 
+  public Set<Account> getRecipeLovers() {
+    return recipeLovers;
+  }
+
+  public void setRecipeLovers(Set<Account> recipeLovers) {
+    this.recipeLovers = recipeLovers;
+  }
 
   public static Builder builder() {
     return new Builder();
