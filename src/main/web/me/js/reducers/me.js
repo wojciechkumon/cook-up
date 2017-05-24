@@ -40,6 +40,10 @@ function favouriteRecipeIds(state = {isFetching: false, data: []}, action) {
         data: action.recipes.map(recipe => recipe.id),
         lastUpdated: action.receivedAt
       };
+    case REMOVE_CREATED_RECIPE:
+      return {
+        data: state.data.filter(id => id !== action.recipeId)
+      };
     default:
       return state;
   }
