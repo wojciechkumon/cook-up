@@ -13,27 +13,29 @@ class NavMenu extends Component {
   render() {
     const {loggedIn} = this.props.user;
     return (
-      <nav className="NavMenu">
-        <Grid>
-          <Row>
-            <Col md={3}>
-              <h1>Cook up</h1>
-            </Col>
-            <Col md={9}>
-              <ul className="nav nav-pills">
-                <li><Link to="/about">About</Link></li>
-                <li><Link to="/">Finder</Link></li>
+        <nav className="NavMenu">
+          <Grid>
+            <Row>
+              <Col md={3}>
+                <div className="nav">
+                  <Link to="/" className="cook-up">Cook up</Link>
+                </div>
+              </Col>
+              <Col md={9}>
+                <ul className="nav nav-pills">
+                  <li><Link to="/about">About</Link></li>
+                  <li><Link to="/">Finder</Link></li>
 
-                {loggedIn && <li><Link to="/addRecipe">Add recipe</Link></li>}
-                {loggedIn && <li><Link to="/me">Me</Link></li>}
-                {loggedIn && <LogoutPill/>}
-                {!loggedIn && <SignInModalPill/>}
-                {!loggedIn && <LoginModalPill/>}
-              </ul>
-            </Col>
-          </Row>
-        </Grid>
-      </nav>
+                  {loggedIn && <li><Link to="/addRecipe">Add recipe</Link></li>}
+                  {loggedIn && <li><Link to="/me">Me</Link></li>}
+                  {loggedIn && <LogoutPill/>}
+                  {!loggedIn && <SignInModalPill/>}
+                  {!loggedIn && <LoginModalPill/>}
+                </ul>
+              </Col>
+            </Row>
+          </Grid>
+        </nav>
     );
   }
 }

@@ -6,7 +6,9 @@ import java.awt.Color;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
+import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -27,6 +29,7 @@ import cookup.exception.PdfGeneratingException;
 
 @Service
 public class PdfGeneratorImpl implements PdfGenerator {
+
   private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.##",
       DecimalFormatSymbols.getInstance(Locale.US));
   private static final PDFont TITLE_FONT = PDType1Font.HELVETICA_BOLD;
@@ -137,17 +140,31 @@ public class PdfGeneratorImpl implements PdfGenerator {
   private List<String> getIngredientLines(Recipe recipe) {
     return recipe.getIngredients()
         .stream()
-        .map(this::recipeIngredientToString)
+        .flatMap(this::recipeIngredientToString)
         .collect(Collectors.toList());
   }
 
-  private String recipeIngredientToString(RecipeIngredient recipeIngredient) {
+  private Stream<String> recipeIngredientToString(RecipeIngredient recipeIngredient) {
     String amount = DECIMAL_FORMAT.format(recipeIngredient.getAmount());
     Ingredient ingredient = recipeIngredient.getIngredient();
     String unit = ingredient.getIngredientUnit().name().toLowerCase();
     String name = ingredient.getName();
+    String mainIngredientString = "- " + amount + " " + unit + " " + name;
+    List<String> substituteLines = getSubstituteLines(recipeIngredient.getSubstitutes());
 
-    return "- " + amount + " " + unit + " " + name;
+    return Stream.concat(Stream.of(mainIngredientString), substituteLines.stream());
+  }
+
+  private List<String> getSubstituteLines(Set<Ingredient> ingredients) {
+    return ingredients.stream()
+        .map(this::substituteToString)
+        .collect(Collectors.toList());
+  }
+
+  private String substituteToString(Ingredient ingredient) {
+    String name = ingredient.getName();
+    char dot = '\u2022';
+    return "  " + dot + " " + name;
   }
 
   private void printIngredients(float leading, List<String> ingredientsLines,
