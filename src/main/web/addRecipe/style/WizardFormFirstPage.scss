@@ -2,7 +2,7 @@
 
 .WizardFormFirstPage {
   margin: auto;
-  width: 50%;
+  max-width: 90%;
 
   .basic-info {
     margin: auto;
@@ -24,4 +24,13 @@
     font-weight: bold;
   }
 
+  .autocomplete-ingredient, .autocomplete-substitute {
+    max-width: 60%;
+  }
+
+  .amount-unit {
+    margin-left: 10px;
+    font-weight: bold;
+    color: $light-grey;
+  }
 }

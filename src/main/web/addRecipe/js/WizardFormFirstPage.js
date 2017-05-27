@@ -42,8 +42,10 @@ class WizardFormFirstPage extends Component {
 }
 
 const renderIngredients = ({chosenIngredients, fields, meta: {error, submitFailed}}) => (
-    <div>
-      {fields.map((ingredient, index) => (
+  <div>
+    {fields.map((ingredient, index) => {
+      const chosenIngredient = chosenIngredients[index].ingredient;
+      return (
           <div key={index}>
             <h4>
               <FontAwesome onClick={() => fields.remove(index)}
@@ -55,7 +57,7 @@ const renderIngredients = ({chosenIngredients, fields, meta: {error, submitFaile
             <Field
                 name={`${ingredient}.ingredient`}
                 component={IngredientAutocomplete}
-                chosenIngredient={chosenIngredients[index].ingredient}
+                chosenIngredient={chosenIngredient}
             />
             <Field
                 name={`${ingredient}.ingredient`}
@@ -70,24 +72,32 @@ const renderIngredients = ({chosenIngredients, fields, meta: {error, submitFaile
                 name={`${ingredient}.substitutes`}
                 component={renderError}
             />
-            <Field
-                name={`${ingredient}.amount`}
-                type="text"
-                component={renderField}
-                validate={[required, isDoubleValidator]}
-                normalize={doubleNormalizer}
-                label="Amount"
-            />
+            <div>
+              <Field
+                  className="amount-field"
+                  name={`${ingredient}.amount`}
+                  type="text"
+                  component={renderField}
+                  validate={[required, isDoubleValidator]}
+                  normalize={doubleNormalizer}
+                  label="Amount"
+              />
+              <span className="amount-unit">
+                {chosenIngredient
+                && ('Ingredient unit: ' + chosenIngredient.ingredientUnit)}
+                </span>
+            </div>
           </div>
-      ))}
+      )
+    })}
 
-      <Button type="button" onClick={() => fields.push({})}>Add
-        ingredient</Button>
-      <div className="nav-buttons">
-        {submitFailed && error && <span>{error}</span>}
-        <Field name="ingredientsError" component={renderError}/>
-      </div>
+    <Button type="button" onClick={() => fields.push({})}>Add
+      ingredient</Button>
+    <div className="nav-buttons">
+      {submitFailed && error && <span>{error}</span>}
+      <Field name="ingredientsError" component={renderError}/>
     </div>
+  </div>
 );
 
 const selector = formValueSelector('add-recipe-wizard');

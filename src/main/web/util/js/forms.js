@@ -1,10 +1,11 @@
 import React from "react";
 import "../style/forms.scss";
 
-export const renderField = ({input, label, type, meta: {touched, error, warning, asyncValidating}}) => (
-  <div className={asyncValidating ? 'Field async-validating' : 'Field'}>
-    <input {...input} placeholder={label} type={type}/>
-    {touched && ((error && <div className="form-error">{error}</div>)
+export const renderField = ({className, input, label, type, meta: {touched, error, warning, asyncValidating}}) => (
+    <div className={(className ? className + ' ' : '') + (asyncValidating
+            ? 'Field async-validating' : 'Field')}>
+      <input {...input} placeholder={label} type={type}/>
+      {touched && ((error && <div className="form-error">{error}</div>)
                  || (warning && <div className="form-warning">{warning}</div>))}
   </div>
 );
