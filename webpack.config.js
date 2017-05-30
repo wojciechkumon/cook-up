@@ -6,6 +6,7 @@ module.exports = {
   entry: ['react-hot-loader/patch',
           'webpack-dev-server/client?http://localhost:9000',
           'webpack/hot/only-dev-server',
+          'babel-polyfill',
           './src/main/web/main/js/index.js'],
   devServer: {
     contentBase: path.join(__dirname, "target/classes/static"),
