@@ -18,7 +18,7 @@ module.exports = {
     },
     setup: function (app) {
       const urls = ['/', '/about', '/me', '/signInSuccess', '/logout', '/addRecipe'];
-      const urlStarts = ['/recipe/', '/user/', '/login'];
+      const urlStarts = ['/recipe/', '/user/', '/login', '/editRecipe'];
 
       app.use(function pushStateHook(req, res, next) {
         if (urls.includes(req.url)

@@ -14,7 +14,8 @@ class EditableRecipeListRow extends Component {
   };
 
   editRecipe = e => {
-    this.props.history.push('/edit');
+    const {history, recipe} = this.props;
+    history.push('/editRecipe/' + recipe.id);
     e.stopPropagation();
   };
 

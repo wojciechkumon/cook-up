@@ -3,6 +3,7 @@ import {getHttpError} from "../../../main/js/actions/actions";
 
 export const REQUEST_RECIPE = 'REQUEST_RECIPE';
 export const RECEIVE_RECIPE = 'RECEIVE_RECIPE';
+export const INVALIDATE_RECIPE = 'INVALIDATE_RECIPE';
 export const RECIPE_REQUEST_ERROR = 'RECIPE_REQUEST_ERROR';
 export const REQUEST_RECIPE_FAVOURITE = 'REQUEST_RECIPE_FAVOURITE';
 export const RECEIVE_RECIPE_FAVOURITE = 'RECEIVE_RECIPE_FAVOURITE';
@@ -31,6 +32,13 @@ export function fetchCommentsIfNeeded(recipeId) {
       return dispatch(fetchComments(recipeId));
     }
     return Promise.resolve();
+  }
+}
+
+export function invalidateRecipe(recipeId) {
+  return {
+    type: INVALIDATE_RECIPE,
+    recipeId
   }
 }
 
