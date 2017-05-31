@@ -12,6 +12,10 @@
     margin-top: 20px;
   }
 
+  .Field input[type=text] {
+    width: 300px;
+  }
+
   .close-button {
     margin-right: 10px;
     &:hover {
