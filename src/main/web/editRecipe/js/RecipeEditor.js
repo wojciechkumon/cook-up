@@ -1,9 +1,12 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
+import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
+import formValueSelector from "redux-form/es/formValueSelector";
 import {fetchCreatedRecipesIfNeeded} from "../../me/js/actions/actions";
 import Loader from "../../util/js/Loader";
 import EditRecipeForm from "./EditRecipeForm";
+import {handleSubmit} from "./editRecipeSubmitter";
 
 class RecipeEditor extends Component {
 
@@ -22,7 +25,7 @@ class RecipeEditor extends Component {
       );
     }
 
-    const {match} = this.props;
+    const {match, dispatch, history, chosenIngredients} = this.props;
     const recipeId = Number(match.params.recipeId);
     const ids = this.props.ids.data;
     if (!ids.includes(recipeId)) {
@@ -35,12 +38,16 @@ class RecipeEditor extends Component {
     }
 
     let recipe = this.props.recipes[recipeId];
-    recipe = recipe ? recipe.data : recipe;
+    recipe = recipe ? recipe.data : undefined;
 
     return (
       <div>
         <h4>Edit recipe</h4>
-        {recipe && <EditRecipeForm recipe={recipe}/>}
+        {recipe &&
+         <EditRecipeForm
+           onSubmit={handleSubmit(dispatch, history, recipeId)}
+           recipe={recipe}
+           chosenIngredients={chosenIngredients}/>}
         {!recipe && <Loader/>}
       </div>
     );
@@ -55,13 +62,15 @@ RecipeEditor.propTypes = {
   }).isRequired
 };
 
+const selector = formValueSelector('edit-recipe-wizard');
 const mapStateToProps = state => {
   return {
     recipes: state.recipes.byId,
-    ids: state.me.createdRecipeIds
+    ids: state.me.createdRecipeIds,
+    chosenIngredients: selector(state, 'ingredients')
   }
 };
 
 RecipeEditor = connect(mapStateToProps)(RecipeEditor);
 
-export default RecipeEditor;
+export default withRouter(RecipeEditor);
