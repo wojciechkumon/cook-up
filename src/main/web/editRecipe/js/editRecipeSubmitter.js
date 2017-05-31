@@ -1,5 +1,6 @@
 import client from "../../restclient/client";
 import {reset} from "redux-form/es/actions";
+import {invalidateRecipe} from "../../recipe/js/actions/actions";
 
 export const handleSubmit = (dispatch, history, recipeId) => values => {
   const path = '/api/recipes/' + recipeId;
@@ -14,7 +15,10 @@ export const handleSubmit = (dispatch, history, recipeId) => values => {
   };
 
   return client({method: 'PUT', path, entity: recipeDto})
-    .then(response => history.push('/recipe/' + recipeId))
+    .then(response => {
+      dispatch(invalidateRecipe(recipeId));
+      return response;
+    }).then(response => history.push('/recipe/' + recipeId))
     .then(() => dispatch(reset('edit-recipe-wizard')))
     .catch(response => {});
 };

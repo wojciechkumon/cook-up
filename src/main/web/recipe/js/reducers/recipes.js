@@ -13,7 +13,8 @@ import {
   REQUEST_COMMENTS,
   REQUEST_FOUND_RECIPES,
   REQUEST_RECIPE,
-  REQUEST_RECIPE_FAVOURITE
+  REQUEST_RECIPE_FAVOURITE,
+  INVALIDATE_RECIPE
 } from "../actions/actions";
 import {RECEIVE_CREATED_RECIPES, RECEIVE_FAVOURITE_RECIPES} from "../../../me/js/actions/actions";
 import {
@@ -77,6 +78,12 @@ function handleRecipe(state = {
         isFavouriteFetching: false,
         isFavourite: action.isFavourite
       });
+    case INVALIDATE_RECIPE:
+      return Object.assign({}, state, {
+        isFetching: false,
+        didInvalidate: true,
+        error: false
+      });
     default:
       return state;
   }
@@ -89,6 +96,7 @@ function byId(state = {}, action) {
     case RECIPE_REQUEST_ERROR:
     case REQUEST_RECIPE_FAVOURITE:
     case RECEIVE_RECIPE_FAVOURITE:
+    case INVALIDATE_RECIPE:
       return Object.assign({}, state, {
         [action.recipeId]: handleRecipe(state[action.recipeId], action)
       });
