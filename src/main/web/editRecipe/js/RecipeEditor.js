@@ -7,6 +7,7 @@ import {fetchCreatedRecipesIfNeeded} from "../../me/js/actions/actions";
 import Loader from "../../util/js/Loader";
 import EditRecipeForm from "./EditRecipeForm";
 import {handleSubmit} from "./editRecipeSubmitter";
+import "../../addRecipe/style/recipeForm.scss";
 
 class RecipeEditor extends Component {
 
@@ -18,8 +19,8 @@ class RecipeEditor extends Component {
     const fetching = this.props.ids.isFetching;
     if (fetching) {
       return (
-        <div>
-          <h4>Edit recipe</h4>
+        <div className="recipe-form">
+          <h2>Edit recipe</h2>
           <Loader/>
         </div>
       );
@@ -30,8 +31,8 @@ class RecipeEditor extends Component {
     const ids = this.props.ids.data;
     if (!ids.includes(recipeId)) {
       return (
-        <div>
-          <h4>Edit recipe</h4>
+        <div className="recipe-form">
+          <h2>Edit recipe</h2>
           <p>Recipe not exists or you're not its owner!</p>
         </div>
       );
@@ -41,8 +42,8 @@ class RecipeEditor extends Component {
     recipe = recipe ? recipe.data : undefined;
 
     return (
-      <div>
-        <h4>Edit recipe</h4>
+      <div className="recipe-form">
+        <h2>Edit recipe</h2>
         {recipe &&
          <EditRecipeForm
            onSubmit={handleSubmit(dispatch, history, recipeId)}

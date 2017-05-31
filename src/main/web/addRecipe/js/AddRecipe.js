@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
 import AddRecipeWizardForm from "./AddRecipeWizardForm";
-import "../style/AddRecipe.scss";
+import "../style/recipeForm.scss";
 import {handleSubmit} from "./addRecipeSubmitter";
 
 class AddRecipe extends Component {
@@ -11,7 +11,7 @@ class AddRecipe extends Component {
     const {dispatch, history} = this.props;
 
     return (
-      <div className="AddRecipe">
+      <div className="recipe-form">
         <h2>Add recipe</h2>
         <AddRecipeWizardForm onSubmit={handleSubmit(dispatch, history)}/>
       </div>
