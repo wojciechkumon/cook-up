@@ -108,6 +108,7 @@
 
 
     <build>
+        <finalName>cook-up</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

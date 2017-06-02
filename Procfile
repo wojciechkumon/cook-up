@@ -1,1 +1,1 @@
-web:    java -jar target/cook-up-1.0-SNAPSHOT.jar --server.port=$PORT --spring.profiles.active=prod
+web:    java -jar target/cook-up.jar --server.port=$PORT --spring.profiles.active=prod
