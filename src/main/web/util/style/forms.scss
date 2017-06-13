@@ -1,8 +1,9 @@
 @import '../../main/style/global_variables';
 
 .Field {
-  &.async-validating {
-    background-color: #807c80;
+  .Loader {
+    vertical-align: middle;
+    margin-left: 5px;
   }
 
   input[type=text], input[type=password] {
