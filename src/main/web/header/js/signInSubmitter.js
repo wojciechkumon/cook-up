@@ -20,19 +20,20 @@ export const handleSubmit = (dispatch, history) => values => {
       } else {
         throw new SubmissionError({_error: 'Sign up failed!'});
       }
+      return response;
     }).catch(response => {
-      if (response.entity.errors) {
-        throw new SubmissionError(prepareErrors(response));
+      if (response.entity && response.entity.errors) {
+        throw new SubmissionError(prepareErrors(response.entity.errors));
       } else {
         throw new SubmissionError({_error: 'Sign up failed!'});
       }
     });
 };
 
-function prepareErrors(response) {
+function prepareErrors(errors) {
   const errorsObject = {};
 
-  response.entity.errors.forEach(error => {
+  errors.forEach(error => {
     if (error.field) {
       errorsObject[error.field] = mapErrorCodeToMessage(error.code, error.defaultMessage);
     } else if (error.code === 'FieldMatch') {
