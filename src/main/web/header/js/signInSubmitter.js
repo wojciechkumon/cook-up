@@ -13,7 +13,7 @@ export const handleSubmit = (dispatch, history) => values => {
 
   return client({method: 'POST', path: '/api/register', entity: signInData})
     .then(response => {
-      if (response.status.text === 'Created') {
+      if (response.status.code === 201) {
         dispatch(hideSignInModal());
         dispatch(reset('sign-in-form'));
         history.push("/signInSuccess");
