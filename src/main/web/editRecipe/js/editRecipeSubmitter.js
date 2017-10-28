@@ -1,5 +1,5 @@
 import client from "../../restclient/client";
-import {reset} from "redux-form/es/actions";
+import {reset} from "redux-form";
 import {invalidateRecipe} from "../../recipe/js/actions/actions";
 
 export const handleSubmit = (dispatch, history, recipeId) => values => {

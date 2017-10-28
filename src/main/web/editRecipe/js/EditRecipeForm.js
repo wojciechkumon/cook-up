@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
-import {reset} from "redux-form/es/actions";
+import {reset} from "redux-form";
 import {connect} from "react-redux";
 import EditRecipeFirstPage from "./EditRecipeFirstPage";
 import EditRecipeSecondPage from "./EditRecipeSecondPage";

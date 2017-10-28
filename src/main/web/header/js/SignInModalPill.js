@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import PropTypes from "prop-types";
 import {Button, Modal} from "react-bootstrap";
 import {connect} from "react-redux";
-import {submit} from "redux-form/es/actions";
+import {submit} from "redux-form";
 import {withRouter} from "react-router-dom";
 import {hideSignInModal, showSignInModal} from "./actions/actions";
 import "../style/modals.scss";

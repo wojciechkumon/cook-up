@@ -1,5 +1,5 @@
 import client from "../../restclient/client";
-import {reset} from "redux-form/es/actions";
+import {reset} from "redux-form";
 import SubmissionError from "redux-form/es/SubmissionError";
 import url from "url";
 import {hideLoginModal} from "../../header/js/actions/actions";

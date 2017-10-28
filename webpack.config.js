@@ -16,7 +16,7 @@ module.exports = {
     proxy: {
       "/api": "http://localhost:8080"
     },
-    setup: function (app) {
+    before: app => {
       const urls = ['/', '/about', '/me', '/signInSuccess', '/logout', '/addRecipe'];
       const urlStarts = ['/recipe/', '/user/', '/login', '/editRecipe'];
 
