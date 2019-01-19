@@ -20,16 +20,23 @@ import org.springframework.util.MultiValueMap;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 import cookup.config.Profiles;
+import cookup.domain.recipe.DifficultyLevel;
+import cookup.domain.recipe.Ingredient;
 import cookup.domain.recipe.Recipe;
+import cookup.domain.recipe.RecipeIngredient;
+import cookup.dto.RecipeDto;
 
 import static cookup.SessionIdHelper.getHeadersWithSessionId;
+import static java.util.Collections.singletonList;
 import static org.junit.Assert.assertEquals;
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.DEFINED_PORT;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 @SpringBootTest(webEnvironment = DEFINED_PORT)
 @ActiveProfiles(Profiles.TEST)
@@ -48,12 +55,7 @@ public class RecipesTest {
         .readValue(String.join("", allLines), List.class);
 
     // when
-    ResponseEntity<Map> responseEntity = restTemplate.exchange(
-        "/api/recipes",
-        HttpMethod.GET,
-        null,
-        new ParameterizedTypeReference<Map>() {
-        });
+    ResponseEntity<Map> responseEntity = restTemplate.getForEntity("/api/recipes", Map.class);
     Map embedded = (Map) responseEntity.getBody().get("_embedded");
     List<Map> recipes = (List<Map>) embedded.get("recipes");
     recipes.forEach(recipe -> {
@@ -80,6 +82,44 @@ public class RecipesTest {
 
     // then
     assertEquals(initialAmountOfRecipes - 1, getNumberOfRecipes());
+  }
+
+  @Test
+  public void shouldUpdateRecipe() {
+    // given
+    List<Ingredient> ingredients = restTemplate.exchange(
+        "/api/ingredients", HttpMethod.GET, null,
+        new ParameterizedTypeReference<List<Ingredient>>() {
+        }).getBody();
+    MultiValueMap<String, String> headersWithSessionId = getHeadersWithSessionId(restTemplate);
+    RecipeIngredient recipeIngredient = new RecipeIngredient();
+    recipeIngredient.setAmount(1.0);
+    recipeIngredient.setSubstitutes(Collections.emptySet());
+    recipeIngredient.setIngredient(ingredients.get(0));
+    RecipeDto recipeDto = new RecipeDto();
+    recipeDto.setName("updated name");
+    recipeDto.setCookingDescription("updated desc");
+    recipeDto.setCookingTimeMinutes(1111);
+    recipeDto.setDifficultyLevel(DifficultyLevel.MEDIUM);
+    recipeDto.setKcal(99);
+    recipeDto.setServings(999);
+    recipeDto.setIngredients(singletonList(recipeIngredient));
+
+    // when
+    ResponseEntity<String> responseEntity = restTemplate.exchange("/api/recipes/2", HttpMethod.PUT,
+        new HttpEntity<>(recipeDto, headersWithSessionId), String.class);
+
+    // then
+    assertEquals(NO_CONTENT, responseEntity.getStatusCode());
+    Recipe updatedRecipe = restTemplate.getForObject("/api/recipes/2", Recipe.class);
+    System.out.println(updatedRecipe);
+    assertEquals(recipeDto.getName(), updatedRecipe.getName());
+    assertEquals(recipeDto.getCookingDescription(), updatedRecipe.getCookingDescription());
+    assertEquals(recipeDto.getCookingTimeMinutes(), updatedRecipe.getCookingTimeMinutes());
+    assertEquals(recipeDto.getDifficultyLevel(), updatedRecipe.getDifficultyLevel());
+    assertEquals(recipeDto.getKcal(), updatedRecipe.getKcal());
+    assertEquals(recipeDto.getServings(), updatedRecipe.getServings());
+    assertEquals(recipeDto.getIngredients().size(), updatedRecipe.getIngredients().size());
   }
 
   private int getNumberOfRecipes() {
