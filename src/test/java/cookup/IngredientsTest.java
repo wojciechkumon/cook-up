@@ -53,7 +53,6 @@ public class IngredientsTest {
     // then
     assertEquals(HttpStatus.OK, ingredientsEntity.getStatusCode());
     List<Ingredient> ingredients = ingredientsEntity.getBody();
-    System.out.println(new ObjectMapper().writeValueAsString(ingredients));
     assertEquals(expectedIngredients.size(), ingredients.size());
     for (int i = 0; i < expectedIngredients.size(); i++) {
       assertEquals(expectedIngredients.get(i).getId(), ingredients.get(i).getId());
