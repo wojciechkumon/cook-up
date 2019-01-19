@@ -1,0 +1,6 @@
+server:
+  port: 55897
+spring.jpa:
+  hibernate.ddl-auto: update
+  properties.hibernate.dialect: org.hibernate.dialect.H2Dialect
+  show-sql: true
