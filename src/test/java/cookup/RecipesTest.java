@@ -37,6 +37,7 @@ import static org.junit.Assert.assertEquals;
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.DEFINED_PORT;
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 @SpringBootTest(webEnvironment = DEFINED_PORT)
@@ -75,14 +76,14 @@ public class RecipesTest {
   public void shouldDeleteRecipe() {
     // given
     MultiValueMap<String, String> headersWithSessionId = getHeadersWithSessionId(restTemplate);
-    int initialAmountOfRecipes = getNumberOfRecipes();
 
     // when
     restTemplate.exchange("/api/recipes/1", HttpMethod.DELETE,
         new HttpEntity<>(headersWithSessionId), String.class);
 
     // then
-    assertEquals(initialAmountOfRecipes - 1, getNumberOfRecipes());
+    ResponseEntity<String> entity = restTemplate.getForEntity("/api/recipes/1", String.class);
+    assertEquals(NOT_FOUND, entity.getStatusCode());
   }
 
   @Test
@@ -157,17 +158,5 @@ public class RecipesTest {
     assertEquals(recipeDto.getKcal(), createdRecipe.getKcal());
     assertEquals(recipeDto.getServings(), createdRecipe.getServings());
     assertEquals(recipeDto.getIngredients().size(), createdRecipe.getIngredients().size());
-  }
-
-  private int getNumberOfRecipes() {
-    ResponseEntity<Map> responseEntity = restTemplate.exchange(
-        "/api/recipes",
-        HttpMethod.GET,
-        null,
-        new ParameterizedTypeReference<Map>() {
-        });
-    Map embedded = (Map) responseEntity.getBody().get("_embedded");
-    List<?> recipes = (List<?>) embedded.get("recipes");
-    return recipes.size();
   }
 }
