@@ -7,17 +7,16 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 
-import java.util.concurrent.TimeUnit;
+import static cookup.selenium.SeleniumUtils.BASE_URL;
+import static cookup.selenium.SeleniumUtils.newWebDriver;
 
 class LoginTest {
   private WebDriver driver;
 
   @BeforeEach
   void setUp() {
-    driver = new ChromeDriver();
-    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    driver = newWebDriver();
   }
 
   @Test
@@ -29,7 +28,7 @@ class LoginTest {
   }
 
   static void login(WebDriver driver) {
-    driver.get("https://new-cook-up.herokuapp.com/");
+    driver.get(BASE_URL);
     driver.findElement(By.xpath("/html/body/div[1]/div/nav/div/div/div[2]/ul/li[4]/a"))
         .click();
     WebElement email = driver.findElement(By.name("email"));

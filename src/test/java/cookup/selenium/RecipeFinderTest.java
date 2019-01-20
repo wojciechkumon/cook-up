@@ -7,19 +7,16 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-
-import java.util.concurrent.TimeUnit;
 
 import static cookup.selenium.LoginTest.login;
+import static cookup.selenium.SeleniumUtils.newWebDriver;
 
 class RecipeFinderTest {
   private WebDriver driver;
 
   @BeforeEach
   void setUp() {
-    driver = new ChromeDriver();
-    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    driver = newWebDriver();
   }
 
   @Test
