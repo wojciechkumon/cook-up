@@ -40,6 +40,7 @@ class LoginTest {
     driver.findElement(
         By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Log In'])[1]/following::button[1]"))
         .click();
+    driver.findElement(By.xpath("/html/body/div[1]/div/nav/div/div/div[2]/ul/li[5]/a"));
   }
 
   @AfterEach
