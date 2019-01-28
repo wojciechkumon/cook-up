@@ -2,7 +2,6 @@ package cookup.selenium;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -20,7 +19,6 @@ class LoginTest {
   }
 
   @Test
-  @Disabled
   void testUntitledTestCase() {
     login(driver);
     driver.findElement(By.xpath("/html/body/div[1]/div/nav/div/div/div[2]/ul/li[5]/a"))

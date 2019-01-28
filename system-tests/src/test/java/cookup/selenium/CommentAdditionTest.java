@@ -2,7 +2,6 @@ package cookup.selenium;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -22,7 +21,6 @@ class CommentAdditionTest {
   }
 
   @Test
-  @Disabled
   void addComment() {
     String commentText = "new comment test " + new Random().nextInt(1_000_000);
     driver.get(BASE_URL + "/recipe/430");

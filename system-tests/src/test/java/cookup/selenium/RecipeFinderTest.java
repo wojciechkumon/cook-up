@@ -2,7 +2,6 @@ package cookup.selenium;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -20,7 +19,6 @@ class RecipeFinderTest {
   }
 
   @Test
-  @Disabled
   void findRecipe() {
     login(driver);
     driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='What do you have in your fridge?'])[1]/following::div[4]")).click();
