@@ -19,7 +19,7 @@ class LoginTest {
   }
 
   @Test
-  void testUntitledTestCase() {
+  void testLogin() {
     login(driver);
     driver.findElement(By.xpath("/html/body/div[1]/div/nav/div/div/div[2]/ul/li[5]/a"))
         .click();
