@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import cookup.config.Profiles;
 
 @Component
-@Profile({Profiles.DEV, Profiles.TEST})
+@Profile({Profiles.DEV, Profiles.DB_MOCK})
 public class DevDbInit implements DbInitializer {
   private final RecipeDbInitializer dbInitializer;
 

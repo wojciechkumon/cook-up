@@ -41,7 +41,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 @SpringBootTest(webEnvironment = DEFINED_PORT)
-@ActiveProfiles({"test", "db-mock"})
+@ActiveProfiles({Profiles.TEST, Profiles.DB_MOCK})
 @RunWith(SpringRunner.class)
 @AutoConfigureTestDatabase(replace = NONE)
 public class RecipesTest {

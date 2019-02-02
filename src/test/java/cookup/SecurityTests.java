@@ -28,7 +28,7 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.DEFINED_PORT;
 
 @SpringBootTest(webEnvironment = DEFINED_PORT)
-@ActiveProfiles({"test", "db-mock"})
+@ActiveProfiles({Profiles.TEST, Profiles.DB_MOCK})
 @RunWith(SpringRunner.class)
 @AutoConfigureTestDatabase(replace = NONE)
 public class SecurityTests {
