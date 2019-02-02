@@ -12,7 +12,7 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
-@ActiveProfiles("test")
+@ActiveProfiles({"test", "db-mock"})
 @RunWith(SpringRunner.class)
 @AutoConfigureTestDatabase(replace = NONE)
 public class AppStartupTest {

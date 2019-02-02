@@ -29,7 +29,7 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.DEFINED_PORT;
 
 @SpringBootTest(webEnvironment = DEFINED_PORT)
-@ActiveProfiles(Profiles.TEST)
+@ActiveProfiles({"test", "db-mock"})
 @RunWith(SpringRunner.class)
 @AutoConfigureTestDatabase(replace = NONE)
 public class IngredientsTest {

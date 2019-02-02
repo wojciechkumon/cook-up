@@ -1,6 +1,10 @@
-server:
-  port: 55897
-spring.jpa:
-  hibernate.ddl-auto: update
-  properties.hibernate.dialect: org.hibernate.dialect.H2Dialect
-  show-sql: true
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/cookUp
+    username: cookUp
+    password: cookUpPass
