@@ -6,9 +6,11 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static cookup.selenium.SeleniumUtils.BASE_URL;
 import static cookup.selenium.SeleniumUtils.newWebDriver;
+import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 
 class LoginTest {
   private WebDriver driver;
@@ -26,19 +28,34 @@ class LoginTest {
   }
 
   static void login(WebDriver driver) {
+    login(driver, "lolek@gmail.com", "lolek");
+  }
+
+  static void login(WebDriver driver, String email, String password) {
+    loginWithoutCheck(driver, email, password);
+    driver.findElement(By.xpath("/html/body/div[1]/div/nav/div/div/div[2]/ul/li[5]/a"));
+  }
+
+  static void loginWithoutCheck(WebDriver driver, String email, String password) {
     driver.get(BASE_URL);
     driver.findElement(By.xpath("/html/body/div[1]/div/nav/div/div/div[2]/ul/li[4]/a"))
         .click();
-    WebElement email = driver.findElement(By.name("email"));
-    email.clear();
-    email.sendKeys("lolek@gmail.com");
-    WebElement password = driver.findElement(By.name("password"));
-    password.clear();
-    password.sendKeys("lolek");
+    WebElement emailElement = driver.findElement(By.name("email"));
+    emailElement.clear();
+    emailElement.sendKeys(email);
+    WebElement passwordElement = driver.findElement(By.name("password"));
+    passwordElement.clear();
+    passwordElement.sendKeys(password);
     driver.findElement(
         By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Log In'])[1]/following::button[1]"))
         .click();
-    driver.findElement(By.xpath("/html/body/div[1]/div/nav/div/div/div[2]/ul/li[5]/a"));
+  }
+
+  @Test
+  void testFailedLogin() {
+    loginWithoutCheck(driver, "test@test.com", "wrongPassword");
+    new WebDriverWait(driver, 30).until(invisibilityOfElementLocated(
+        By.xpath("/html/body/div[1]/div/nav/div/div/div[2]/ul/li[5]/a")));
   }
 
   @AfterEach
