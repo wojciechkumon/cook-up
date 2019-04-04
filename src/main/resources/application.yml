@@ -11,6 +11,8 @@ spring:
   datasource:
     driver-class: org.postgresql.Driver
 
+  session.store-type: jdbc
+
   data:
     rest:
       base-path: /api

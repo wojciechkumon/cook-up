@@ -1,5 +1,6 @@
 package cookup.controller.rest.security;
 
+import cookup.service.AccountService;
 import org.springframework.data.rest.webmvc.BasePathAwareController;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,10 +16,12 @@ import cookup.domain.account.UserWithId;
 @RestController
 @BasePathAwareController
 public class LoginRestController {
+  private final AccountService accountService;
   private final Map<String, String> successMap;
   private final Map<String, String> failureMap;
 
-  LoginRestController() {
+  LoginRestController(AccountService accountService) {
+    this.accountService = accountService;
     this.successMap = prepareMap("true");
     this.failureMap = prepareMap("false");
   }
@@ -35,7 +38,7 @@ public class LoginRestController {
 
     Map<String, Object> loginSuccessMap = new HashMap<>(successMap);
     loginSuccessMap.put("email", userWithId.getEmail());
-    loginSuccessMap.put("id", userWithId.getId());
+    loginSuccessMap.put("id", accountService.getAccountId(userWithId.getEmail()));
     return loginSuccessMap;
   }
 

@@ -52,4 +52,9 @@ public class AccountServiceImpl implements AccountService {
   public boolean isEmailTaken(String email) {
     return accountDao.findByEmail(email.toLowerCase()) != null;
   }
+
+  @Override
+  public long getAccountId(String email) {
+    return accountDao.findByEmail(email).getId();
+  }
 }

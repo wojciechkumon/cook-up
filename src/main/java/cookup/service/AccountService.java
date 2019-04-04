@@ -8,4 +8,6 @@ public interface AccountService {
   Account addAccount(RegistrationDto registrationDto);
 
   boolean isEmailTaken(String email);
+
+  long getAccountId(String email);
 }
