@@ -8,7 +8,6 @@ class Share extends Component {
   render() {
     const {
         FacebookShareButton,
-        GooglePlusShareButton,
         TwitterShareButton
     } = ShareButtons;
 
@@ -16,7 +15,6 @@ class Share extends Component {
     const shareUrl = window.location.origin + '/recipe/' + recipeId;
     const FacebookIcon = generateShareIcon('facebook');
     const TwitterIcon = generateShareIcon('twitter');
-    const GooglePlusIcon = generateShareIcon('google');
 
     const iconSize = 32;
 
@@ -25,9 +23,6 @@ class Share extends Component {
           <FacebookShareButton url={shareUrl}>
             <FacebookIcon className="fb" size={iconSize} round/>
           </FacebookShareButton>
-          <GooglePlusShareButton url={shareUrl}>
-            <GooglePlusIcon className="google-plus" size={iconSize} round/>
-          </GooglePlusShareButton>
           <TwitterShareButton url={shareUrl}>
             <TwitterIcon className="twitter" size={iconSize} round/>
           </TwitterShareButton>

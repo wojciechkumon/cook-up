@@ -1,4 +1,8 @@
-# Cook Up #
+# Cook Up
+
+Web app to find recipes by ingredients.
+
+[https://new-cook-up.herokuapp.com](https://new-cook-up.herokuapp.com/)
 
 
 **build:** `mvn clean install`
